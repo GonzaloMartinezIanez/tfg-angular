@@ -1,0 +1,323 @@
+<app-menu></app-menu>
+
+<div class="contenido">
+    <h2>Formulario de personas en interacción</h2>
+
+    <form [formGroup]="formularioInteraccion" (ngSubmit)="enviar()">
+        <div class="row">
+            <div class="col-25">
+                <label for="Nombre">Nombre</label>
+            </div>
+            <div class="col-75">
+                <input id="Nombre" type="text" formControlName="Nombre">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="ApellidoPaterno">Apellido paterno</label>
+            </div>
+            <div class="col-75">
+                <input id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="ApellidoMaterno">Apellido materno</label>
+            </div>
+            <div class="col-75">
+                <input id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="NombreSocial">Nombre social</label>
+            </div>
+            <div class="col-75">
+                <input id="NombreSocial" type="text" formControlName="NombreSocial">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="FechaNacimiento">Fecha de nacimiento</label>
+            </div>
+            <div class="col-75">
+                <input id="FechaNacimiento" type="date" formControlName="FechaNacimiento">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Sexo">Sexo asignado al nacer</label>
+            </div>
+            <div class="col-75">
+                <select name="Sexo" id="Sexo" formControlName="Sexo">
+                    <option value="">Selecciona una opción</option>
+                    <option value='Hombre'>Hombre</option>
+                    <option value='Mujer'>Mujer</option>
+                    <option value='Intersex'>Intersex</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Nacionalidad">Nacionalidad</label>
+            </div>
+            <div class="col-75">
+                <input id="Nacionalidad" type="text" formControlName="Nacionalidad">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Estado">Estado</label>
+            </div>
+            <div class="col-75">
+                <input id="Estado" type="text" formControlName="Estado">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Municipio">Municipio</label>
+            </div>
+            <div class="col-75">
+                <input id="Municipio" type="text" formControlName="Municipio">
+            </div>
+        </div>
+        <!--  <select name="nacionalidad" id="nacionalidad" formControlName="nacionalidad">
+        <option *ngFor="let pais of paises" [ngValue]="pais">
+            {{ pais }}
+    </select> -->
+
+        <div class="row">
+            <div class="col-25">
+                <label for="LugarFrecuenta">Lugar que frecuenta</label>
+            </div>
+            <div class="col-75">
+                <input id="LugarFrecuenta" type="text" formControlName="LugarFrecuenta">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-25">
+                <label for="LugarActual">Lugar actual</label>
+            </div>
+            <div class="col-75">
+                <input id="LugarActual" type="text" formControlName="LugarActual">
+            </div>
+        </div>
+
+        <div id="mapInteraccion"></div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Grupo">Grupo</label>
+            </div>
+            <div class="col-55">
+                <select name="IdGrupo" id="IdGrupo" formControlName="IdGrupo">
+                    <option>Sin grupo</option>
+                    <option *ngFor="let g of grupos" value={{g.IdGrupo}}>{{g.NombreGrupo}}</option>
+                </select>
+            </div>
+            <div class="col-20">
+                <button routerLink="/grupo">Crear nuevo grupo</button>
+            </div>
+            
+        </div>
+
+        <h2>Perfil: elegir una o varias opciones según corresponda</h2>
+        <h3>Catálogo de personas</h3>
+        <div class="row">
+            <div class="col-25">
+                <label for="SituacionCalle">En situación de calle</label>
+            </div>
+            <div class="col-75">
+                <input id="SituacionCalle" type="checkbox" formControlName="SituacionCalle">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="MigrantesMexicanas">Migrantes mexicanas</label>
+            </div>
+            <div class="col-75">
+                <input id="MigrantesMexicanas" type="checkbox" formControlName="MigrantesMexicanas">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="TrabajadorCampo">Trabajadora de campo</label>
+            </div>
+            <div class="col-75">
+                <input id="TrabajadorCampo" type="checkbox" formControlName="TrabajadorCampo">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-25">
+                <label for="DesplazadasForzadasInternas">Desplazadas forzadas internas</label>
+            </div>
+            <div class="col-75">
+                <input id="DesplazadasForzadasInternas" type="checkbox" formControlName="DesplazadasForzadasInternas">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="MigrantesExtranjeras">Migrantes extranjeras</label>
+            </div>
+            <div class="col-75">
+                <input id="MigrantesExtranjeras" type="checkbox" formControlName="MigrantesExtranjeras">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Deportadas">Deportadas</label>
+            </div>
+            <div class="col-75">
+                <input id="Deportadas" type="checkbox" formControlName="Deportadas">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="TrabajadorHogar">Tranajadoras de hogar</label>
+            </div>
+            <div class="col-75">
+                <input id="TrabajadorHogar" type="checkbox" formControlName="TrabajadorHogar">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="DescripcionFisica">Descripción física</label>
+            </div>
+            <div class="col-75">
+                <textarea id="DescripcionFisica" rows="10" cols="50" formControlName="DescripcionFisica"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Necesidades">Necesidad de apoyo/atención por parte de autoridades:</label>
+            </div>
+            <div class="col-75">
+                <textarea id="Necesidades" rows="10" cols="50" formControlName="Necesidades"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="MensajeFamiliares">Mensaje a familiares</label>
+            </div>
+            <div class="col-75">
+                <textarea id="MensajeFamiliares" rows="10" cols="50" formControlName="MensajeFamiliares"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Imagen">Imagén de la persona</label>
+            </div>
+            <div class="col-75">
+                <input id="Imagen" type="file" formControlName="Imagen">
+            </div>
+        </div>
+
+        <h2>Observaciones</h2>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="SaludFisica">Salud física</label>
+            </div>
+            <div class="col-75">
+                <select name="SaludFisica" id="SaludFisica" formControlName="SaludFisica">
+                    <option value="Buena">Buena</option>
+                    <option value="Regular">Regular</option>
+                    <option value="Mala">Mala</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="SaludMental">Salud mental</label>
+            </div>
+            <div class="col-75">
+                <select name="SaludMental" id="SaludMental" formControlName="SaludMental">
+                    <option value="Buena">Buena</option>
+                    <option value="Regular">Regular</option>
+                    <option value="Mala">Mala</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Observaciones">Observaciones</label>
+            </div>
+            <div class="col-75">
+                <textarea id="Observaciones" rows="10" cols="50" formControlName="Observaciones"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Folio">Folio</label>
+            </div>
+            <div class="col-75">
+                <input id="Folio" type="text" formControlName="Folio">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Entrevistador">Entrevistador</label>
+            </div>
+            <div class="col-75">
+                <input id="Entrevistador" type="text" formControlName="Entrevistador">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Institucion">Institución</label>
+            </div>
+            <div class="col-75">
+                <select name="Institucion" id="institucion" formControlName="Institucion">
+                    <option value='CNB'>CNB</option>
+                    <option value='CLB'>CLB</option>
+                    <option value='Fiscalía'>Fiscalía</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Interacciones">Interacciones</label>
+            </div>
+            <div class="col-75">
+                <select name="Interacciones" id="Interacciones" formControlName="Interacciones">
+                    <option value="Lugar1">Lugar1</option>
+                    <option value="Lugar2">Lugar2</option>
+                    <option value="Lugar3">Lugar3</option>
+                </select>
+            </div>
+        </div>
+
+        <br>
+        
+        <div class="row">
+            <input type="submit" [disabled]="!formularioInteraccion.valid">
+        </div>
+    </form>
+</div>

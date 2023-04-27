@@ -1,0 +1,61 @@
+<app-menu></app-menu>
+
+<div class="contenido">
+    <h2>Modificar datos del entrevistador/a</h2>
+    <form [formGroup]="formularioEntrevistador" (ngSubmit)="modificar()">
+        <div class="row">
+            <div class="col-25">
+                <label for="Nombre">Nombre</label>
+            </div>
+            <div class="col-75">
+                <input id="Nombre" type="text" formControlName="Nombre">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="ApellidoPaterno">Apellido paterno</label>
+            </div>
+            <div class="col-75">
+                <input id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="ApellidoMaterno">Apellido materno</label>
+            </div>
+            <div class="col-75">
+                <input id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="Istitucion">Institución</label>
+            </div>
+            <div class="col-75">
+                <select name="Institucion" id="Institucion" formControlName="Institucion">
+                    <option value="CNB">CNB</option>
+                    <option value="CLB">CLB</option>
+                    <option value="Fiscalía">Fiscalía</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="LugarActual"> Lugar donde se encuentra actualemente</label>
+            </div>
+            <div class="col-75">
+                <input id="LugarActual" type="text" formControlName="LugarActual">
+            </div>
+        </div>
+
+        <div id="mapEntrevistador"></div>
+
+        <br>
+
+        <input type="submit" [disabled]="!formularioEntrevistador.valid">
+    </form>
+</div>

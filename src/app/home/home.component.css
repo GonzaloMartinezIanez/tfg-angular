@@ -1,0 +1,35 @@
+/* .nav_menu{
+    margin: 5%;
+    height: 70vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    
+}
+
+.button_menu{
+    width: 15%;
+    background-color: rgb(240, 255, 238);
+    border-radius: 30px;
+    font-size: large;
+}
+ */
+.nav_menu {
+    width: 90%;
+    height: 70vh;
+    margin: auto;
+    margin-top: 5%;
+
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+}
+
+.button_menu {
+    background-color: rgb(240, 255, 238);
+    border-radius: 20px;
+    font-size: large;
+
+    flex: 1 1 33%;
+    margin: 20px;
+}

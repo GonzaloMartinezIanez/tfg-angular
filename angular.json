@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": ["stream"],
             "outputPath": "dist/angular-tfg",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -94,5 +95,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "97acc054-a4d8-4a74-9718-efe2ccc9b09d"
   }
 }
