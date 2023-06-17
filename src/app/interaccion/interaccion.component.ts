@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EntrevistadorService } from '../entrevistador.service';
 import { GrupoService } from '../grupo.service';
 import * as L from "leaflet";
@@ -14,6 +14,7 @@ import { GlobalComponent } from '../global-component';
 export class InteraccionComponent implements OnInit {
   mapInteraccion;
   layer = new L.marker;
+  imagenSRC: string = "";
 
   markerIcon = {
     icon: L.icon({
@@ -26,9 +27,11 @@ export class InteraccionComponent implements OnInit {
     })
   };
 
+  posicionFormulario: any;
+
   formularioInteraccion = new FormGroup({
-    Nombre: new FormControl(''),
-    ApellidoPaterno: new FormControl(''),
+    Nombre: new FormControl('', Validators.required),
+    ApellidoPaterno: new FormControl('', Validators.required),
     ApellidoMaterno: new FormControl(''),
     NombreSocial: new FormControl(''),
     FechaNacimiento: new FormControl(''),
@@ -49,13 +52,13 @@ export class InteraccionComponent implements OnInit {
     DescripcionFisica: new FormControl(''),
     Necesidades: new FormControl(''),
     MensajeFamiliares: new FormControl(''),
-    Imagen: new FormControl(''),
+    Imagen: new FormControl(null),
     SaludFisica: new FormControl(''),
     SaludMental: new FormControl(''),
     Observaciones: new FormControl(''),
-    Folio: new FormControl(''),
-    Entrevistador: new FormControl(''),
-    Institucion: new FormControl(''),
+    Folio: new FormControl('', Validators.required),
+    Entrevistador: new FormControl('', Validators.required),
+    Institucion: new FormControl('', Validators.required),
     Interacciones: new FormControl(''),
   })
 
@@ -65,18 +68,26 @@ export class InteraccionComponent implements OnInit {
     private servicioGrupo: GrupoService, private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.posicionFormulario = 0;
     this.getGrupos();
     this.getEntrevistadorId("1");
-
-    this.crearMapa();
   }
 
   crearMapa() {
-    this.mapInteraccion = L.map("mapInteraccion").setView([37.16788748437835, -3.5993957519531254], 13);
+    this.mapInteraccion = L.map("mapInteraccion", { scrollWheelZoom: false }).setView([37.16788748437835, -3.5993957519531254], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.mapInteraccion);
+
+    if (this.formularioInteraccion.value.LugarActual != undefined) {
+      const coordenadas = this.formularioInteraccion.value.LugarActual.split(', ');
+
+      if (Number(coordenadas[0]) && Number(coordenadas[1])) {
+        this.mapInteraccion.setView([coordenadas[0], coordenadas[1]], 13);
+        this.layer = L.marker([coordenadas[0], coordenadas[1]], this.markerIcon).addTo(this.mapInteraccion);
+      }
+    }
 
     this.mapInteraccion.on("click", e => {
       //Marcar las coordenadas en el formulario
@@ -90,17 +101,32 @@ export class InteraccionComponent implements OnInit {
     });
   }
 
+  onFileChange(event) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imagenSRC = reader.result as string;
+
+        this.formularioInteraccion.patchValue({
+          Imagen: reader.result
+        });
+      };
+    }
+  }
+
   getGrupos() {
     this.servicioGrupo.getGruposCorto()
       .subscribe(grupos => {
         this.grupos = grupos;
         this.formularioInteraccion.patchValue({
-          IdGrupo : "Sin grupo"
+          IdGrupo: "Sin grupo"
         })
       });
   }
-
-
 
   getEntrevistadorId(id: string): void {
     this.servicioEntrevistador.getEntrevistadorId(id)
@@ -111,20 +137,38 @@ export class InteraccionComponent implements OnInit {
           LugarActual: entrevistador[0].LugarActual,
         });
 
-        const coordenadas = entrevistador[0].LugarActual.split(', ');
+        /* const coordenadas = entrevistador[0].LugarActual.split(', ');
 
         if (Number(coordenadas[0]) && Number(coordenadas[1])) {
           this.mapInteraccion.setView([coordenadas[0], coordenadas[1]], 13);
           this.layer = L.marker([coordenadas[0], coordenadas[1]], this.markerIcon).addTo(this.mapInteraccion);
-        }
+        } */
       });
   }
 
   enviar(): void {
-    this.http.post(GlobalComponent.APIurl + "/interaccion", this.formularioInteraccion.value)
-      .subscribe(res => {
-        console.log(res)
-      })
+    //.log(this.formularioInteraccion.value)
+     this.http.post(GlobalComponent.APIurl + "/interaccion", this.formularioInteraccion.value)
+       .subscribe(res => {
+         console.log(res)
+         if(res['message'] == "Interacción añadida"){
+          alert("Interacción añadida")
+         }
+       })
   }
 
+  async cambiarPasoFormulario(siguientePaso) {
+    this.posicionFormulario = siguientePaso;
+    // Esta espera es necesaria ya que a la hora de crear el mapa, no le da tiempo al html a mostrar 
+    // el div con "mapInteraccion" y en la función crearMapa no la encuentra y produce un error
+    await this.delay(1);
+
+    if (siguientePaso == 1) {
+      this.crearMapa()
+    }
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 }

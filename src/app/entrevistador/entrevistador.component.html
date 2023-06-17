@@ -5,37 +5,37 @@
     <form [formGroup]="formularioEntrevistador" (ngSubmit)="modificar()">
         <div class="row">
             <div class="col-25">
-                <label for="Nombre">Nombre</label>
+                <label class="label_form" for="Nombre">Nombre</label>
             </div>
             <div class="col-75">
-                <input id="Nombre" type="text" formControlName="Nombre">
+                <input class="input_form" id="Nombre" type="text" formControlName="Nombre">
             </div>
         </div>
 
         <div class="row">
             <div class="col-25">
-                <label for="ApellidoPaterno">Apellido paterno</label>
+                <label class="label_form" for="ApellidoPaterno">Apellido paterno</label>
             </div>
             <div class="col-75">
-                <input id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
+                <input class="input_form" id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
             </div>
         </div>
 
         <div class="row">
             <div class="col-25">
-                <label for="ApellidoMaterno">Apellido materno</label>
+                <label class="label_form" for="ApellidoMaterno">Apellido materno</label>
             </div>
             <div class="col-75">
-                <input id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
+                <input class="input_form" id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
             </div>
         </div>
 
         <div class="row">
             <div class="col-25">
-                <label for="Istitucion">Institución</label>
+                <label class="label_form" for="Istitucion">Institución</label>
             </div>
             <div class="col-75">
-                <select name="Institucion" id="Institucion" formControlName="Institucion">
+                <select class="select_form" name="Institucion" id="Institucion" formControlName="Institucion">
                     <option value="CNB">CNB</option>
                     <option value="CLB">CLB</option>
                     <option value="Fiscalía">Fiscalía</option>
@@ -45,10 +45,10 @@
 
         <div class="row">
             <div class="col-25">
-                <label for="LugarActual"> Lugar donde se encuentra actualemente</label>
+                <label class="label_form" for="LugarActual"> Lugar donde se encuentra actualemente</label>
             </div>
             <div class="col-75">
-                <input id="LugarActual" type="text" formControlName="LugarActual">
+                <input class="input_form" id="LugarActual" type="text" formControlName="LugarActual">
             </div>
         </div>
 
@@ -56,6 +56,6 @@
 
         <br>
 
-        <input type="submit" [disabled]="!formularioEntrevistador.valid">
+        <input class="input_form" type="submit" [disabled]="!formularioEntrevistador.valid">
     </form>
 </div>

@@ -18,7 +18,7 @@ export class GrupoComponent implements OnInit {
     NombreEncargado: new FormControl(''),
     LugarCreacion: new FormControl(''),
   })
-  
+
   constructor(private http: HttpClient) { }
   mapGrupo;
   layer = new L.marker;
@@ -57,6 +57,9 @@ export class GrupoComponent implements OnInit {
     this.http.post(GlobalComponent.APIurl + "/grupo", this.formularioGrupo.value)
       .subscribe(res => {
         console.log(res)
+        if (res['message'] == "Grupo añadido") {
+          alert("Grupo añadido")
+        }
       })
   }
 }

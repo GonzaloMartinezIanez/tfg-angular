@@ -1,3 +1,1246 @@
 <app-menu></app-menu>
 
-<div id="map"></div>
+<div class="contenido">
+    <h1>Formulario de personas en interacción</h1>
+
+    <div class="boton_area_form">
+        <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 0}"
+            (click)="cambiarPasoFormulario(0)">Aviso de privacidad</button>
+        <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 1}"
+            (click)="cambiarPasoFormulario(1)">Datos de la persona</button>
+        <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 2}"
+            (click)="cambiarPasoFormulario(2)">Relato de la desaparición</button>
+        <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 3}"
+            (click)="cambiarPasoFormulario(3)">Descripción física</button>
+        <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 4}"
+            (click)="cambiarPasoFormulario(4)">Datos de quien busca</button>
+    </div>
+
+    <form [formGroup]="formularioDesaparecidos" (ngSubmit)="enviar()" enctype="multipart/form-data">
+        <div [ngClass]="{ocultar: posicionFormulario != 0}">
+            <h2>Aviso de privacidad</h2>
+            <p>
+                Agradecemos la confianza que ha puesto en la Comisión Nacional de Búsqueda (CNB) del Gobierno Mexicano.
+                Nosotros estamos encargados de buscar a las personas desaparecidas en México, incluidas a las
+                extranjeras. En cada estado del país existe una Comisión Local de Búsqueda (CLB), las cuales tienen el
+                mismo mandato.
+            </p>
+
+            <br>
+            <p>
+                Estamos comprometidos con la protección de los datos personales que nos comparta, la información que nos
+                dé será utilizada únicamente para la búsqueda y, en caso de localización, para el apoyo humanitario y
+                conforme a derecho de la persona migrante. NO será usada para detener a las personas migrantes ni para
+                facilitar su deportación.
+            </p>
+
+            <h2>Datos de la entrevista</h2>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Folio">Folio/ID del registro global de migrantes *</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Folio" type="text" formControlName="Folio">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="FolioInstitucion">Número de expediente/folio interno de la
+                        institución</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="FolioInstitucion" type="text" formControlName="FolioInstitucion">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="FolioRNPDNO">Folio Único de Búsqueda del RNPDNO</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="FolioRNPDNO" type="text" formControlName="FolioRNPDNO">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="FechaEntrevista">Fecha de la entrevista</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="FechaEntrevista" type="date" formControlName="FechaEntrevista">
+                </div>
+            </div>
+        </div>
+
+        <div [ngClass]="{ocultar: posicionFormulario != 1}">
+            <h2>Datos de la persona migrante desaparecida</h2>
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Nombre">Nombre *</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Nombre" type="text" formControlName="Nombre">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ApellidoPaterno">Apellido paterno *</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ApellidoMaterno">Apellido materno *</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="NombreSocial">Nombre social</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="NombreSocial" type="text" formControlName="NombreSocial">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Alias">Alais, apodo y/o nombre false</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Alias" type="text" formControlName="Alias">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="NacionalidadAlias">Nacionalidad del nombre falso</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="NacionalidadAlias" type="text" formControlName="NacionalidadAlias">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Sexo">Sexo asignado al nacer</label>
+                </div>
+                <div class="col-75">
+                    <select class="select_form" name="Sexo" id="Sexo" formControlName="Sexo">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option value='Hombre'>Hombre</option>
+                        <option value='Mujer'>Mujer</option>
+                        <option value='Intersex'>Intersex</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="FechaNacimiento">Fecha de nacimiento *</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="FechaNacimiento" type="date" formControlName="FechaNacimiento">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Nacionalidad">Nacionalidad *</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Nacionalidad" type="text" formControlName="Nacionalidad">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="EstadoCivil">Estado civil</label>
+                </div>
+                <div class="col-75">
+                    <select class="select_form" name="EstadoCivil" id="EstadoCivil" formControlName="EstadoCivil">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option value='Casado'>Casado</option>
+                        <option value='Solter'>Soltero</option>
+                        <option value='UnionLibre'>Unión libre o acompañado</option>
+                        <option value='Viudo'>Viudo</option>
+                        <option value='Divorciado'>Divorciado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ViajaConIdentificacion">Viaja con identificación</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="ViajaConIdentificacion"
+                            id="ViajaConIdentificacionSi" value="Sí" (change)="onChange($event)">
+                        <label for="ViajaConIdentificacionSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="ViajaConIdentificacion"
+                            id="ViajaConIdentificacionNo" value="No" (change)="onChange($event)">
+                        <label for="ViajaConIdentificacionNo">No</label>
+                    </div>
+                </div>
+
+                <div class="col-65" *ngIf="valoresRadioButton.ViajaConIdentificacion == 'Sí'">
+                    <input class="input_form" id="ViajaConIdentificacion" type="text"
+                        formControlName="ViajaConIdentificacion" placeholder="Número">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="UltimoDomicilio">Dirección de último domicilio fijo
+                        (estado/departamento, colonia, localidad, etc.)</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="UltimoDomicilio" type="text" formControlName="UltimoDomicilio">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="IdiomaMaterno">Idioma materno</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="IdiomaMaterno" type="text" formControlName="IdiomaMaterno">
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="HablaEspañol">¿Habla español con fluidez?</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="HablaEspañol" type="checkbox" formControlName="HablaEspañol">
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="HablaEspañol">¿Habla español con fluidez?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="HablaEspañol" id="HablaEspañolSi" value="Sí"
+                            (change)="onChange($event)">
+                        <label for="HablaEspañolNo">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="HablaEspañol" id="HablaEspañolNo" value="No"
+                            (change)="onChange($event)">
+                        <label for="HablaEspañolNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="OtrosIdiomas">¿Habla algún idioma diferente al español?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="OtrosIdiomas" id="OtrosIdiomasSi" value="Sí"
+                            (change)="onChange($event)">
+                        <label class="label_form" for="OtrosIdiomasSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="OtrosIdiomas" id="OtrosIdiomasNo" value="No"
+                            (change)="onChange($event)">
+                        <label class="label_form" for="OtrosIdiomasNo">No</label>
+                    </div>
+                </div>
+
+                <div class="col-65" *ngIf="valoresRadioButton.OtrosIdiomas == 'Sí'">
+                    <input class="input_form" id="OtrosIdiomas" type="text" formControlName="OtrosIdiomas"
+                        placeholder="¿Cuál?">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="PuebloOriginario">¿Pertenece a un pueblo originario/indígena?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="PuebloOriginario" id="PuebloOriginarioSi"
+                            value="Sí" (change)="onChange($event)">
+                        <label for="PuebloOriginarioSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="PuebloOriginario" id="PuebloOriginarioNo"
+                            value="No" (change)="onChange($event)">
+                        <label for="PuebloOriginarioNo">No</label>
+                    </div>
+                </div>
+
+                <div class="col-65" *ngIf="valoresRadioButton.PuebloOriginario == 'Sí'">
+                    <input class="input_form" id="PuebloOriginario" type="text" formControlName="PuebloOriginario"
+                        placeholder="¿Cuál?">
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Afrodescendiente">¿Se considera afrodescendiente?</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Afrodescendiente" type="checkbox" formControlName="Afrodescendiente">
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Afrodescendiente">¿Se considera afrodescendiente?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="Afrodescendiente" id="AfrodescendienteSi"
+                            value="Sí" (change)="onChange($event)">
+                        <label for="AfrodescendienteSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="Afrodescendiente" id="AfrodescendienteNo"
+                            value="No" (change)="onChange($event)">
+                        <label for="AfrodescendienteNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="PuebloOriginario">¿Sus padres o sus abuelos hablan un idioma indígena
+                        o diferente al español?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="IdiomaPadresAbuelos" id="IdiomaPadresAbuelosSi"
+                            value="Sí" (change)="onChange($event)">
+                        <label for="IdiomaPadresAbuelosSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="IdiomaPadresAbuelos" id="IdiomaPadresAbuelosNo"
+                            value="No" (change)="onChange($event)">
+                        <label for="IdiomaPadresAbuelosNo">No</label>
+                    </div>
+                </div>
+
+                <div class="col-65" *ngIf="valoresRadioButton.IdiomaPadresAbuelos == 'Sí'">
+                    <input class="input_form" id="IdiomaPadresAbuelos" type="text" formControlName="IdiomaPadresAbuelos"
+                        placeholder="¿Cuál?">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="SexoIdentifica">Sexo/género con el que la persona migrante se
+                        identifica</label>
+                </div>
+                <div class="col-75">
+                    <select class="select_form" name="SexoIdentifica" id="SexoIdentifica"
+                        formControlName="SexoIdentifica">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option value='Hombre'>Hombre</option>
+                        <option value='Mujer'>Mujer</option>
+                        <option value='Mujer trans'>Mujer trans</option>
+                        <option value='Hombre trans'>Hombre trans</option>
+                        <option value='Sin genero'>Sin genero</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="OrientacionSexual">¿Sus padres o sus abuelos hablan un idioma
+                        indígena o diferente al español?</label>
+                </div>
+
+                <div class="col-20">
+                    <div>
+                        <input class="input_form" type="radio" name="OrientacionSexual"
+                            id="OrientacionSexualHeterosexual" value="Heterosexual">
+                        <label for="OrientacionSexualHeterosexual">Heterosexual</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="OrientacionSexual" id="OrientacionSexualHomosexual"
+                            value="Homosexual" (change)="onChange($event)">
+                        <label for="OrientacionSexualHomosexual">Homosexual</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="OrientacionSexual" id="OrientacionSexualBisexual"
+                            value="Bisexual" (change)="onChange($event)">
+                        <label for="OrientacionSexualBisexual">Bisexual</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="OrientacionSexual" id="OrientacionSexual"
+                            value="Otro" (change)="onChange($event)">
+                        <label for="OrientacionSexual">Otro</label>
+                    </div>
+                </div>
+
+                <div class="col-55" *ngIf="valoresRadioButton.OrientacionSexual == 'Otro'">
+                    <input class="input_form" id="OrientacionSexual" type="text" formControlName="OrientacionSexual"
+                        placeholder="¿Cuál?">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Profesion">Profesión u oficio</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Profesion" type="text" formControlName="Profesion">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="EdadMigracion">¿A qué edad migró?</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="EdadMigracion" type="text" formControlName="EdadMigracion">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="AñoComienzoMigracion">¿En qué año salió de su lugar de
+                        origen?</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="AñoComienzoMigracion" type="text"
+                        formControlName="AñoComienzoMigracion">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="MotivoMigracion">¿Por qué decidió migrar?</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="MotivoMigracion" rows="3" cols="50"
+                        formControlName="MotivoMigracion"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="NumeroMigraciones">¿Cuántas veces ha migrado?</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="NumeroMigraciones" type="text" formControlName="NumeroMigraciones">
+                </div>
+            </div>
+        </div>
+
+        <div [ngClass]="{ocultar: posicionFormulario != 2}">
+            <h2>Sobre la desaparición</h2>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="RelatoDesaparicion">Lugar y circunstancias del último contacto
+                        (dónde, cuándo, con quién, qué sucedió) y si comunicó sobre algún riesgo o amenaza</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="RelatoDesaparicion" rows="10" cols="50"
+                        formControlName="RelatoDesaparicion"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="PaisPerdidaContacto">¿País donde sucedió la pérdida de
+                        contacto?</label>
+                </div>
+
+                <div class="col-20">
+                    <div>
+                        <input class="input_form" type="radio" name="PaisPerdidaContacto" id="PaisPerdidaContactoMexico"
+                            value="Mexico" (change)="onChange($event)">
+                        <label for="PaisPerdidaContactoMexico">México</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="PaisPerdidaContacto" id="PaisPerdidaContactoEEUU"
+                            value="EEUU" (change)="onChange($event)">
+                        <label for="PaisPerdidaContactoEEUU">Estados Unidos</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="PaisPerdidaContacto" id="PaisPerdidaContactoOtro"
+                            value="Otro" (change)="onChange($event)">
+                        <label for="PaisPerdidaContacto">Otro</label>
+                    </div>
+                </div>
+
+                <div class="col-55" *ngIf="valoresRadioButton.PaisPerdidaContacto == 'Otro'">
+                    <input class="input_form" id="PaisPerdidaContacto" type="text" formControlName="PaisPerdidaContacto"
+                        placeholder="¿Cuál?">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="MunicipioPerdidaContacto">¿Estado, municipio y toda la información
+                        sobre el lugar donde sucedió la pérdida de contacto?</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="MunicipioPerdidaContacto" rows="10" cols="50"
+                        formControlName="MunicipioPerdidaContacto"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="LugarCrucePretendia">Punto por donde pretendía cruzar la
+                        frontera</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="LugarCrucePretendia" type="text"
+                        formControlName="LugarCrucePretendia">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="LugarCrucePretendia">Punto fronterizo por donde pretendía cruzar la
+                        frontera</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="LugarCrucePretendia" type="text"
+                        formControlName="LugarCrucePretendia">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="LugarCruceConfirmado">Punto fronterizo que se sabe que ya había
+                        cruzado</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="LugarCruceConfirmado" type="text"
+                        formControlName="LugarCruceConfirmado">
+                </div>
+            </div>
+
+            <h3>Faltan catálogos</h3>
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="PaisObjetivo">País a donde se dirigía</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="PaisObjetivo" type="text" formControlName="PaisObjetivo">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="EstadoObjetivo">Estado a donde se dirigía</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="EstadoObjetivo" type="text" formControlName="EstadoObjetivo">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="MunicipioObjetivo">Localidad/municipio/condado a donde se
+                        dirigía</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="MunicipioObjetivo" type="text" formControlName="MunicipioObjetivo">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="FechaUltimaComunicacion">Fecha de última comunicación</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="FechaUltimaComunicacion" type="date"
+                        formControlName="FechaUltimaComunicacion">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="PersonaUltimaComunicacion">¿Quién habló por última vez con la persona
+                        migrante?</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="PersonaUltimaComunicacion" type="text"
+                        formControlName="PersonaUltimaComunicacion">
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="DeportadaAnteriormente">¿La persona migrante ha sido deportada por
+                        autoridades migratorias anteriormente?</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="DeportadaAnteriormente" type="checkbox"
+                        formControlName="DeportadaAnteriormente">
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="DeportadaAnteriormente">¿La persona migrante ha sido deportada por
+                        autoridades migratorias anteriormente?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="DeportadaAnteriormente"
+                            id="DeportadaAnteriormenteSi" value="Sí" (change)="onChange($event)">
+                        <label for="AfrodescendienteSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="DeportadaAnteriormente"
+                            id="DeportadaAnteriormenteNo" value="No" (change)="onChange($event)">
+                        <label for="DeportadaAnteriormenteNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="valoresRadioButton.DeportadaAnteriormente == 'Sí'">
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="PaisDeportacion">¿Desde qué país o países ha sido
+                            deportada?</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="PaisDeportacion" type="text" formControlName="PaisDeportacion">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="FechaUltimaDeportacion">Fecha de última deportación</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="FechaUltimaDeportacion" type="date"
+                            formControlName="FechaUltimaDeportacion">
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Encarcelado">Ha estado en la cárcel en México o Estados
+                        Unidos</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Encarcelado" type="checkbox" formControlName="Encarcelado">
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Encarcelado">Ha estado en la cárcel en México o Estados
+                        Unidos</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="Encarcelado" id="EncarceladoSi" value="Sí"
+                            (change)="onChange($event)">
+                        <label for="EncarceladoSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="Encarcelado" id="EncarceladoNo" value="No"
+                            (change)="onChange($event)">
+                        <label for="EncarceladoNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="valoresRadioButton.Encarcelado == 'Sí'">
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="UbicacionCarcel">Ubicación de la cárcel</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="UbicacionCarcel" type="text" formControlName="UbicacionCarcel">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="FechaDetencion">¿En qué fecha fue la detención?</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="FechaDetencion" type="date" formControlName="FechaDetencion">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="IdentificacionDetencionEEUU">Si estuvo en detención en Estados
+                            Unidos recibió un número de identificación (A# / US Marchal #)</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="IdentificacionDetencionEEUU" type="text"
+                            formControlName="IdentificacionDetencionEEUU">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="PapelesFalsos">¿Usaba papeles falsos?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="PapelesFalsos" id="PapelesFalsosSi" value="Sí"
+                            (change)="onChange($event)">
+                        <label for="PapelesFalsosSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="PapelesFalsos" id="PapelesFalsosNo" value="No"
+                            (change)="onChange($event)">
+                        <label for="PapelesFalsosNo">No</label>
+                    </div>
+                </div>
+
+                <div class="col-65" *ngIf="valoresRadioButton.PapelesFalsos == 'Sí'">
+                    <input class="input_form" id="PapelesFalsos" type="text" formControlName="PapelesFalsos"
+                        placeholder="¿Cuál?">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="AcompañantesViaje">¿Con quién viajaba?</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="AcompañantesViaje" rows="5" cols="50"
+                        formControlName="AcompañantesViaje"
+                        placeholder="(Nombres, alias,  nacionalidades, número de teléfono de personas compañeras de viaje, incluye coyotes, polleros o guías. Importante especificar si viajaba con menores)"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ConocidosEnExtranjero">¿Tiene familiares o amistades en otros países?
+                        ¿Dónde y con quién se comunicaría?</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="ConocidosEnExtranjero" rows="5" cols="50"
+                        formControlName="ConocidosEnExtranjero"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div [ngClass]="{ocultar: posicionFormulario != 3}">
+            <h2>Descripción física de la persona migrante desaparecida</h2>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Estatura">Estatura</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Estatura" type="text" formControlName="Estatura">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Peso">Peso</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Peso" type="text" formControlName="Peso">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Complexion">Complexion</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Complexion" type="text" formControlName="Complexion">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ColorPiel">Color de piel</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="ColorPiel" type="text" formControlName="ColorPiel">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="VelloFacial">Barba o bigote</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="VelloFacial" id="VelloFacialSi" value="Sí"
+                            (change)="onChange($event)">
+                        <label for="VelloFacialSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="VelloFacial" id="VelloFacialNo" value="No"
+                            (change)="onChange($event)">
+                        <label for="VelloFacialNo">No</label>
+                    </div>
+                </div>
+
+                <div class="col-65" *ngIf="valoresRadioButton.VelloFacial == 'Sí'">
+                    <input class="input_form" id="VelloFacial" type="text" formControlName="VelloFacial"
+                        placeholder="Color y tamaño">
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Lentes">¿Usa lentes?</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Lentes" type="checkbox" formControlName="Lentes">
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Lentes">¿Usa lentes?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="Lentes" id="LentesSi" value="Sí"
+                            (change)="onChange($event)">
+                        <label for="LentesSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="Lentes" id="LentesNo" value="No"
+                            (change)="onChange($event)">
+                        <label for="LentesNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Cabello">Cabello</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Cabello" type="text" formControlName="Cabello"
+                        placeholder="(color, tamaño, tipo, cantidad, ¿cómo lo lleva usualmente: atado, suelto, teñido)">
+                </div>
+            </div>
+
+            <div *ngIf="formularioDesaparecidos.value.Sexo == 'Mujer'">
+                <!-- <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Embarazada">¿Estaba embarazada?</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="Embarazada" type="checkbox" formControlName="Embarazada">
+                    </div>
+                </div> -->
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Embarazada">¿Estaba embarazada?</label>
+                    </div>
+    
+                    <div class="col-10">
+                        <div>
+                            <input class="input_form" type="radio" name="Embarazada" id="EmbarazadaSi" value="Sí"
+                                (change)="onChange($event)">
+                            <label for="EmbarazadaSi">Sí</label>
+                        </div>
+    
+                        <div>
+                            <input class="input_form" type="radio" name="Embarazada" id="EmbarazadaNo" value="No"
+                                (change)="onChange($event)">
+                            <label for="EmbarazadaNo">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="valoresRadioButton.Embarazada == 'Sí'">
+                    <div class="row">
+                        <div class="col-25">
+                            <label class="label_form" for="MesesEmbarazo">¿De cuántos meses?</label>
+                        </div>
+                        <div class="col-75">
+                            <input class="input_form" id="MesesEmbarazo" type="text" formControlName="MesesEmbarazo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="NumeroCelular">Número de celular</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="NumeroCelular" type="text" formControlName="NumeroCelular">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="SeñalesParticulares">Señas particulares</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="SeñalesParticulares" rows="5" cols="50"
+                        formControlName="SeñalesParticulares"
+                        placeholder="lunares, tatuajes, quemaduras, manchas, cicatrices, perforaciones, señalar tamaño y ubicación. También incluir modificaciones corporales como prótesis, siliconas inyectables, implantes, cirugías corporales"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Lesiones">Lesiones o fracturas que haya tenido</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="Lesiones" rows="5" cols="50"
+                        formControlName="Lesiones"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="TipoDientes">Tipo de dientes</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="TipoDientes" rows="5" cols="50" formControlName="TipoDientes"
+                        placeholder="tiene prótesis, coronas, amalgamas, ausencias, separados, manchados y si están arriba, abajo del lado izquierdo o derecho"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="EstadoSalud">Estado de salud</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="EstadoSalud" rows="5" cols="50" formControlName="EstadoSalud"
+                        placeholder="enfermedades crónicas, dolores en el cuerpo, enfermedades mentales, algún tipo de discapacidad, si toma o necesita tomar medicamentos"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="DescripcionPrendas">Descripción de prendas</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="DescripcionPrendas" rows="5" cols="50"
+                        formControlName="DescripcionPrendas"
+                        placeholder="ropa, zapatos, joyas, sombreros, celulares, bolsas u otras cosas que llevabala persona desaparecida"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="RedesSociales">Redes sociales</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="RedesSociales" rows="2" cols="50"
+                        formControlName="RedesSociales" placeholder="Facebook, Instagram, Twitter, etc"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Imagen">Imagén de la persona</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Imagen" type="file" accept='image/*' formControlName="Imagen"
+                        (change)="onFileChange($event)">
+                </div>
+                <img [src]="imagenSRC" *ngIf="imagenSRC" style="width: 50%; align-items: center;">
+            </div>
+        </div>
+
+        <div [ngClass]="{ocultar: posicionFormulario != 4}">
+            <h2>Acciones de búsqueda por parte de la familia</h2>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="HayDenuncia">¿Han puesto una denuncia?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="HayDenuncia" id="HayDenunciaSi" value="Sí"
+                            (change)="onChange($event)">
+                        <label for="HayDenunciaSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="HayDenuncia" id="HayDenunciaNo" value="No"
+                            (change)="onChange($event)">
+                        <label for="HayDenunciaNo">No</label>
+                    </div>
+                </div>
+
+                <div class="col-65" *ngIf="valoresRadioButton.HayDenuncia == 'Sí'">
+                    <input class="input_form" id="HayDenuncia" type="text" formControlName="HayDenuncia"
+                        placeholder="¿Ante qué autoridades y de qué país?">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="HayReporte">¿Han puesto reporte?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="HayReporte" id="HayReporteSi" value="Sí"
+                            (change)="onChange($event)">
+                        <label for="HayReporteSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="HayReporte" id="HayReporteNo" value="No"
+                            (change)="onChange($event)">
+                        <label for="HayReporteNo">No</label>
+                    </div>
+                </div>
+
+                <div class="col-65" *ngIf="valoresRadioButton.HayReporte == 'Sí'">
+                    <input class="input_form" id="HayReporte" type="text" formControlName="HayReporte"
+                        placeholder="¿Ante qué autoridades y de qué país?">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="AvancesDenuncia">¿Ha recibido avances de la denuncia?</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="AvancesDenuncia" id="AvancesDenunciaSi" value="Sí"
+                            (change)="onChange($event)">
+                        <label for="AvancesDenunciaSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="AvancesDenuncia" id="AvancesDenunciaNo" value="No"
+                            (change)="onChange($event)">
+                        <label for="AvancesDenunciaNo">No</label>
+                    </div>
+                </div>
+
+                <div class="col-65" *ngIf="valoresRadioButton.AvancesDenuncia == 'Sí'">
+                    <input class="input_form" id="HayReporte" type="text" formControlName="AvancesDenuncia"
+                        placeholder="¿Cuáles?">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="LugaresBusqueda">¿Lugares donde usted o alguna otra persona ha
+                        realizado búsquedas?</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="LugaresBusqueda" type="text" formControlName="LugaresBusqueda">
+                </div>
+            </div>
+
+            <h2>Datos de quien busca a la persona en interacción desaparecida</h2>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="NombreQuienBusca">Nombre</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="NombreQuienBusca" type="text" formControlName="NombreQuienBusca">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ApellidoPaternoQuienBusca">Apellido paterno</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="ApellidoPaternoQuienBusca" type="text"
+                        formControlName="ApellidoPaternoQuienBusca">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ApellidoMaternoQuienBusca">Apellido materno</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="ApellidoMaternoQuienBusca" type="text"
+                        formControlName="ApellidoMaternoQuienBusca">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ParentescoQuienBusca">Parentesco o relación con la persona
+                        desaparecida</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="ParentescoQuienBusca" type="text"
+                        formControlName="ParentescoQuienBusca">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="DireccionQuienBusca">Dirección</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="DireccionQuienBusca" type="text"
+                        formControlName="DireccionQuienBusca">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="TelefonoQuienBusca">Teléfono</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="TelefonoQuienBusca" type="text" formControlName="TelefonoQuienBusca">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="CorreoElectronicoQuienBusca">Correo electrónico</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="CorreoElectronicoQuienBusca" type="text"
+                        formControlName="CorreoElectronicoQuienBusca">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="MensajeQuienBusca">En caso de encontrarle, ¿tiene algún mensaje para
+                        la persona desaparecida?</label>
+                </div>
+                <div class="col-75">
+                    <textarea class="textarea_form" id="MensajeQuienBusca" rows="2" cols="50"
+                        formControlName="MensajeQuienBusca"></textarea>
+                </div>
+            </div>
+
+            <h2>Uso de la información</h2>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="InformacionUsadaPara">¿Acepta que la información sea usada para
+                        denuncia o búsqueda? *</label>
+                </div>
+                <div class="col-75">
+                    <select class="select_form" name="InformacionUsadaPara" id="InformacionUsadaPara"
+                        formControlName="InformacionUsadaPara">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option value='Búsqueda'>Búsqueda</option>
+                        <option value='Denuncia'>Denuncia</option>
+                        <option value='Ambas'>Ambas</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="AvancesDenuncia">¿Acepta que la información se haga pública?
+                        *</label>
+                </div>
+
+                <div class="col-10">
+                    <div>
+                        <input class="input_form" type="radio" name="InformacionPublica" id="InformacionPublicaSi"
+                            value="Sí" (change)="onChange($event)">
+                        <label for="InformacionPublicaSi">Sí</label>
+                    </div>
+
+                    <div>
+                        <input class="input_form" type="radio" name="InformacionPublica" id="InformacionPublicaNo"
+                            value="No" (change)="onChange($event)">
+                        <label for="InformacionPublicaNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Datos del entrevistador</h2>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Entrevistador">Entrevistador</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Entrevistador" type="text" formControlName="Entrevistador">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Institucion">Institución *</label>
+                </div>
+                <div class="col-75">
+                    <select class="select_form" name="Institucion" id="institucion" formControlName="Institucion">
+                        <option value='CNB'>CNB</option>
+                        <option value='CLB'>CLB</option>
+                        <option value='Fiscalía'>Fiscalía</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Cargo">Cargo</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Cargo" type="text" formControlName="Cargo">
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <input class="input_form" type="submit" [disabled]="!formularioDesaparecidos.valid">
+        </div>
+    </form>
+</div>

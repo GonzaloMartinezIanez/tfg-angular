@@ -5,37 +5,37 @@
     <form [formGroup]="formularioGrupo" (ngSubmit)="(crearGrupo())">
         <div class="row">
             <div class="col-25">
-                <label for="NombreGrupo">Nombre del grupo</label>
+                <label class="label_form" for="NombreGrupo">Nombre del grupo</label>
             </div>
             <div class="col-75">
-                <input id="NombreGrupo" type="text" formControlName="NombreGrupo">
+                <input class="input_form" id="NombreGrupo" type="text" formControlName="NombreGrupo">
             </div>
         </div>
 
         <div class="row">
             <div class="col-25">
-                <label for="FechaCreacion">Fecha de creación</label>
+                <label class="label_form" for="FechaCreacion">Fecha de creación</label>
             </div>
             <div class="col-75">
-                <input id="FechaCreacion" type="date" formControlName="FechaCreacion">
+                <input class="input_form" id="FechaCreacion" type="date" formControlName="FechaCreacion">
             </div>
         </div>
 
         <div class="row">
             <div class="col-25">
-                <label for="NombreEncargado">Nombre del encargado del grupo</label>
+                <label class="label_form" for="NombreEncargado">Nombre del encargado del grupo</label>
             </div>
             <div class="col-75">
-                <input id="NombreEncargado" type="text" formControlName="NombreEncargado">
+                <input class="input_form" id="NombreEncargado" type="text" formControlName="NombreEncargado">
             </div>
         </div>
 
         <div class="row">
             <div class="col-25">
-                <label for="LugarCreacion"> Lugar de creación</label>
+                <label class="label_form" for="LugarCreacion"> Lugar de creación</label>
             </div>
             <div class="col-75">
-                <input id="LugarCreacion" type="text" formControlName="LugarCreacion">
+                <input class="input_form" id="LugarCreacion" type="text" formControlName="LugarCreacion">
             </div>
         </div>
 
@@ -46,7 +46,7 @@
         <br>
 
         <div class="row">
-            <input type="submit" [disabled]="!formularioGrupo.valid">
+            <input class="input_form"type="submit" [disabled]="!formularioGrupo.valid">
         </div>
     </form>
 </div>

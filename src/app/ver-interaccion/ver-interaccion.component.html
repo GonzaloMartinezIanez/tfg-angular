@@ -4,10 +4,7 @@
     <h2>Datos de personas en estado de interacción</h2>
 
     <form [formGroup]="formularioVerInteraccion" (ngSubmit)="(busqueda())">
-
-        <input type="text" id="valor" formControlName="valor" placeholder="Escribe aquí para buscar">
-
-        <select name="campo" id="campo" formControlName="campo" >
+        <select class="input_ver" name="campo" id="campo" formControlName="campo" >
             <option value="" disabled selected hidden>Selecciona un campo para buscar</option>
             <option value="Nombre">Nombre</option>
             <option value="ApellidoPaterno">Apellido paterno</option>
@@ -31,9 +28,14 @@
             <option value="SaludMental">Salud mental</option>
             <option value="Folio">Folio</option>          
         </select>
+
+        <input class="input_ver" type="text" id="valor" formControlName="valor" placeholder="Escribe aquí para buscar">
         
-        <input type="submit" [disabled]="!formularioVerInteraccion.valid" value="Buscar">
+        <input type="submit" [disabled]="!formularioVerInteraccion.valid" value="Añadir filtro">
     </form>
+
+    <br>
+    <button (click)="clear()">Limpiar búsquedas</button>
     
     <br>
     <br>
