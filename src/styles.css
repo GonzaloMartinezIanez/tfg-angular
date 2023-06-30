@@ -11,24 +11,48 @@ body {
     margin-bottom: 100px;
 }
 
+.cabecera {
+    /* position: sticky;
+    top: 50px;
+    overflow: hidden; */
+}
+
+
 .ocultar {
     display: none;
+}
+
+.hide{
+    display: hidden;
 }
 
 #map,
 #mapInteraccion,
 #mapGrupo,
-#mapEntrevistador {
+#mapEntrevistador,
+#mapVerGrupo,
+#mapDesapareciodos,
+#mapActualizarInteraccion {
     margin: 12px 12px;
     margin-left: auto;
     margin-right: auto;
     height: 600px;
     width: calc(50%);
+    z-index: 0;
 }
 
 .boton_area_form {
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: left;
+    
+}
+
+.boton_area_form_siguiente {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    
 }
 
 .boton_avanzar_form {
@@ -40,14 +64,28 @@ body {
 
 
     padding: 15px 32px;
-    margin-right: 100px;
+    margin-right: 5%;
 
     text-align: center;
     text-decoration: none;
 }
 
-.boton_avanzar_form_seleccionado {    
-    background-color: rgb(35, 91, 78);  
+.boton_avanzar_form_siguiente {
+    background-color: rgb(16, 49, 43);
+    color: white;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+
+    padding: 15px 32px;
+    margin-left: 5%;
+
+    text-align: center;
+    text-decoration: none;
+}
+
+.boton_avanzar_form_seleccionado {
+    background-color: rgb(35, 91, 78);
     color: white;
     border-style: solid;
     border-radius: 5px;
@@ -83,7 +121,7 @@ body {
 }
 
 .input_form[type=submit] {
-    background-color: rgb(35, 91, 78);    
+    background-color: rgb(35, 91, 78);
     color: white;
     padding: 12px 20px;
     border: none;
@@ -97,12 +135,11 @@ body {
 }
 
 .button_form {
-    background-color: rgb(35, 91, 78); 
+    background-color: rgb(35, 91, 78);
     color: white;
     border-style: solid;
     border-radius: 5px;
     border-width: 2px;
-
 
     padding: 15px 32px;
 

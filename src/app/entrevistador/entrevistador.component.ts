@@ -17,12 +17,13 @@ export class EntrevistadorComponent implements OnInit {
     ApellidoPaterno: new FormControl(''),
     ApellidoMaterno: new FormControl(''),
     Institucion: new FormControl(''),
+    Cargo: new FormControl(''),
     LugarActual: new FormControl(''),
   });
 
   mapEntrevistador;
   layer = new L.marker;
-  
+
   e: any;
 
   markerIcon = {
@@ -39,8 +40,7 @@ export class EntrevistadorComponent implements OnInit {
   constructor(private servicioEntrevistador: EntrevistadorService) { }
 
   ngOnInit(): void {
-
-    this.getEntrevistadorId("1");
+    this.getEntrevistador();
 
     this.crearMapa();
   }
@@ -64,14 +64,15 @@ export class EntrevistadorComponent implements OnInit {
     });
   }
 
-  getEntrevistadorId(id: string): void {
-    this.servicioEntrevistador.getEntrevistadorId(id)
+  getEntrevistador(): void {
+    this.servicioEntrevistador.getEntrevistador()
       .subscribe(entrevistador => {
         this.formularioEntrevistador.patchValue({
           Nombre: entrevistador[0].Nombre,
           ApellidoPaterno: entrevistador[0].ApellidoPaterno,
           ApellidoMaterno: entrevistador[0].ApellidoMaterno,
           Institucion: entrevistador[0].Institucion,
+          Cargo: entrevistador[0].Cargo,
           LugarActual: entrevistador[0].LugarActual
         });
 
@@ -85,14 +86,6 @@ export class EntrevistadorComponent implements OnInit {
   }
 
   modificar(): void {
-    const e = {
-      "Nombre": this.formularioEntrevistador.value.Nombre,
-      "ApellidoPaterno": this.formularioEntrevistador.value.ApellidoPaterno,
-      "ApellidoMaterno": this.formularioEntrevistador.value.ApellidoMaterno,
-      "Institucion": this.formularioEntrevistador.value.Institucion,
-      "LugarActual": this.formularioEntrevistador.value.LugarActual
-    };
-
-    this.servicioEntrevistador.putEntrevistador("1", this.formularioEntrevistador.value);
+    this.servicioEntrevistador.putEntrevistador(this.formularioEntrevistador.value);
   }
 }

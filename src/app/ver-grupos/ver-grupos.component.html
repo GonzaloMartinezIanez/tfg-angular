@@ -1,0 +1,52 @@
+<app-menu></app-menu>
+
+<div class="contenido">
+    <h2>Grupos de personas en interacción</h2>
+
+    <div class="row">
+        <div class="col-25">
+            <label class="label_form" for="grupo">Nombre del grupo</label>
+        </div>
+        <div class="col-75">
+            <select class="select_form" name="grupo" id="grupo" (change)="onGruposChange($event)"
+                [(ngModel)]="grupoSeleccionado">
+                <option disabled selected hidden value="">Selecciona una opción</option>
+                <option *ngFor="let grupo of gruposCorto" value="{{grupo.IdGrupo}}">{{
+                    grupo.NombreGrupo }} </option>
+            </select>
+        </div>
+    </div>
+
+    <br>
+
+    <table>
+        <tr>
+            <th>Nombre del grupo</th>
+            <th>Fecha de creación</th>
+            <th>Nombre del encargado</th>
+            <th>Lugar de creación</th>
+        </tr>
+        <tr>
+            <td>{{grupo.nombreGrupo}}</td>
+            <td>{{grupo.fechaCreacion}}</td>
+            <td>{{grupo.nombreEncargado}}</td>
+            <td>{{grupo.lugarCreacion}}</td>
+        </tr>
+    </table>
+
+
+    <br>
+
+    <div class="fila">
+        <div class="columna">
+            <h3>Integrantes del grupo</h3>
+            <ul>
+                <li *ngFor="let p of personas">
+                    {{p.Nombre}} {{p.ApellidoPaterno}} {{p.ApellidoMaterno}}
+                </li>
+            </ul>
+        </div>
+
+        <div [ngClass]="{ocultar: ocultarMapa == true}" class="columna" id="mapVerGrupo"></div>
+    </div>
+</div>

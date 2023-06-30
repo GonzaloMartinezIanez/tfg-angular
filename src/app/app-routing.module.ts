@@ -8,6 +8,8 @@ import { InteraccionComponent } from './interaccion/interaccion.component';
 import { LoginComponent } from './login/login.component';
 import { VerDesaparecidosComponent } from './ver-desaparecidos/ver-desaparecidos.component';
 import { VerInteraccionComponent } from './ver-interaccion/ver-interaccion.component';
+import { VerGruposComponent } from './ver-grupos/ver-grupos.component';
+import { ActualizarInteraccionComponent } from './actualizar-interaccion/actualizar-interaccion.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -18,7 +20,10 @@ const routes: Routes = [
   { path: 'interaccion', component: InteraccionComponent },
   { path: 'grupo', component: GrupoComponent },
   { path: 'ver-desaparecidos', component: VerDesaparecidosComponent },
-  { path: 'ver-interaccion', component: VerInteraccionComponent }
+  { path: 'ver-interaccion', component: VerInteraccionComponent },
+  { path: 'ver-grupos', component: VerGruposComponent },
+  { path: 'actualizar-interaccion', component: ActualizarInteraccionComponent },
+  { path: '**', component: LoginComponent }
 ];
 
 @NgModule({

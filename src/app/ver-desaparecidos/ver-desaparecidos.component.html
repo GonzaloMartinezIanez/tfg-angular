@@ -1,1 +1,32 @@
 <app-menu></app-menu>
+<script src="https://code.datagridxl.com/datagridxl2.js"></script>
+<div class="contenido">
+    <h2>Datos de personas desaparecidas</h2>
+
+    <form [formGroup]="formularioVerDesaparecidos" (ngSubmit)="(busqueda())">
+        <select class="input_ver" name="campo" id="campo" formControlName="campo" >
+            <option value="" disabled selected hidden>Selecciona un campo para buscar</option>
+            <option value="IdDesaparecido">Folio</option>  
+            <option value="Nombre">Nombre</option>
+            <option value="ApellidoPaterno">Apellido paterno</option>
+            <option value="ApellidoMaterno">Apellido materno</option>
+            <option value="FechaNacimiento">Fecha de nacimiento</option>
+            <option value="Sexo">Sexo</option>                 
+        </select>
+
+        <input class="input_ver" type="text" id="valor" formControlName="valor" placeholder="Escribe aquí para buscar">
+        
+        <input type="submit" [disabled]="!formularioVerDesaparecidos.valid" value="Añadir filtro">
+    </form>
+
+    <br>
+    <button (click)="clear()">Limpiar búsquedas</button>
+    
+    <br>
+    <br>
+
+    <div #grid id="grid"></div>
+
+
+    <button (click)="download()">Descargar tabla como CSV</button>
+</div>

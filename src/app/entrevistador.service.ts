@@ -11,12 +11,12 @@ export class EntrevistadorService {
 
   constructor(private http: HttpClient) { }
 
-  getEntrevistadorId(id: string) {
-    return this.http.get(GlobalComponent.APIurl + "/entrevistador/" + id);
+  getEntrevistador() {
+    return this.http.get(GlobalComponent.APIurl + "/entrevistador");
   }
 
-  putEntrevistador(id: string, e: any) {
-    this.http.put(GlobalComponent.APIurl + "/entrevistador/" + id, e)
+  putEntrevistador(e: any) {
+    this.http.put(GlobalComponent.APIurl + "/entrevistador", e)
       .subscribe(res => {
         console.log(res)
         if (res == "Entrevistador actualizado")

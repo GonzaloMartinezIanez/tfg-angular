@@ -2,6 +2,7 @@
   "name": "angular-tfg",
   "version": "0.0.0",
   "scripts": {
+    "start:proxy": "ng serve --proxy-config src/proxy.conf.json",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

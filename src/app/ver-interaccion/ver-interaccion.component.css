@@ -1,3 +1,4 @@
 #grid {
   height: 70vh;
+  z-index: 0;
 }

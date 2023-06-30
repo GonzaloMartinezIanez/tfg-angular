@@ -1,0 +1,295 @@
+<app-menu></app-menu>
+
+<div class="contenido">
+    <h2>Actualizar registro de una persona en interacción</h2>
+    <input style="min-width: 230px; margin-right: 30px;" class="input_ver" type="text"
+        placeholder="Escribe aquí el folio de la persona" [(ngModel)]="folio">
+
+    <button class="button_form" (click)="getInteraccion()">Buscar registro</button>
+    <br>
+    <br>
+
+    <div *ngIf="hayInteraccion">
+        <div class="row">
+            <div class="col-25">
+                <label class="label_form" for="Interacciones">Actualizar las interacciones</label>
+            </div>
+            <div class="col-65">
+                <textarea [(ngModel)]="interaccion.Interacciones" class="textarea_form" id="Interacciones" rows="10"
+                    cols="50" value="{{interaccion.Interacciones}}"></textarea>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="centrar">
+            <button class="boton" (click)="actualizar()">Actualizar interacción</button>
+        </div>
+
+        <br>
+
+        <div class="fila">
+            <div class="columna">
+                <h2>Datos generales de la persona que interactúa</h2>
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Nombre">Nombre</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="Nombre" type="text" value="{{interaccion.Nombre}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="ApellidoPaterno">Apellido paterno</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="ApellidoPaterno" type="text"
+                            value="{{interaccion.ApellidoPaterno}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="ApellidoMaterno">Apellido materno</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="ApellidoMaterno" type="text"
+                            value="{{interaccion.ApellidoMaterno}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="NombreSocial">Nombre social</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="NombreSocial" type="text"
+                            value="{{interaccion.NombreSocial}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="FechaNacimiento">Fecha de nacimiento</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="FechaNacimiento" type="text"
+                            value="{{interaccion.FechaNacimiento}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Sexo">Sexo asignado al nacer</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="Sexo" type="text" value="{{interaccion.Sexo}}">
+                    </div>
+                </div>
+
+                <br>
+
+                <h2>Procedencia de la persona</h2>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Nacionalidad">Nacionalidad</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="Nacionalidad" type="text"
+                            value="{{interaccion.Nacionalidad}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Estado">Entidad federativa de nacimiento</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="Estado" type="text" value="{{interaccion.Estado}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Municipio">Municipio de nacimiento</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="Municipio" type="text" value="{{interaccion.Municipio}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="LugarFrecuenta">Lugar que frecuenta</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="LugarFrecuenta" type="text"
+                            value="{{interaccion.LugarFrecuenta}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="LugarActual">Lugar de inicio de la interacción</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="LugarActual" type="text"
+                            value="{{interaccion.LugarActual}}">
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row" *ngIf="estaEnGrupo">
+                    <div class="col-25">
+                        <label class="label_form" for="NombreGrupo">Grupo al que pertenece</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="NombreGrupo" type="text"
+                            value="{{interaccion.NombreGrupo}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div [ngClass]="{ocultar: ocultarMapa == true}" id="mapActualizarInteraccion"></div>
+                </div>
+            </div>
+
+            <div class="columna">
+                <h2>Situación de la persona</h2>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="SituacionCalle">En situación de calle</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="SituacionCalle" type="text"
+                            value="{{interaccion.SituacionCalle}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="MigrantesMexicanas">Migrante mexicana</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="MigrantesMexicanas" type="text"
+                            value="{{interaccion.MigrantesMexicanas}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="TrabajadorCampo">Trabajadora de campo</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="TrabajadorCampo" type="text"
+                            value="{{interaccion.TrabajadorCampo}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="DesplazadasForzadasInternas">Desplazada forzada interna</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="DesplazadasForzadasInternas" type="text"
+                            value="{{interaccion.DesplazadasForzadasInternas}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="MigrantesExtranjeras">Migrantes extranjeras</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="MigrantesExtranjeras" type="text"
+                            value="{{interaccion.MigrantesExtranjeras}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Deportadas">Deportada</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="Deportadas" type="text"
+                            value="{{interaccion.Deportadas}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="TrabajadorHogar">Trabajadora del hogar</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="TrabajadorHogar" type="text"
+                            value="{{interaccion.TrabajadorHogar}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="DescripcionFisica">Descripción física</label>
+                    </div>
+                    <div class="col-65">
+                        <textarea readonly class="textarea_form" id="DescripcionFisica" rows="10" cols="50"
+                            value="{{interaccion.DescripcionFisica}}"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Necesidades">Necesidad de apoyo/atención por parte de
+                            autoridades</label>
+                    </div>
+                    <div class="col-65">
+                        <textarea readonly class="textarea_form" id="Necesidades" rows="10" cols="50"
+                            value="{{interaccion.Necesidades}}"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="MensajeFamiliares">Mensaje a familiares</label>
+                    </div>
+                    <div class="col-65">
+                        <textarea readonly class="textarea_form" id="MensajeFamiliares" rows="10" cols="50"
+                            value="{{interaccion.MensajeFamiliares}}"></textarea>
+                    </div>
+                </div>
+
+                <br>
+
+                <h2>Observaciones</h2>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="SaludFisica">Salud física</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="SaludFisica" type="text"
+                            value="{{interaccion.SaludFisica}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="SaludMental">Salud mental</label>
+                    </div>
+                    <div class="col-65">
+                        <input readonly class="input_form" id="SaludMental" type="text"
+                            value="{{interaccion.SaludMental}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Observaciones">Observaciones del entrevistador</label>
+                    </div>
+                    <div class="col-65">
+                        <textarea readonly class="textarea_form" id="Observaciones" rows="10" cols="50"
+                            value="{{interaccion.Observaciones}}"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

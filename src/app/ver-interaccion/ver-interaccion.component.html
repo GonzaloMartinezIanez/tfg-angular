@@ -6,11 +6,11 @@
     <form [formGroup]="formularioVerInteraccion" (ngSubmit)="(busqueda())">
         <select class="input_ver" name="campo" id="campo" formControlName="campo" >
             <option value="" disabled selected hidden>Selecciona un campo para buscar</option>
+            <option value="IdInteraccion">Folio</option> 
             <option value="Nombre">Nombre</option>
             <option value="ApellidoPaterno">Apellido paterno</option>
             <option value="ApellidoMaterno">Apellido materno</option>
             <option value="NombreSocial">Nombre social</option>
-            <option value="FechaNacimiento">Fecha de nacimiento</option>
             <option value="Sexo">Sexo</option>
             <option value="Nacionalidad">Nacionalidad</option>
             <option value="Estado">Estado</option>
@@ -18,15 +18,14 @@
             <option value="LugarFrecuenta">Lugar que frecuenta</option>
             <option value="LugarActual">Lugar actual</option>
             <option value="SituacionCalle">En situación de calle</option>
-            <option value="MigrantesMexicanas">Megrante mexicana</option>
+            <option value="MigrantesMexicanas">Migrante mexicana</option>
             <option value="TrabajadorCampo">Trabajador de campo</option>
             <option value="DesplazadasForzadasInternas">Desplazadas forzadas internas</option>
             <option value="MigrantesExtranjeras">Migrantes extranjeras</option>
             <option value="Deportadas">Deportadas</option>
             <option value="TrabajadorHogar">Trabajador del hogar</option>
             <option value="SaludFisica">Salud física</option>
-            <option value="SaludMental">Salud mental</option>
-            <option value="Folio">Folio</option>          
+            <option value="SaludMental">Salud mental</option>                     
         </select>
 
         <input class="input_ver" type="text" id="valor" formControlName="valor" placeholder="Escribe aquí para buscar">

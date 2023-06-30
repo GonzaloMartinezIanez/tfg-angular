@@ -1,0 +1,28 @@
+table{
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: white;
+    text-align: center;
+}
+
+th, td{
+    height: 50px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: x-large;
+}
+
+.fila{
+    display: flex;
+}
+
+.columna{
+    flex: 50%;
+}

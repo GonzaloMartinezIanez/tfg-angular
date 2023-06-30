@@ -19,7 +19,7 @@ export class GrupoComponent implements OnInit {
     LugarCreacion: new FormControl(''),
   })
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private servicioEntrevistador: EntrevistadorService) { }
   mapGrupo;
   layer = new L.marker;
 
@@ -35,11 +35,35 @@ export class GrupoComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.getEntrevistador();
+  }
+
+  getEntrevistador(): void {
+    this.servicioEntrevistador.getEntrevistador()
+      .subscribe(entrevistador => {
+        this.formularioGrupo.patchValue({
+          LugarCreacion: entrevistador[0].LugarActual,
+        });
+
+        this.crearMapa()
+      });
+  }
+
+  crearMapa() {
     this.mapGrupo = L.map("mapGrupo").setView([37.16788748437835, -3.5993957519531254], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.mapGrupo);
+
+    if (this.formularioGrupo.value.LugarCreacion != undefined) {
+      const coordenadas = this.formularioGrupo.value.LugarCreacion.split(', ');
+
+      if (Number(coordenadas[0]) && Number(coordenadas[1])) {
+        this.mapGrupo.setView([coordenadas[0], coordenadas[1]], 13);
+        this.layer = L.marker([coordenadas[0], coordenadas[1]], this.markerIcon).addTo(this.mapGrupo);
+      }
+    }
 
     this.mapGrupo.on("click", e => {
       //Marcar las coordenadas en el formulario

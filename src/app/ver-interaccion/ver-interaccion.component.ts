@@ -49,8 +49,8 @@ export class VerInteraccionComponent implements OnInit {
 
   crearTabla(interacciones) {
     this.gridInstance = new DataGridXL("grid", {
-      data: this.modificarInteracciones(interacciones),
-      frozenCols: 3,
+      data: interacciones.map(i => Object.values(i)),
+      frozenCols: 4,
       allowEditCells: false,
       allowFillCells: false,
       allowInsertRows: false,
@@ -62,6 +62,10 @@ export class VerInteraccionComponent implements OnInit {
       allowCopy: false,
       allowHideCols: true,
       columns: [
+        {
+          title: "Folio",
+          source: 0
+        },
         {
           title: "Nombre",
           source: 1
@@ -161,31 +165,9 @@ export class VerInteraccionComponent implements OnInit {
         {
           title: "Observaciones",
           source: 25
-        },
-        {
-          title: "Folio",
-          source: 26
-        }
+        }        
       ]
     });
-  }
-
-  modificarInteracciones(interacciones) {
-    // Transformar el json en un array de array
-    var result = interacciones.map(i => Object.values(i))
-
-    // Cambiar los valores booleanos expresados en 0 y 1 por "sí" y "no"
-    result.forEach(interaccion => {
-      for (var i = 12; i < 19; i++) {
-        if (interaccion[i] == 0) {
-          interaccion[i] = "No";
-        } else if (interaccion[i] == 1) {
-          interaccion[i] = "Sí";
-        }
-      }
-    })
-
-    return result;
   }
 
   clear(): void {

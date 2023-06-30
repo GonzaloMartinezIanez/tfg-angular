@@ -13,11 +13,19 @@ export class GrupoService {
   }
 
   getGrupoId(id : string){
-    return this.http.get(GlobalComponent.APIurl + "/" + id);
+    return this.http.get(GlobalComponent.APIurl + "/grupo/" + id);
+  }
+
+  getGrupoInteraccion(id : string){
+    return this.http.get(GlobalComponent.APIurl + "/grupointeraccion/" + id);
   }
 
   getGruposCorto() {
     return this.http.get(GlobalComponent.APIurl + "/grupocorto");
+  }
+
+  getPersonasEnGrupo(id : string){
+    return this.http.get(GlobalComponent.APIurl + "/grupopersonas/" + id);
   }
 
 }

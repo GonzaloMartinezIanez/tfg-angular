@@ -1,7 +1,7 @@
 <app-menu></app-menu>
 
 <div class="contenido">
-    <h1>Formulario de personas en interacción</h1>
+    <h1>Formulario de registro de personas desaparecidas migrantes</h1>
 
     <div class="boton_area_form">
         <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 0}"
@@ -35,15 +35,6 @@
             </p>
 
             <h2>Datos de la entrevista</h2>
-
-            <div class="row">
-                <div class="col-25">
-                    <label class="label_form" for="Folio">Folio/ID del registro global de migrantes *</label>
-                </div>
-                <div class="col-75">
-                    <input class="input_form" id="Folio" type="text" formControlName="Folio">
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-25">
@@ -114,11 +105,12 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="Alias">Alais, apodo y/o nombre false</label>
+                    <label class="label_form" for="Alias">Alias, apodo y/o nombre falso</label>
                 </div>
                 <div class="col-75">
                     <input class="input_form" id="Alias" type="text" formControlName="Alias">
                 </div>
+
             </div>
 
             <div class="row">
@@ -126,7 +118,12 @@
                     <label class="label_form" for="NacionalidadAlias">Nacionalidad del nombre falso</label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="NacionalidadAlias" type="text" formControlName="NacionalidadAlias">
+                    <select class="select_form" name="NacionalidadAlias" id="NacionalidadAlias"
+                        formControlName="NacionalidadAlias">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option *ngFor="let nacion of naciones" value="{{nacion.nacionalidad}}">{{
+                            nacion.nacionalidad }} </option>
+                    </select>
                 </div>
             </div>
 
@@ -158,7 +155,11 @@
                     <label class="label_form" for="Nacionalidad">Nacionalidad *</label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="Nacionalidad" type="text" formControlName="Nacionalidad">
+                    <select class="select_form" name="Nacionalidad" id="Nacionalidad" formControlName="Nacionalidad">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option *ngFor="let nacion of naciones" value="{{nacion.nacionalidad}}">{{
+                            nacion.nacionalidad }} </option>
+                    </select>
                 </div>
             </div>
 
@@ -198,8 +199,8 @@
                 </div>
 
                 <div class="col-65" *ngIf="valoresRadioButton.ViajaConIdentificacion == 'Sí'">
-                    <input class="input_form" id="ViajaConIdentificacion" type="text"
-                        formControlName="ViajaConIdentificacion" placeholder="Número">
+                    <input class="input_form" id="ViajaConIdentificacionCual" type="text"
+                        formControlName="ViajaConIdentificacionCual" placeholder="Número">
                 </div>
             </div>
 
@@ -221,15 +222,6 @@
                     <input class="input_form" id="IdiomaMaterno" type="text" formControlName="IdiomaMaterno">
                 </div>
             </div>
-
-            <!-- <div class="row">
-                <div class="col-25">
-                    <label class="label_form" for="HablaEspañol">¿Habla español con fluidez?</label>
-                </div>
-                <div class="col-75">
-                    <input class="input_form" id="HablaEspañol" type="checkbox" formControlName="HablaEspañol">
-                </div>
-            </div> -->
 
             <div class="row">
                 <div class="col-25">
@@ -271,7 +263,7 @@
                 </div>
 
                 <div class="col-65" *ngIf="valoresRadioButton.OtrosIdiomas == 'Sí'">
-                    <input class="input_form" id="OtrosIdiomas" type="text" formControlName="OtrosIdiomas"
+                    <input class="input_form" id="OtrosIdiomasCual" type="text" formControlName="OtrosIdiomasCual"
                         placeholder="¿Cuál?">
                 </div>
             </div>
@@ -296,19 +288,10 @@
                 </div>
 
                 <div class="col-65" *ngIf="valoresRadioButton.PuebloOriginario == 'Sí'">
-                    <input class="input_form" id="PuebloOriginario" type="text" formControlName="PuebloOriginario"
-                        placeholder="¿Cuál?">
+                    <input class="input_form" id="PuebloOriginarioCual" type="text"
+                        formControlName="PuebloOriginarioCual" placeholder="¿Cuál?">
                 </div>
             </div>
-
-            <!-- <div class="row">
-                <div class="col-25">
-                    <label class="label_form" for="Afrodescendiente">¿Se considera afrodescendiente?</label>
-                </div>
-                <div class="col-75">
-                    <input class="input_form" id="Afrodescendiente" type="checkbox" formControlName="Afrodescendiente">
-                </div>
-            </div> -->
 
             <div class="row">
                 <div class="col-25">
@@ -329,7 +312,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="row">
                 <div class="col-25">
@@ -352,8 +334,8 @@
                 </div>
 
                 <div class="col-65" *ngIf="valoresRadioButton.IdiomaPadresAbuelos == 'Sí'">
-                    <input class="input_form" id="IdiomaPadresAbuelos" type="text" formControlName="IdiomaPadresAbuelos"
-                        placeholder="¿Cuál?">
+                    <input class="input_form" id="IdiomaPadresAbuelosCual" type="text"
+                        formControlName="IdiomaPadresAbuelosCual" placeholder="¿Cuál?">
                 </div>
             </div>
 
@@ -377,8 +359,7 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="OrientacionSexual">¿Sus padres o sus abuelos hablan un idioma
-                        indígena o diferente al español?</label>
+                    <label class="label_form" for="OrientacionSexual">Orientación sexual</label>
                 </div>
 
                 <div class="col-20">
@@ -408,8 +389,8 @@
                 </div>
 
                 <div class="col-55" *ngIf="valoresRadioButton.OrientacionSexual == 'Otro'">
-                    <input class="input_form" id="OrientacionSexual" type="text" formControlName="OrientacionSexual"
-                        placeholder="¿Cuál?">
+                    <input class="input_form" id="OrientacionSexualCual" type="text"
+                        formControlName="OrientacionSexualCual" placeholder="¿Cuál?">
                 </div>
             </div>
 
@@ -467,6 +448,16 @@
 
             <div class="row">
                 <div class="col-25">
+                    <label class="label_form" for="FechaUltimaComunicacion">Fecha de última comunicación</label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="FechaUltimaComunicacion" type="date"
+                        formControlName="FechaUltimaComunicacion">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
                     <label class="label_form" for="RelatoDesaparicion">Lugar y circunstancias del último contacto
                         (dónde, cuándo, con quién, qué sucedió) y si comunicó sobre algún riesgo o amenaza</label>
                 </div>
@@ -503,8 +494,8 @@
                 </div>
 
                 <div class="col-55" *ngIf="valoresRadioButton.PaisPerdidaContacto == 'Otro'">
-                    <input class="input_form" id="PaisPerdidaContacto" type="text" formControlName="PaisPerdidaContacto"
-                        placeholder="¿Cuál?">
+                    <input class="input_form" id="PaisPerdidaContactoCual" type="text"
+                        formControlName="PaisPerdidaContactoCual" placeholder="¿Cuál?">
                 </div>
             </div>
 
@@ -532,17 +523,6 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="LugarCrucePretendia">Punto fronterizo por donde pretendía cruzar la
-                        frontera</label>
-                </div>
-                <div class="col-75">
-                    <input class="input_form" id="LugarCrucePretendia" type="text"
-                        formControlName="LugarCrucePretendia">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-25">
                     <label class="label_form" for="LugarCruceConfirmado">Punto fronterizo que se sabe que ya había
                         cruzado</label>
                 </div>
@@ -552,13 +532,17 @@
                 </div>
             </div>
 
-            <h3>Faltan catálogos</h3>
             <div class="row">
                 <div class="col-25">
                     <label class="label_form" for="PaisObjetivo">País a donde se dirigía</label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="PaisObjetivo" type="text" formControlName="PaisObjetivo">
+                    <select class="select_form" name="PaisObjetivo" id="PaisObjetivo" formControlName="PaisObjetivo"
+                        (change)="onNacionesChange($event)">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option *ngFor="let nacion of naciones" value="{{nacion.nacionalidad}}">{{
+                            nacion.nacionalidad }} </option>
+                    </select>
                 </div>
             </div>
 
@@ -566,8 +550,16 @@
                 <div class="col-25">
                     <label class="label_form" for="EstadoObjetivo">Estado a donde se dirigía</label>
                 </div>
-                <div class="col-75">
+                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo != 'MEXICANA'">
                     <input class="input_form" id="EstadoObjetivo" type="text" formControlName="EstadoObjetivo">
+                </div>
+                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo === 'MEXICANA'">
+                    <select class="select_form" name="EstadoObjetivo" id="EstadoObjetivo"
+                        formControlName="EstadoObjetivo" (change)="onEntidadesChange($event)">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option *ngFor="let entidad of entidades" value="{{entidad.idEntidad}}">{{ entidad.entidad
+                            }} </option>
+                    </select>
                 </div>
             </div>
 
@@ -576,18 +568,16 @@
                     <label class="label_form" for="MunicipioObjetivo">Localidad/municipio/condado a donde se
                         dirigía</label>
                 </div>
-                <div class="col-75">
+                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo != 'MEXICANA'">
                     <input class="input_form" id="MunicipioObjetivo" type="text" formControlName="MunicipioObjetivo">
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-25">
-                    <label class="label_form" for="FechaUltimaComunicacion">Fecha de última comunicación</label>
-                </div>
-                <div class="col-75">
-                    <input class="input_form" id="FechaUltimaComunicacion" type="date"
-                        formControlName="FechaUltimaComunicacion">
+                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo === 'MEXICANA'">
+                    <select class="select_form" name="MunicipioObjetivo" id="MunicipioObjetivo" formControlName="MunicipioObjetivo">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option *ngFor="let municipio of municipios" value="{{municipio.municipio}}">{{
+                            municipio.municipio
+                            }} </option>
+                    </select>
                 </div>
             </div>
 
@@ -601,17 +591,6 @@
                         formControlName="PersonaUltimaComunicacion">
                 </div>
             </div>
-
-            <!-- <div class="row">
-                <div class="col-25">
-                    <label class="label_form" for="DeportadaAnteriormente">¿La persona migrante ha sido deportada por
-                        autoridades migratorias anteriormente?</label>
-                </div>
-                <div class="col-75">
-                    <input class="input_form" id="DeportadaAnteriormente" type="checkbox"
-                        formControlName="DeportadaAnteriormente">
-                </div>
-            </div> -->
 
             <div class="row">
                 <div class="col-25">
@@ -655,16 +634,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="row">
-                <div class="col-25">
-                    <label class="label_form" for="Encarcelado">Ha estado en la cárcel en México o Estados
-                        Unidos</label>
-                </div>
-                <div class="col-75">
-                    <input class="input_form" id="Encarcelado" type="checkbox" formControlName="Encarcelado">
-                </div>
-            </div> -->
 
             <div class="row">
                 <div class="col-25">
@@ -738,7 +707,7 @@
                 </div>
 
                 <div class="col-65" *ngIf="valoresRadioButton.PapelesFalsos == 'Sí'">
-                    <input class="input_form" id="PapelesFalsos" type="text" formControlName="PapelesFalsos"
+                    <input class="input_form" id="PapelesFalsosCual" type="text" formControlName="PapelesFalsosCual"
                         placeholder="¿Cuál?">
                 </div>
             </div>
@@ -750,7 +719,7 @@
                 <div class="col-75">
                     <textarea class="textarea_form" id="AcompañantesViaje" rows="5" cols="50"
                         formControlName="AcompañantesViaje"
-                        placeholder="(Nombres, alias,  nacionalidades, número de teléfono de personas compañeras de viaje, incluye coyotes, polleros o guías. Importante especificar si viajaba con menores)"></textarea>
+                        placeholder="Nombres, alias, nacionalidades, número de teléfono de personas compañeras de viaje, incluye coyotes, polleros o guías. Importante especificar si viajaba con menores"></textarea>
                 </div>
             </div>
 
@@ -774,7 +743,7 @@
                     <label class="label_form" for="Estatura">Estatura</label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="Estatura" type="text" formControlName="Estatura">
+                    <input class="input_form" id="Estatura" type="text" formControlName="Estatura" placeholder="cm">
                 </div>
             </div>
 
@@ -783,7 +752,7 @@
                     <label class="label_form" for="Peso">Peso</label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="Peso" type="text" formControlName="Peso">
+                    <input class="input_form" id="Peso" type="text" formControlName="Peso" placeholder="kg">
                 </div>
             </div>
 
@@ -825,19 +794,10 @@
                 </div>
 
                 <div class="col-65" *ngIf="valoresRadioButton.VelloFacial == 'Sí'">
-                    <input class="input_form" id="VelloFacial" type="text" formControlName="VelloFacial"
+                    <input class="input_form" id="VelloFacialCual" type="text" formControlName="VelloFacialCual"
                         placeholder="Color y tamaño">
                 </div>
             </div>
-
-            <!-- <div class="row">
-                <div class="col-25">
-                    <label class="label_form" for="Lentes">¿Usa lentes?</label>
-                </div>
-                <div class="col-75">
-                    <input class="input_form" id="Lentes" type="checkbox" formControlName="Lentes">
-                </div>
-            </div> -->
 
             <div class="row">
                 <div class="col-25">
@@ -865,32 +825,23 @@
                 </div>
                 <div class="col-75">
                     <input class="input_form" id="Cabello" type="text" formControlName="Cabello"
-                        placeholder="(color, tamaño, tipo, cantidad, ¿cómo lo lleva usualmente: atado, suelto, teñido)">
+                        placeholder="Color, tamaño, tipo, cantidad, ¿cómo lo lleva usualmente?: atado, suelto, teñido">
                 </div>
             </div>
 
             <div *ngIf="formularioDesaparecidos.value.Sexo == 'Mujer'">
-                <!-- <div class="row">
-                    <div class="col-25">
-                        <label class="label_form" for="Embarazada">¿Estaba embarazada?</label>
-                    </div>
-                    <div class="col-75">
-                        <input class="input_form" id="Embarazada" type="checkbox" formControlName="Embarazada">
-                    </div>
-                </div> -->
-
                 <div class="row">
                     <div class="col-25">
                         <label class="label_form" for="Embarazada">¿Estaba embarazada?</label>
                     </div>
-    
+
                     <div class="col-10">
                         <div>
                             <input class="input_form" type="radio" name="Embarazada" id="EmbarazadaSi" value="Sí"
                                 (change)="onChange($event)">
                             <label for="EmbarazadaSi">Sí</label>
                         </div>
-    
+
                         <div>
                             <input class="input_form" type="radio" name="Embarazada" id="EmbarazadaNo" value="No"
                                 (change)="onChange($event)">
@@ -927,7 +878,7 @@
                 <div class="col-75">
                     <textarea class="textarea_form" id="SeñalesParticulares" rows="5" cols="50"
                         formControlName="SeñalesParticulares"
-                        placeholder="lunares, tatuajes, quemaduras, manchas, cicatrices, perforaciones, señalar tamaño y ubicación. También incluir modificaciones corporales como prótesis, siliconas inyectables, implantes, cirugías corporales"></textarea>
+                        placeholder="Lunares, tatuajes, quemaduras, manchas, cicatrices, perforaciones, señalar tamaño y ubicación. También incluir modificaciones corporales como prótesis, siliconas inyectables, implantes, cirugías corporales"></textarea>
                 </div>
             </div>
 
@@ -947,7 +898,7 @@
                 </div>
                 <div class="col-75">
                     <textarea class="textarea_form" id="TipoDientes" rows="5" cols="50" formControlName="TipoDientes"
-                        placeholder="tiene prótesis, coronas, amalgamas, ausencias, separados, manchados y si están arriba, abajo del lado izquierdo o derecho"></textarea>
+                        placeholder="Tiene prótesis, coronas, amalgamas, ausencias, separados, manchados y si están arriba, abajo del lado izquierdo o derecho"></textarea>
                 </div>
             </div>
 
@@ -968,7 +919,7 @@
                 <div class="col-75">
                     <textarea class="textarea_form" id="DescripcionPrendas" rows="5" cols="50"
                         formControlName="DescripcionPrendas"
-                        placeholder="ropa, zapatos, joyas, sombreros, celulares, bolsas u otras cosas que llevabala persona desaparecida"></textarea>
+                        placeholder="Ropa, zapatos, joyas, sombreros, celulares, bolsas u otras cosas que llevabala persona desaparecida"></textarea>
                 </div>
             </div>
 
@@ -987,7 +938,7 @@
                     <label class="label_form" for="Imagen">Imagén de la persona</label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="Imagen" type="file" accept='image/*' formControlName="Imagen"
+                    <input class="input_form" id="Imagen" type="file" accept='image/*'
                         (change)="onFileChange($event)">
                 </div>
                 <img [src]="imagenSRC" *ngIf="imagenSRC" style="width: 50%; align-items: center;">
@@ -1017,7 +968,7 @@
                 </div>
 
                 <div class="col-65" *ngIf="valoresRadioButton.HayDenuncia == 'Sí'">
-                    <input class="input_form" id="HayDenuncia" type="text" formControlName="HayDenuncia"
+                    <input class="input_form" id="HayDenunciaCual" type="text" formControlName="HayDenunciaCual"
                         placeholder="¿Ante qué autoridades y de qué país?">
                 </div>
             </div>
@@ -1042,7 +993,7 @@
                 </div>
 
                 <div class="col-65" *ngIf="valoresRadioButton.HayReporte == 'Sí'">
-                    <input class="input_form" id="HayReporte" type="text" formControlName="HayReporte"
+                    <input class="input_form" id="HayReporteCual" type="text" formControlName="HayReporteCual"
                         placeholder="¿Ante qué autoridades y de qué país?">
                 </div>
             </div>
@@ -1067,7 +1018,7 @@
                 </div>
 
                 <div class="col-65" *ngIf="valoresRadioButton.AvancesDenuncia == 'Sí'">
-                    <input class="input_form" id="HayReporte" type="text" formControlName="AvancesDenuncia"
+                    <input class="input_form" id="HayReporteCual" type="text" formControlName="AvancesDenunciaCual"
                         placeholder="¿Cuáles?">
                 </div>
             </div>
@@ -1210,20 +1161,16 @@
                     <label class="label_form" for="Entrevistador">Entrevistador</label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="Entrevistador" type="text" formControlName="Entrevistador">
+                    <input readonly class="input_form" id="Entrevistador" type="text" formControlName="Entrevistador">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="Institucion">Institución *</label>
+                    <label class="label_form" for="Institucion">Institución</label>
                 </div>
                 <div class="col-75">
-                    <select class="select_form" name="Institucion" id="institucion" formControlName="Institucion">
-                        <option value='CNB'>CNB</option>
-                        <option value='CLB'>CLB</option>
-                        <option value='Fiscalía'>Fiscalía</option>
-                    </select>
+                    <input readonly class="input_form" id="Institucion" type="text" formControlName="Institucion">
                 </div>
             </div>
 
@@ -1232,15 +1179,21 @@
                     <label class="label_form" for="Cargo">Cargo</label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="Cargo" type="text" formControlName="Cargo">
+                    <input readonly class="input_form" id="Cargo" type="text" formControlName="Cargo">
                 </div>
             </div>
         </div>
 
         <br>
 
-        <div class="row">
-            <input class="input_form" type="submit" [disabled]="!formularioDesaparecidos.valid">
+        <div class="boton_area_form_siguiente">
+            <button type="button" class="boton_avanzar_form_siguiente" [ngClass]="{ocultar: posicionFormulario == 0}"
+                (click)="botonSiguienteRetrocer(false)">Retroceder</button>
+            <button type="button" class="boton_avanzar_form_siguiente" [ngClass]="{ocultar: posicionFormulario == 4}"
+                (click)="botonSiguienteRetrocer(true)">Avanzar</button>
+
+            <input [ngClass]="{ocultar: posicionFormulario != 4}" class="boton_avanzar_form_siguiente" type="submit"
+                [disabled]="!formularioDesaparecidos.valid">
         </div>
     </form>
 </div>

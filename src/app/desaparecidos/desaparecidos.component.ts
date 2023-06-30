@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as L from "leaflet";
 import { EntrevistadorService } from '../entrevistador.service';
+import { GlobalComponent } from '../global-component';
+import { NacionesService } from '../naciones.service';
 //import "leaflet/dist/leaflet.css";
 
 @Component({
@@ -13,100 +15,6 @@ import { EntrevistadorService } from '../entrevistador.service';
 export class DesaparecidosComponent implements OnInit {
   formularioDesaparecidos = new FormGroup({
     // Datos de la entrevista
-    Folio: new FormControl(''),
-    FolioInstitucion: new FormControl(''),
-    FolioRNPDNO: new FormControl(''),
-    FechaEntrevista: new FormControl(''),
-
-    // Datos de la persona
-    Nombre: new FormControl(''),
-    ApellidoPaterno: new FormControl(''),
-    ApellidoMaterno: new FormControl(''),
-    NombreSocial: new FormControl(''),
-    Alias: new FormControl(''),
-    NacionalidadAlias: new FormControl(''),
-    Sexo: new FormControl(''),
-    FechaNacimiento: new FormControl(''),
-    Nacionalidad: new FormControl(''),
-    EstadoCivil: new FormControl(''),
-    ViajaConIdentificacion: new FormControl(''),
-    UltimoDomicilio: new FormControl(''),
-    IdiomaMaterno: new FormControl(''),
-    HablaEspañol: new FormControl(''),
-    OtrosIdiomas: new FormControl(''),
-    PuebloOriginario: new FormControl(''),
-    Afrodescendiente: new FormControl(''),
-    IdiomaPadresAbuelos: new FormControl(''),
-    SexoIdentifica: new FormControl(''),
-    OrientacionSexual: new FormControl(''),
-    Profesion: new FormControl(''),
-    EdadMigracion: new FormControl(''),
-    AñoComienzoMigracion: new FormControl(''),
-    MotivoMigracion: new FormControl(''),
-    NumeroMigraciones: new FormControl(''),
-
-    // Relato de la desaparición
-    RelatoDesaparicion: new FormControl(''),
-    PaisPerdidaContacto: new FormControl(''),
-    MunicipioPerdidaContacto: new FormControl(''),
-    LugarCrucePretendia: new FormControl(''),
-    LugarCruceConfirmado: new FormControl(''),
-    PaisObjetivo: new FormControl(''),
-    EstadoObjetivo: new FormControl(''),
-    MunicipioObjetivo: new FormControl(''),
-    FechaUltimaComunicacion: new FormControl(''),
-    PersonaUltimaComunicacion: new FormControl(''),
-    DeportadaAnteriormente: new FormControl(''),
-    PaisDeportacion: new FormControl(''),
-    FechaUltimaDeportacion: new FormControl(''),
-    Encarcelado: new FormControl(''),
-    UbicacionCarcel: new FormControl(''),
-    FechaDetencion: new FormControl(''),
-    IdentificacionDetencionEEUU: new FormControl(''),
-    PapelesFalsos: new FormControl(''),
-    AcompañantesViaje: new FormControl(''),
-    ConocidosEnExtranjero: new FormControl(''),
-
-    // Descripción física
-    Estatura: new FormControl(''),
-    Peso: new FormControl(''),
-    Complexion: new FormControl(''),
-    ColorPiel: new FormControl(''),
-    VelloFacial: new FormControl(''),
-    Lentes: new FormControl(''),
-    Cabello: new FormControl(''),
-    Embarazada: new FormControl(''),
-    MesesEmbarazo: new FormControl(''),
-    NumeroCelular: new FormControl(''),
-    SeñalesParticulares: new FormControl(''),
-    Lesiones: new FormControl(''),
-    TipoDientes: new FormControl(''),
-    EstadoSalud: new FormControl(''),
-    DescripcionPrendas: new FormControl(''),
-    RedesSociales: new FormControl(''),
-    Imagen: new FormControl(null),
-
-    // Datos de quien busca
-    HayDenuncia: new FormControl(''),
-    HayReporte: new FormControl(''),
-    AvancesDenuncia: new FormControl(''),
-    LugaresBusqueda: new FormControl(''),
-    NombreQuienBusca: new FormControl(''),
-    ApellidoPaternoQuienBusca: new FormControl(''),
-    ApellidoMaternoQuienBusca: new FormControl(''),
-    ParentescoQuienBusca: new FormControl(''),
-    DireccionQuienBusca: new FormControl(''),
-    TelefonoQuienBusca: new FormControl(''),
-    CorreoElectronicoQuienBusca: new FormControl(''),
-    MensajeQuienBusca: new FormControl(''),
-    InformacionUsadaPara: new FormControl(''),
-    InformacionPublica: new FormControl(''),
-    Entrevistador: new FormControl(''),
-    Institucion: new FormControl(''),
-    Cargo: new FormControl('')
-
-    /* // Datos de la entrevista
-    Folio: new FormControl('', Validators.required),
     FolioInstitucion: new FormControl(''),
     FolioRNPDNO: new FormControl(''),
     FechaEntrevista: new FormControl(''),
@@ -123,15 +31,20 @@ export class DesaparecidosComponent implements OnInit {
     Nacionalidad: new FormControl('', Validators.required),
     EstadoCivil: new FormControl(''),
     ViajaConIdentificacion: new FormControl(''),
+    ViajaConIdentificacionCual: new FormControl(''),
     UltimoDomicilio: new FormControl(''),
     IdiomaMaterno: new FormControl(''),
     HablaEspañol: new FormControl(''),
     OtrosIdiomas: new FormControl(''),
+    OtrosIdiomasCual: new FormControl(''),
     PuebloOriginario: new FormControl(''),
+    PuebloOriginarioCual: new FormControl(''),
     Afrodescendiente: new FormControl(''),
     IdiomaPadresAbuelos: new FormControl(''),
+    IdiomaPadresAbuelosCual: new FormControl(''),
     SexoIdentifica: new FormControl(''),
     OrientacionSexual: new FormControl(''),
+    OrientacionSexualCual: new FormControl(''),
     Profesion: new FormControl(''),
     EdadMigracion: new FormControl(''),
     AñoComienzoMigracion: new FormControl(''),
@@ -141,6 +54,7 @@ export class DesaparecidosComponent implements OnInit {
     // Relato de la desaparición
     RelatoDesaparicion: new FormControl(''),
     PaisPerdidaContacto: new FormControl(''),
+    PaisPerdidaContactoCual: new FormControl(''),
     MunicipioPerdidaContacto: new FormControl(''),
     LugarCrucePretendia: new FormControl(''),
     LugarCruceConfirmado: new FormControl(''),
@@ -149,14 +63,15 @@ export class DesaparecidosComponent implements OnInit {
     MunicipioObjetivo: new FormControl(''),
     FechaUltimaComunicacion: new FormControl(''),
     PersonaUltimaComunicacion: new FormControl(''),
-    DeportadaAnteriormente: new FormControl(false),
+    DeportadaAnteriormente: new FormControl(''),
     PaisDeportacion: new FormControl(''),
     FechaUltimaDeportacion: new FormControl(''),
-    Encarcelado: new FormControl(false),
+    Encarcelado: new FormControl(''),
     UbicacionCarcel: new FormControl(''),
     FechaDetencion: new FormControl(''),
     IdentificacionDetencionEEUU: new FormControl(''),
     PapelesFalsos: new FormControl(''),
+    PapelesFalsosCual: new FormControl(''),
     AcompañantesViaje: new FormControl(''),
     ConocidosEnExtranjero: new FormControl(''),
 
@@ -166,9 +81,10 @@ export class DesaparecidosComponent implements OnInit {
     Complexion: new FormControl(''),
     ColorPiel: new FormControl(''),
     VelloFacial: new FormControl(''),
+    VelloFacialCual: new FormControl(''),
     Lentes: new FormControl(''),
     Cabello: new FormControl(''),
-    Embarazada: new FormControl(false),
+    Embarazada: new FormControl(''),
     MesesEmbarazo: new FormControl(''),
     NumeroCelular: new FormControl(''),
     SeñalesParticulares: new FormControl(''),
@@ -181,8 +97,11 @@ export class DesaparecidosComponent implements OnInit {
 
     // Datos de quien busca
     HayDenuncia: new FormControl(''),
+    HayDenunciaCual: new FormControl(''),
     HayReporte: new FormControl(''),
+    HayReporteCual: new FormControl(''),
     AvancesDenuncia: new FormControl(''),
+    AvancesDenunciaCual: new FormControl(''),
     LugaresBusqueda: new FormControl(''),
     NombreQuienBusca: new FormControl(''),
     ApellidoPaternoQuienBusca: new FormControl(''),
@@ -196,7 +115,7 @@ export class DesaparecidosComponent implements OnInit {
     InformacionPublica: new FormControl('', Validators.required),
     Entrevistador: new FormControl(''),
     Institucion: new FormControl('', Validators.required),
-    Cargo: new FormControl('') */
+    Cargo: new FormControl('')
   })
 
   posicionFormulario: any;
@@ -223,108 +142,95 @@ export class DesaparecidosComponent implements OnInit {
     "InformacionPublica": "",
   }
 
+  naciones: any;
+  entidades: any;
+  municipios: any;
+
   constructor(private servicioEntrevistador: EntrevistadorService,
-    private http: HttpClient) { }
+    private http: HttpClient, private nacionesSercive: NacionesService) { }
 
   ngOnInit(): void {
-    //this.getEntrevistadorId("1");
-    this.posicionFormulario = 0
+    this.getEntrevistador();
+    this.posicionFormulario = 0;
+    this.getNaciones();
   }
 
-  getEntrevistadorId(id: string): void {
-    this.servicioEntrevistador.getEntrevistadorId(id)
+  getEntrevistador(): void {
+    this.servicioEntrevistador.getEntrevistador()
       .subscribe(entrevistador => {
         this.formularioDesaparecidos.patchValue({
-          Entrevistador: entrevistador[0].Nombre,
+          Entrevistador: entrevistador[0].Nombre + " " + entrevistador[0].ApellidoPaterno + " " + entrevistador[0].ApellidoMaterno,
           Institucion: entrevistador[0].Institucion,
+          Cargo: entrevistador[0].Cargo,
         });
       });
   }
 
-  enviar(): void {
-    let valores = this.rellenarCamposRadio()
-    console.log(valores)
-    // Enviar estos valores
+  getNaciones() {
+    this.nacionesSercive.getNaciones().subscribe(n => {
+      this.naciones = n;
+    })
   }
 
-  rellenarCamposRadio(){
-    let valores = this.formularioDesaparecidos.value; 
+  onNacionesChange(event) {
+    if (this.formularioDesaparecidos.value.PaisObjetivo === "MEXICANA") {
+      this.nacionesSercive.getEntidades().subscribe(e => {
+        this.entidades = e;
+      })
+    }
+  }
 
-    if(this.valoresRadioButton.ViajaConIdentificacion == "Sí" && this.formularioDesaparecidos.value.ViajaConIdentificacion != ""){
-      valores['ViajaConIdentificacion'] = this.formularioDesaparecidos.value.ViajaConIdentificacion
-    } else{
-      valores['ViajaConIdentificacion'] = this.valoresRadioButton.ViajaConIdentificacion
+  onEntidadesChange(event) {
+    this.nacionesSercive.getMunicipios(this.formularioDesaparecidos.value.EstadoObjetivo).subscribe(m => {
+      this.municipios = m;
+    })
+  }
+
+  enviar(): void {
+    let valores = this.rellenarCamposRadio();
+
+    if (Number(this.formularioDesaparecidos.value.EstadoObjetivo)) {
+      this.formularioDesaparecidos.patchValue({
+        EstadoObjetivo: this.entidades.find(ent => ent.idEntidad == this.formularioDesaparecidos.value.EstadoObjetivo).entidad
+      })
     }
 
-    if(this.valoresRadioButton.OtrosIdiomas == "Sí" && this.formularioDesaparecidos.value.OtrosIdiomas != ""){
-      valores['OtrosIdiomas'] = this.formularioDesaparecidos.value.OtrosIdiomas
-    } else{
-      valores['OtrosIdiomas'] = this.valoresRadioButton.OtrosIdiomas
+    const formData = new FormData();
+    for (const key of Object.keys(this.formularioDesaparecidos.value)) {
+      const value = this.formularioDesaparecidos.value[key];
+      formData.append(key, value);
     }
 
-    if(this.valoresRadioButton.PuebloOriginario == "Sí" && this.formularioDesaparecidos.value.PuebloOriginario != ""){
-      valores['PuebloOriginario'] = this.formularioDesaparecidos.value.PuebloOriginario
-    } else{
-      valores['PuebloOriginario'] = this.valoresRadioButton.PuebloOriginario
-    }
+    this.http.post(GlobalComponent.APIurl + "/desaparecidos", formData)
+      .subscribe(res => {
+        console.log(res)
+        if (res['message'] == "Persona desaparecida añadida") {
+          alert("Persona desaparecida añadida")
+        }
+      })
+  }
 
-    if(this.valoresRadioButton.IdiomaPadresAbuelos == "Sí" && this.formularioDesaparecidos.value.IdiomaPadresAbuelos != ""){
-      valores['IdiomaPadresAbuelos'] = this.formularioDesaparecidos.value.IdiomaPadresAbuelos
-    } else{
-      valores['IdiomaPadresAbuelos'] = this.valoresRadioButton.IdiomaPadresAbuelos
-    }
-
-    if(this.valoresRadioButton.OrientacionSexual == "Otro" && this.formularioDesaparecidos.value.OrientacionSexual != ""){
-      valores['OrientacionSexual'] = this.formularioDesaparecidos.value.OrientacionSexual
-    } else{
-      valores['OrientacionSexual'] = this.valoresRadioButton.OrientacionSexual
-    }
-
-    if(this.valoresRadioButton.PaisPerdidaContacto == "Otro" && this.formularioDesaparecidos.value.PaisPerdidaContacto != ""){
-      valores['PaisPerdidaContacto'] = this.formularioDesaparecidos.value.PaisPerdidaContacto
-    } else{
-      valores['PaisPerdidaContacto'] = this.valoresRadioButton.PaisPerdidaContacto
-    } 
-
-    if(this.valoresRadioButton.PapelesFalsos == "Sí" && this.formularioDesaparecidos.value.PapelesFalsos != ""){
-      valores['PapelesFalsos'] = this.formularioDesaparecidos.value.PapelesFalsos
-    } else{
-      valores['PapelesFalsos'] = this.valoresRadioButton.PapelesFalsos
-    }
-
-    if(this.valoresRadioButton.VelloFacial == "Sí" && this.formularioDesaparecidos.value.VelloFacial != ""){
-      valores['VelloFacial'] = this.formularioDesaparecidos.value.VelloFacial
-    } else{
-      valores['VelloFacial'] = this.valoresRadioButton.VelloFacial
-    }
-
-    if(this.valoresRadioButton.HayDenuncia == "Sí" && this.formularioDesaparecidos.value.HayDenuncia != ""){
-      valores['HayDenuncia'] = this.formularioDesaparecidos.value.HayDenuncia
-    } else{
-      valores['HayDenuncia'] = this.valoresRadioButton.HayDenuncia
-    }
-
-    if(this.valoresRadioButton.HayReporte == "Sí" && this.formularioDesaparecidos.value.HayReporte != ""){
-      valores['HayReporte'] = this.formularioDesaparecidos.value.HayReporte
-    } else{
-      valores['HayReporte'] = this.valoresRadioButton.HayReporte
-    }
-
-    if(this.valoresRadioButton.AvancesDenuncia == "Sí" && this.formularioDesaparecidos.value.AvancesDenuncia != ""){
-      valores['AvancesDenuncia'] = this.formularioDesaparecidos.value.AvancesDenuncia
-    } else{
-      valores['AvancesDenuncia'] = this.valoresRadioButton.AvancesDenuncia
-    }
-
-    valores['InformacionPublica'] = this.valoresRadioButton.InformacionPublica
-    valores['HablaEspañol'] = this.valoresRadioButton.HablaEspañol
-    valores['Afrodescendiente'] = this.valoresRadioButton.Afrodescendiente
-    valores['DeportadaAnteriormente'] = this.valoresRadioButton.DeportadaAnteriormente
-    valores['Encarcelado'] = this.valoresRadioButton.Encarcelado
-    valores['Lentes'] = this.valoresRadioButton.Lentes
-    valores['Embarazada'] = this.valoresRadioButton.Embarazada
-
-    return valores
+   rellenarCamposRadio(){
+    this.formularioDesaparecidos.patchValue({
+      ViajaConIdentificacion: this.valoresRadioButton.ViajaConIdentificacion,
+      HablaEspañol: this.valoresRadioButton.HablaEspañol,
+      OtrosIdiomas: this.valoresRadioButton.OtrosIdiomas,
+      PuebloOriginario: this.valoresRadioButton.PuebloOriginario,
+      Afrodescendiente: this.valoresRadioButton.Afrodescendiente,
+      IdiomaPadresAbuelos: this.valoresRadioButton.IdiomaPadresAbuelos,
+      OrientacionSexual: this.valoresRadioButton.OrientacionSexual,
+      PaisPerdidaContacto: this.valoresRadioButton.PaisPerdidaContacto,
+      DeportadaAnteriormente: this.valoresRadioButton.DeportadaAnteriormente,
+      Encarcelado: this.valoresRadioButton.Encarcelado,
+      PapelesFalsos: this.valoresRadioButton.PapelesFalsos,
+      VelloFacial: this.valoresRadioButton.VelloFacial,
+      Lentes: this.valoresRadioButton.Lentes,
+      Embarazada: this.valoresRadioButton.Embarazada,
+      HayDenuncia: this.valoresRadioButton.HayDenuncia,
+      HayReporte: this.valoresRadioButton.HayReporte,
+      AvancesDenuncia: this.valoresRadioButton.AvancesDenuncia,
+      InformacionPublica: this.valoresRadioButton.InformacionPublica
+    })
   }
 
   onFileChange(event) {
@@ -338,14 +244,22 @@ export class DesaparecidosComponent implements OnInit {
         this.imagenSRC = reader.result as string;
 
         this.formularioDesaparecidos.patchValue({
-          Imagen: reader.result
-        });
+          Imagen: event.target.files[0]
+        })
       };
     }
   }
 
-  async cambiarPasoFormulario(siguientePaso) {
+  cambiarPasoFormulario(siguientePaso) {
     this.posicionFormulario = siguientePaso;
+  }
+
+  botonSiguienteRetrocer(avanzar) {
+    if (avanzar) {
+      this.posicionFormulario++;
+    } else{
+      this.posicionFormulario--;
+    }
   }
 
   onChange(event) {
@@ -357,5 +271,10 @@ export class DesaparecidosComponent implements OnInit {
       this.valoresRadioButton[event.target.name] = "Otro"
     }
 
+    if(event.target.name == "InformacionPublica"){
+      this.formularioDesaparecidos.patchValue({
+        InformacionPublica: event.target.value
+      });
+    }
   }
 }

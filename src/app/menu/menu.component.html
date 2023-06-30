@@ -1,25 +1,29 @@
-<ul>
-    <li style="text-align: left;" class="dropdown">
-        <a href="javascript:void(0)" class="dropbtn">Menu</a>
-        <div class="dropdown-content">
-            <a routerLink="/desaparecidos" mat-menu-item>Añadir persona desaparecida</a>
-            <a routerLink="/ver-desaparecidos" mat-menu-item>Visualizar personas desaparecidas</a>
-            <a routerLink="/interaccion" mat-menu-item>Añadir persona en interacción</a>
-            <a routerLink="/ver-interaccion" mat-menu-item>Visualizar personas en interacción</a>
-            <a routerLink="/grupo" mat-menu-item>Crear grupo de personas</a>
-        </div>
-    </li>
+<div class="menu">
+    <ul>
+        <li style="text-align: left;" class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Menu</a>
+            <div class="dropdown-content">
+                <a routerLink="/desaparecidos">Añadir persona desaparecida</a>
+                <a routerLink="/ver-desaparecidos">Visualizar personas desaparecidas</a>
+                <a routerLink="/interaccion">Añadir persona en interacción</a>
+                <a routerLink="/ver-interaccion">Visualizar personas en interacción</a>
+                <a routerLink="/grupo">Crear grupo de personas</a>
+                <a routerLink="/ver-grupos">Visualizar grupos de personas</a>
+                <a routerLink="/actualizar-interaccion">Actualizar interacción de una persona</a>
+            </div>
+        </li>
 
-    <li style="text-align: center;">
-        <a routerLink="/home">Registro de Interacciones</a>
-    </li>
+        <li style="text-align: center;">
+            <a routerLink="/home">Registro de Interacciones</a>
+        </li>
 
-    <li style="text-align: right;" class="dropdown">
-        <a href="javascript:void(0)" class="dropbtn">Bienvenido, {{user}} </a>
-        <div  class="dropdown-content">
-            <a style="text-align: right;" routerLink="/entrevistador" mat-menu-item>Modificar datos del
-                entrevistador</a>
-            <a style="text-align: right;" routerLink="/login" mat-menu-item>Cerrar sesión</a>
-        </div>
-    </li>
-</ul>
+        <li style="text-align: right;" class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Bienvenido, {{user}} </a>
+            <div class="dropdown-content">
+                <a style="text-align: right;" routerLink="/entrevistador">Modificar datos del
+                    entrevistador</a>
+                <a style="text-align: right;" (click)="logOut()">Cerrar sesión</a>
+            </div>
+        </li>
+    </ul>
+</div>
