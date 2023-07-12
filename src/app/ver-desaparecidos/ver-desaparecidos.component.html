@@ -14,19 +14,20 @@
             <option value="Sexo">Sexo</option>                 
         </select>
 
-        <input class="input_ver" type="text" id="valor" formControlName="valor" placeholder="Escribe aquí para buscar">
+        <input class="input_ver" style="margin-left: 20px;" type="text" id="valor" formControlName="valor" placeholder="Escribe aquí para buscar">
         
-        <input type="submit" [disabled]="!formularioVerDesaparecidos.valid" value="Añadir filtro">
+        <input class="button_form" style="margin-left: 20px;" type="submit" [disabled]="!formularioVerDesaparecidos.valid" value="Añadir filtro">
     </form>
 
     <br>
-    <button (click)="clear()">Limpiar búsquedas</button>
+    <button class="button_form" (click)="clear()">Limpiar búsquedas</button>
     
     <br>
     <br>
 
     <div #grid id="grid"></div>
 
+    <br>
 
-    <button (click)="download()">Descargar tabla como CSV</button>
+    <button class="button_form" (click)="download()">Descargar tabla como CSV</button>
 </div>

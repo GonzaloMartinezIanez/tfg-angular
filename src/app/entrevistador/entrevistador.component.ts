@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { EntrevistadorService } from '../entrevistador.service';
+import { EntrevistadorService } from '../servicios/entrevistador.service';
 import { Observable } from 'rxjs';
 import * as L from "leaflet";
 
@@ -11,7 +11,11 @@ import * as L from "leaflet";
   styleUrls: ['./entrevistador.component.css']
 })
 
+/**
+ * Componente con el formulario para cambiar los datos del entrevistador
+ */
 export class EntrevistadorComponent implements OnInit {
+  // FormGroup con el formulario
   formularioEntrevistador = new FormGroup({
     Nombre: new FormControl(''),
     ApellidoPaterno: new FormControl(''),
@@ -21,11 +25,9 @@ export class EntrevistadorComponent implements OnInit {
     LugarActual: new FormControl(''),
   });
 
+  // Variables del mapa
   mapEntrevistador;
   layer = new L.marker;
-
-  e: any;
-
   markerIcon = {
     icon: L.icon({
       iconSize: [25, 41],
@@ -39,12 +41,19 @@ export class EntrevistadorComponent implements OnInit {
 
   constructor(private servicioEntrevistador: EntrevistadorService) { }
 
+  /**
+   * Al comenzar la ejecucion se obtiene el entrevistador
+   * y se crea el mapa
+   */
   ngOnInit(): void {
     this.getEntrevistador();
 
     this.crearMapa();
   }
 
+  /**
+   * Funcion para crear el mapa
+   */
   crearMapa() {
     this.mapEntrevistador = L.map("mapEntrevistador").setView([37.16788748437835, -3.5993957519531254], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -64,6 +73,10 @@ export class EntrevistadorComponent implements OnInit {
     });
   }
 
+  /**
+   * Funcion para obtener el entrevistador y mostrar sus
+   * datos en el formulario
+   */
   getEntrevistador(): void {
     this.servicioEntrevistador.getEntrevistador()
       .subscribe(entrevistador => {
@@ -78,6 +91,7 @@ export class EntrevistadorComponent implements OnInit {
 
         const coordenadas = entrevistador[0].LugarActual.split(', ');
 
+        // Si su lugar actual son coordenadas, se pone un marcador en el mapa
         if (Number(coordenadas[0]) && Number(coordenadas[1])) {
           this.mapEntrevistador.setView([coordenadas[0], coordenadas[1]], 13);
           this.layer = L.marker([coordenadas[0], coordenadas[1]], this.markerIcon).addTo(this.mapEntrevistador);
@@ -85,7 +99,14 @@ export class EntrevistadorComponent implements OnInit {
       });
   }
 
+  /**
+   * Funcion para actualizar los datos del entrevistador 
+   */
   modificar(): void {
-    this.servicioEntrevistador.putEntrevistador(this.formularioEntrevistador.value);
+    this.servicioEntrevistador.putEntrevistador(this.formularioEntrevistador.value).subscribe(res => {
+      console.log(res)
+      if (res == "Entrevistador actualizado")
+        alert("Entrevistador actualizado")
+    });
   }
 }

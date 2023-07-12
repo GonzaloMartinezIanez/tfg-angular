@@ -1,14 +1,13 @@
 body {
     font-family: 'Montserrat';
     background-color: rgb(221, 201, 163);
+    /* color: rgb(111,114,113); */
 }
 
 .contenido {
     width: 97%;
-    margin-left: 1.5%;
-    border-radius: 5px;
-    padding: 40px;
     margin-bottom: 100px;
+    padding: 40px 0 0 30px;
 }
 
 .cabecera {
@@ -17,12 +16,11 @@ body {
     overflow: hidden; */
 }
 
-
 .ocultar {
     display: none;
 }
 
-.hide{
+.hide {
     display: hidden;
 }
 
@@ -36,23 +34,22 @@ body {
     margin: 12px 12px;
     margin-left: auto;
     margin-right: auto;
-    height: 600px;
+    height: 400px;
     width: calc(50%);
     z-index: 0;
 }
 
 .boton_area_form {
-    width: 100%;
     display: flex;
-    justify-content: left;
-    
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .boton_area_form_siguiente {
     width: 100%;
     display: flex;
     justify-content: right;
-    
+
 }
 
 .boton_avanzar_form {
@@ -65,6 +62,7 @@ body {
 
     padding: 15px 32px;
     margin-right: 5%;
+    margin-bottom: 10px;
 
     text-align: center;
     text-decoration: none;
@@ -147,6 +145,10 @@ body {
     text-decoration: none;
 }
 
+.button_form:hover {
+    background-color: rgb(16, 49, 43);
+}
+
 .col-10 {
     display: flex;
     justify-content: space-around;
@@ -171,15 +173,30 @@ body {
     margin-top: 6px;
 }
 
-.col-65 {
+.col-35 {
     float: left;
-    width: 65%;
+    display: flex;
+    justify-content: space-around;
+    width: 35%;
+    margin-top: 6px;
+    text-align: left;
+}
+
+.col-40 {
+    float: left;
+    width: 40%;
     margin-top: 6px;
 }
 
 .col-55 {
     float: left;
     width: 55%;
+    margin-top: 6px;
+}
+
+.col-65 {
+    float: left;
+    width: 65%;
     margin-top: 6px;
 }
 
@@ -209,6 +226,11 @@ body {
     resize: vertical;
 }
 
+.campo_obligatorio {
+    color: red;
+    font-weight: bold;
+}
+
 /* Clear floats after the columns */
 .row::after {
     content: "";
@@ -220,11 +242,14 @@ body {
 @media screen and (max-width: 800px) {
 
     .col-10,
+    .col-20,
     .col-25,
-    .col-75,
+    .col-35,
+    .col-40,
     .col-55,
     .col-65,
-    .col-20 input[type=submit] {
+    .col-75,
+    .col-65 input[type=submit] {
         width: 100%;
         margin-top: 0;
     }
@@ -234,5 +259,10 @@ body {
     #mapGrupo,
     #mapEntrevistador {
         width: calc(100%);
+    }
+
+    .contenido {
+        padding: 80px 5px 0 5px;
+        margin-bottom: 30px;
     }
 }

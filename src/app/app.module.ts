@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -17,7 +16,7 @@ import { MenuComponent } from './menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { TokenInterceptorService } from './token-interceptor.service';
+import { TokenInterceptorService } from './servicios/token-interceptor.service';
 import { VerGruposComponent } from './ver-grupos/ver-grupos.component';
 import { ActualizarInteraccionComponent } from './actualizar-interaccion/actualizar-interaccion.component';
 

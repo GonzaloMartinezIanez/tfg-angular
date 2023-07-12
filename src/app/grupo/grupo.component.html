@@ -5,7 +5,7 @@
     <form [formGroup]="formularioGrupo" (ngSubmit)="(crearGrupo())">
         <div class="row">
             <div class="col-25">
-                <label class="label_form" for="NombreGrupo">Nombre del grupo</label>
+                <label class="label_form" for="NombreGrupo">Nombre del grupo <span class="campo_obligatorio">*</span></label>
             </div>
             <div class="col-75">
                 <input class="input_form" id="NombreGrupo" type="text" formControlName="NombreGrupo">

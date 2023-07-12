@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as L from "leaflet";
-import { EntrevistadorService } from '../entrevistador.service';
+import { EntrevistadorService } from '../servicios/entrevistador.service';
 import { GlobalComponent } from '../global-component';
-import { NacionesService } from '../naciones.service';
+import { NacionesService } from '../servicios/naciones.service';
 //import "leaflet/dist/leaflet.css";
 
 @Component({
@@ -12,7 +12,12 @@ import { NacionesService } from '../naciones.service';
   templateUrl: './desaparecidos.component.html',
   styleUrls: ['./desaparecidos.component.css']
 })
+
+/**
+ * Componente con el formulario para añadir una persona desaparecida
+ */
 export class DesaparecidosComponent implements OnInit {
+  // FormGroup con el formulario
   formularioDesaparecidos = new FormGroup({
     // Datos de la entrevista
     FolioInstitucion: new FormControl(''),
@@ -118,24 +123,25 @@ export class DesaparecidosComponent implements OnInit {
     Cargo: new FormControl('')
   })
 
-  posicionFormulario: any;
+  posicionFormulario: any;    // Variable que marca en que paso esta el formulario
   imagenSRC: string = "";
 
+  // Variable que guarda el estado de los radio buttons
   valoresRadioButton = {
     "ViajaConIdentificacion": "",
     "HablaEspañol": "",
     "OtrosIdiomas": "",
     "PuebloOriginario": "",
     "Afrodescendiente": "",
-    "IdiomaPadresAbuelos": "",    
+    "IdiomaPadresAbuelos": "",
     "OrientacionSexual": "",
     "PaisPerdidaContacto": "",
     "DeportadaAnteriormente": "",
-    "Encarcelado":"",
+    "Encarcelado": "",
     "PapelesFalsos": "",
     "VelloFacial": "",
-    "Lentes":"",
-    "Embarazada":"",
+    "Lentes": "",
+    "Embarazada": "",
     "HayDenuncia": "",
     "HayReporte": "",
     "AvancesDenuncia": "",
@@ -149,12 +155,19 @@ export class DesaparecidosComponent implements OnInit {
   constructor(private servicioEntrevistador: EntrevistadorService,
     private http: HttpClient, private nacionesSercive: NacionesService) { }
 
+  /**
+   * Al comenzar se obtiene los datos del entrevistador las naciones
+   * y se marca la posicion del formulario a la primera (0)
+   */
   ngOnInit(): void {
     this.getEntrevistador();
     this.posicionFormulario = 0;
     this.getNaciones();
   }
 
+  /**
+   * Funcion para solicitar y guardar los campos del entrevistador en el formulario
+   */
   getEntrevistador(): void {
     this.servicioEntrevistador.getEntrevistador()
       .subscribe(entrevistador => {
@@ -166,12 +179,19 @@ export class DesaparecidosComponent implements OnInit {
       });
   }
 
+  /**
+   * Funcion para obtener las nacionlidades
+   */
   getNaciones() {
     this.nacionesSercive.getNaciones().subscribe(n => {
       this.naciones = n;
     })
   }
 
+  /**
+   * Funcion que se llama cada vez que se selecciona una nacionalidad
+   * en el select del html
+   */
   onNacionesChange(event) {
     if (this.formularioDesaparecidos.value.PaisObjetivo === "MEXICANA") {
       this.nacionesSercive.getEntidades().subscribe(e => {
@@ -180,12 +200,19 @@ export class DesaparecidosComponent implements OnInit {
     }
   }
 
+  /**
+   * Funcion que se llama cada vez que cambia la entidad para mostrar los 
+   * municipios de esta entidad
+   */
   onEntidadesChange(event) {
     this.nacionesSercive.getMunicipios(this.formularioDesaparecidos.value.EstadoObjetivo).subscribe(m => {
       this.municipios = m;
     })
   }
 
+  /**
+   * Funcion que manda los datos del formulario a la API
+   */
   enviar(): void {
     let valores = this.rellenarCamposRadio();
 
@@ -195,6 +222,7 @@ export class DesaparecidosComponent implements OnInit {
       })
     }
 
+    // Para mandar una imagen es necesario enviar un FormData
     const formData = new FormData();
     for (const key of Object.keys(this.formularioDesaparecidos.value)) {
       const value = this.formularioDesaparecidos.value[key];
@@ -210,7 +238,11 @@ export class DesaparecidosComponent implements OnInit {
       })
   }
 
-   rellenarCamposRadio(){
+  /**
+   * Funcion que rellena el valor de los radio buttons en 
+   * los campos del formulario
+   */
+  rellenarCamposRadio() {
     this.formularioDesaparecidos.patchValue({
       ViajaConIdentificacion: this.valoresRadioButton.ViajaConIdentificacion,
       HablaEspañol: this.valoresRadioButton.HablaEspañol,
@@ -233,6 +265,10 @@ export class DesaparecidosComponent implements OnInit {
     })
   }
 
+  /**
+   * Funcion que se llama cuando se selecciona una imagen
+   * @param event Contiene la informacion de la imagen
+   */
   onFileChange(event) {
     const reader = new FileReader();
 
@@ -250,28 +286,42 @@ export class DesaparecidosComponent implements OnInit {
     }
   }
 
+  /**
+   *  Funcion para cambiar a otro paso del formulario
+   * @param siguientePaso Numero del paso objetivo
+   */
   cambiarPasoFormulario(siguientePaso) {
     this.posicionFormulario = siguientePaso;
   }
 
+  /**
+   * Funcion para avanzar o retroceder en el formulario
+   * @param avanzar Si es verdadera avanza, de lo contrario retrocede
+   */
   botonSiguienteRetrocer(avanzar) {
     if (avanzar) {
       this.posicionFormulario++;
-    } else{
+    } else {
       this.posicionFormulario--;
     }
   }
 
+  /**
+   * Funcion que se llama cada vez que se pulsa un radio button del formulario
+   * @param event 
+   */
   onChange(event) {
     if (event.target.value == "Sí") {
       this.valoresRadioButton[event.target.name] = "Sí"
-    } else if(event.target.value == "No"){
+    } else if (event.target.value == "No") {
       this.valoresRadioButton[event.target.name] = "No"
-    } else if((event.target.value == "Otro")){
+    } else if ((event.target.value == "Otro")) {
       this.valoresRadioButton[event.target.name] = "Otro"
+    } else {
+      this.valoresRadioButton[event.target.name] = event.target.value;
     }
 
-    if(event.target.name == "InformacionPublica"){
+    if (event.target.name == "InformacionPublica") {
       this.formularioDesaparecidos.patchValue({
         InformacionPublica: event.target.value
       });

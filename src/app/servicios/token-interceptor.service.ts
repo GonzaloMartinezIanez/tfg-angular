@@ -5,6 +5,10 @@ import {AuthService} from './auth.service'
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Servicio que modifica todas las peticiones que se realizan a la
+ * API añadiend el token en la cabecera
+ */
 export class TokenInterceptorService implements HttpInterceptor{
 
   constructor(private authService: AuthService) { }

@@ -22,7 +22,7 @@
                 <h2>Datos generales</h2>
                 <div class="row">
                     <div class="col-25">
-                        <label class="label_form" for="Nombre">Nombre *</label>
+                        <label class="label_form" for="Nombre">Nombre <span class="campo_obligatorio">*</span></label>
                     </div>
                     <div class="col-75">
                         <input class="input_form" id="Nombre" type="text" formControlName="Nombre">
@@ -31,7 +31,7 @@
 
                 <div class="row">
                     <div class="col-25">
-                        <label class="label_form" for="ApellidoPaterno">Apellido paterno *</label>
+                        <label class="label_form" for="ApellidoPaterno">Apellido paterno <span class="campo_obligatorio">*</span></label>
                     </div>
                     <div class="col-75">
                         <input class="input_form" id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
@@ -195,13 +195,13 @@
                         <div>
                             <input class="input_form" type="radio" name="SituacionCalle" id="SituacionCalleSi"
                                 value="Sí" (change)="onChange($event)">
-                            <label for="SituacionCalleSi">Sí</label>
+                            <label class="label_form" for="SituacionCalleSi">Sí</label>
                         </div>
 
                         <div>
                             <input class="input_form" type="radio" name="SituacionCalle" id="SituacionCalleNo"
                                 value="No" (change)="onChange($event)">
-                            <label for="SituacionCalleNo">No</label>
+                            <label class="label_form" for="SituacionCalleNo">No</label>
                         </div>
                     </div>
                 </div>
@@ -215,13 +215,13 @@
                         <div>
                             <input class="input_form" type="radio" name="MigrantesMexicanas" id="MigrantesMexicanasSi"
                                 value="Sí" (change)="onChange($event)">
-                            <label for="MigrantesMexicanasSi">Sí</label>
+                            <label class="label_form" for="MigrantesMexicanasSi">Sí</label>
                         </div>
 
                         <div>
                             <input class="input_form" type="radio" name="MigrantesMexicanas" id="MigrantesMexicanasNo"
                                 value="No" (change)="onChange($event)">
-                            <label for="MigrantesMexicanasNo">No</label>
+                            <label class="label_form" for="MigrantesMexicanasNo">No</label>
                         </div>
                     </div>
                 </div>
@@ -235,13 +235,13 @@
                         <div>
                             <input class="input_form" type="radio" name="TrabajadorCampo" id="TrabajadorCampoSi"
                                 value="Sí" (change)="onChange($event)">
-                            <label for="TrabajadorCampoSi">Sí</label>
+                            <label class="label_form" for="TrabajadorCampoSi">Sí</label>
                         </div>
 
                         <div>
                             <input class="input_form" type="radio" name="TrabajadorCampo" id="TrabajadorCampoNo"
                                 value="No" (change)="onChange($event)">
-                            <label for="TrabajadorCampoNo">No</label>
+                            <label class="label_form" for="TrabajadorCampoNo">No</label>
                         </div>
                     </div>
                 </div>
@@ -256,13 +256,13 @@
                         <div>
                             <input class="input_form" type="radio" name="DesplazadasForzadasInternas"
                                 id="DesplazadasForzadasInternasSi" value="Sí" (change)="onChange($event)">
-                            <label for="DesplazadasForzadasInternasSi">Sí</label>
+                            <label class="label_form" for="DesplazadasForzadasInternasSi">Sí</label>
                         </div>
 
                         <div>
                             <input class="input_form" type="radio" name="DesplazadasForzadasInternas"
                                 id="DesplazadasForzadasInternasNo" value="No" (change)="onChange($event)">
-                            <label for="DesplazadasForzadasInternasNo">No</label>
+                            <label class="label_form" for="DesplazadasForzadasInternasNo">No</label>
                         </div>
                     </div>
                 </div>
@@ -276,13 +276,13 @@
                         <div>
                             <input class="input_form" type="radio" name="MigrantesExtranjeras"
                                 id="MigrantesExtranjerasSi" value="Sí" (change)="onChange($event)">
-                            <label for="MigrantesExtranjerasSi">Sí</label>
+                            <label class="label_form" for="MigrantesExtranjerasSi">Sí</label>
                         </div>
 
                         <div>
                             <input class="input_form" type="radio" name="MigrantesExtranjeras"
                                 id="MigrantesExtranjerasNo" value="No" (change)="onChange($event)">
-                            <label for="MigrantesExtranjerasNo">No</label>
+                            <label class="label_form" for="MigrantesExtranjerasNo">No</label>
                         </div>
                     </div>
                 </div>
@@ -296,13 +296,13 @@
                         <div>
                             <input class="input_form" type="radio" name="Deportadas" id="DeportadasSi" value="Sí"
                                 (change)="onChange($event)">
-                            <label for="DeportadasSi">Sí</label>
+                            <label class="label_form" for="DeportadasSi">Sí</label>
                         </div>
 
                         <div>
                             <input class="input_form" type="radio" name="Deportadas" id="DeportadasNo" value="No"
                                 (change)="onChange($event)">
-                            <label for="DeportadasNo">No</label>
+                            <label class="label_form" for="DeportadasNo">No</label>
                         </div>
                     </div>
                 </div>
@@ -316,13 +316,13 @@
                         <div>
                             <input class="input_form" type="radio" name="TrabajadorHogar" id="TrabajadorHogarSi"
                                 value="Sí" (change)="onChange($event)">
-                            <label for="TrabajadorHogarSi">Sí</label>
+                            <label class="label_form" for="TrabajadorHogarSi">Sí</label>
                         </div>
 
                         <div>
                             <input class="input_form" type="radio" name="TrabajadorHogar" id="TrabajadorHogarNo"
                                 value="No" (change)="onChange($event)">
-                            <label for="TrabajadorHogarNo">No</label>
+                            <label class="label_form" for="TrabajadorHogarNo">No</label>
                         </div>
                     </div>
                 </div>
@@ -366,7 +366,10 @@
                         <input class="input_form" id="Imagen" type="file" accept='image/*'
                             (change)="onFileChange($event)">
                     </div>
-                    <img [src]="imagenSRC" *ngIf="imagenSRC" style="width: 50%; align-items: center;">
+
+                    <br>
+
+                    <img [src]="imagenSRC" *ngIf="imagenSRC" style="height: 400px; margin-top: 20px;">
                 </div>
             </div>
 

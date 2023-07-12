@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GlobalComponent } from './global-component';
+import { GlobalComponent } from '../global-component';
 
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Servicio encargado de los grupos
+ */
 export class GrupoService {
   constructor(private http: HttpClient) { }
 

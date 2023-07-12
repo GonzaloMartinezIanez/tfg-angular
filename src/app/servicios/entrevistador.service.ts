@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { GlobalComponent } from './global-component';
+import { GlobalComponent } from '../global-component';
 
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Servicio encargado de los entrevistadores
+ */
 export class EntrevistadorService {
 
   constructor(private http: HttpClient) { }
@@ -16,11 +19,6 @@ export class EntrevistadorService {
   }
 
   putEntrevistador(e: any) {
-    this.http.put(GlobalComponent.APIurl + "/entrevistador", e)
-      .subscribe(res => {
-        console.log(res)
-        if (res == "Entrevistador actualizado")
-          alert("Entrevistador actualizado")
-      });
+    return this.http.put(GlobalComponent.APIurl + "/entrevistador", e);
   }
 }

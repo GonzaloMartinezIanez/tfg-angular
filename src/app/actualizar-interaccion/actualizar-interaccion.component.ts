@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GrupoService } from '../grupo.service';
+import { GrupoService } from '../servicios/grupo.service';
 import { HttpClient } from '@angular/common/http';
-import { InteraccionService } from '../interaccion.service';
+import { InteraccionService } from '../servicios/interaccion.service';
 import * as L from "leaflet";
 
 @Component({
@@ -9,29 +9,17 @@ import * as L from "leaflet";
   templateUrl: './actualizar-interaccion.component.html',
   styleUrls: ['./actualizar-interaccion.component.css']
 })
+/**
+ * Componente para captar una persona en interaccion y
+ * actualizar la interaccion
+ */
 export class ActualizarInteraccionComponent implements OnInit {
-  folio = "";
-  hayInteraccion = false;
-  estaEnGrupo = false;
-  interaccionesOriginal = ""
+  folio = "";                   // Contenido que se enviará en el formulario
+  hayInteraccion = false;       // Hasta que no hay una interaccion, no se muestra el div
+  estaEnGrupo = false;          // Mostrar los integrantes del grupo si hay
+  interaccionesOriginal = ""    // Variable necesaria para saber si se ha tocado la interaccion
 
-  mapActualizarInteraccion;
-  layer = new L.marker;
-  ocultarMapa = true;
-  primeraVezMapa = true;
-
-  markerIcon = {
-    icon: L.icon({
-      iconSize: [25, 41],
-      iconAnchor: [10, 41],
-      popupAnchor: [2, -40],
-      // specify the path here
-      iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
-      shadowUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-shadow.png"
-    })
-  };
-
-  interaccion: any = {
+  interaccion: any = {          // Variable donde se guarda la interaccion
     Folio: "",
     Nombre: "",
     ApellidoPaterno: "",
@@ -65,11 +53,35 @@ export class ActualizarInteraccionComponent implements OnInit {
     NombreGrupo: ""
   }
 
+  // Variables relacionadas con el mapa
+  mapActualizarInteraccion;
+  layer = new L.marker;
+  ocultarMapa = true;
+  primeraVezMapa = true;
+
+  markerIcon = {
+    icon: L.icon({
+      iconSize: [25, 41],
+      iconAnchor: [10, 41],
+      popupAnchor: [2, -40],
+      // specify the path here
+      iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
+      shadowUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-shadow.png"
+    })
+  }; 
+
   constructor(private http: HttpClient, private servicioGrupo: GrupoService, private servicioInteraccion: InteraccionService) { }
 
   ngOnInit(): void {
+    // Al comenzar se crea un mapa vacio que no se muestra
+    this.crearMapa();
   }
 
+  /**
+   * Funcion que pide la interacion y guarda el resultado en la interaccion
+   * en la variable privada this.interaccion
+   * En el caso de no existir o no tener acceso, se muestra un error
+   */
   getInteraccion() {
     if (Number(this.folio)) {
       this.servicioInteraccion.getInteraccion(this.folio).subscribe(res => {
@@ -112,22 +124,22 @@ export class ActualizarInteraccionComponent implements OnInit {
 
           this.interaccionesOriginal = res[0].Interacciones;
 
-          /* if (this.interaccion.LugarActual != "") {
+          // Mostrar el mapa si es necesario
+          if (this.interaccion.LugarActual != "") {
             const coordenadas = this.interaccion.LugarActual.split(', ');
             if (Number(coordenadas[0]) && Number(coordenadas[1])) {
               if(this.primeraVezMapa){          
-                this.crearMapa();
                 this.actualizarMapa();
-                this.primeraVezMapa = false;
-                console.log("entra")
+                this.ocultarMapa = false;
               } else{
-                this.actualizarMapa();
+                this.ocultarMapa = true;
               }
             }
           } else {
             this.ocultarMapa = true;
-          } */
+          }
 
+          // Si esta en un grupo hay que mostrarlo en la interfaz
           this.servicioGrupo.getGrupoInteraccion(this.folio).subscribe(res => {
             if (res == "[]") {
               this.estaEnGrupo = false;
@@ -144,6 +156,9 @@ export class ActualizarInteraccionComponent implements OnInit {
     }
   }
 
+  /**
+   * Funcion que crea un mapa vacio
+   */
   crearMapa() {
     this.mapActualizarInteraccion = L.map("mapActualizarInteraccion").setView([37.16788748437835, -3.5993957519531254], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -152,6 +167,9 @@ export class ActualizarInteraccionComponent implements OnInit {
     }).addTo(this.mapActualizarInteraccion);
   }
 
+  /**
+   * Funcion que añade un marcador al mapa con la nueva posicion
+   */
   actualizarMapa() {
     if (this.interaccion.LugarActual != "") {
       const coordenadas = this.interaccion.LugarActual.split(', ');
@@ -162,13 +180,16 @@ export class ActualizarInteraccionComponent implements OnInit {
         this.mapActualizarInteraccion.removeLayer(this.layer)
         this.mapActualizarInteraccion.setView([coordenadas[0], coordenadas[1]], 13);
         this.layer = L.marker([coordenadas[0], coordenadas[1]], this.markerIcon).addTo(this.mapActualizarInteraccion);
-
       } else {
         this.ocultarMapa = true;
       }
     }
   }
 
+  /**
+   * Funcion que manda una peticion a la API para
+   * actualizar la interaccion de la persona
+   */
   actualizar() {
     if (this.interaccionesOriginal == this.interaccion.Interacciones) {
       // No se ha modificado la interaccion
@@ -176,11 +197,14 @@ export class ActualizarInteraccionComponent implements OnInit {
     } else {
       this.servicioInteraccion.putInteraccion(this.folio, this.interaccion.Interacciones).subscribe(res => {
         console.log(res)
+         if (res['message'] == "Interaccion actualizada") {
+           alert("Interacción actualizada con éxito")
+         }
       })
     }
   }
 
-  delay(ms: number) {
+  /* delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+  } */
 }

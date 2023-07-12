@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import DataGridXL from "@datagridxl/datagridxl2";
-import { DesaparecidosService } from '../desaparecidos.service';
+import { DesaparecidosService } from '../servicios/desaparecidos.service';
 
 @Component({
   selector: 'app-ver-desaparecidos',
@@ -10,25 +10,37 @@ import { DesaparecidosService } from '../desaparecidos.service';
   styleUrls: ['./ver-desaparecidos.component.css']
 })
 export class VerDesaparecidosComponent implements OnInit {
-  gridInstance: any;
-  interacciones: any;
-
+  // FormGroup con el formulario para filtrar
   formularioVerDesaparecidos = new FormGroup({
     valor: new FormControl('', Validators.required),
     campo: new FormControl('')
   })
+
+  gridInstance: any;    // Variable donde se crea la tabla
+  desaparecidos: any;   // Variable donde se guardan los registros
   
   constructor(private servicioDesaparecidos: DesaparecidosService) { }
 
+  /**
+   * Al principio de la ejecucion se limpia la tabla, y se espera 
+   * a que se obtengan los registros
+   */
   ngOnInit(): void {
-    //this.clear();
+    this.clear();
     this.getDesaparecidos();
   }
 
+  /**
+   * Funcion para descargar la tabla en formato csv
+   */
   download() {
     this.gridInstance.downloadDataAsCSV();
   }
 
+  /**
+   * Funcion que envia a la API una peticion con los campos y
+   * contenidos por los que filtrar
+   */
   busqueda() {
     this.servicioDesaparecidos.getDesaparecidosCampo(this.formularioVerDesaparecidos.value.campo, this.formularioVerDesaparecidos.value.valor)
       .subscribe(i => {
@@ -36,6 +48,10 @@ export class VerDesaparecidosComponent implements OnInit {
       });
   }
 
+  /**
+   * Funcion para obtener los registros de personas desaparecidas y
+   * mostrarlas en la tabla
+   */
   getDesaparecidos() {
     this.servicioDesaparecidos.getPrimerosDesaparecidos()
       .subscribe(i => {
@@ -43,9 +59,13 @@ export class VerDesaparecidosComponent implements OnInit {
       })
   }
 
-  crearTabla(interacciones) {
+  /**
+   * Funcion para crear la tabla
+   * @param desaparecidos Datos con los registros
+   */
+  crearTabla(desaparecidos) {
     this.gridInstance = new DataGridXL("grid", {
-      data: interacciones.map(i => Object.values(i)),
+      data: desaparecidos.map(i => Object.values(i)),
       frozenCols: 4,
       allowEditCells: false,
       allowFillCells: false,
@@ -438,8 +458,9 @@ export class VerDesaparecidosComponent implements OnInit {
     });
   }
 
-
-
+  /**
+   * Funcion para limpiar la tabla
+   */
   clear(): void {
     this.crearTabla([{  "IdDesaparecido": "-",
                         "FolioInstitucion": "-",

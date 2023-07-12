@@ -69,7 +69,7 @@
             <h2>Datos de la persona migrante desaparecida</h2>
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="Nombre">Nombre *</label>
+                    <label class="label_form" for="Nombre">Nombre <span class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
                     <input class="input_form" id="Nombre" type="text" formControlName="Nombre">
@@ -78,7 +78,8 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="ApellidoPaterno">Apellido paterno *</label>
+                    <label class="label_form" for="ApellidoPaterno">Apellido paterno <span
+                            class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
                     <input class="input_form" id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
@@ -87,7 +88,8 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="ApellidoMaterno">Apellido materno *</label>
+                    <label class="label_form" for="ApellidoMaterno">Apellido materno <span
+                            class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
                     <input class="input_form" id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
@@ -143,7 +145,8 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="FechaNacimiento">Fecha de nacimiento *</label>
+                    <label class="label_form" for="FechaNacimiento">Fecha de nacimiento <span
+                            class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
                     <input class="input_form" id="FechaNacimiento" type="date" formControlName="FechaNacimiento">
@@ -152,7 +155,8 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="Nacionalidad">Nacionalidad *</label>
+                    <label class="label_form" for="Nacionalidad">Nacionalidad <span
+                            class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
                     <select class="select_form" name="Nacionalidad" id="Nacionalidad" formControlName="Nacionalidad">
@@ -188,13 +192,13 @@
                     <div>
                         <input class="input_form" type="radio" name="ViajaConIdentificacion"
                             id="ViajaConIdentificacionSi" value="Sí" (change)="onChange($event)">
-                        <label for="ViajaConIdentificacionSi">Sí</label>
+                        <label class="label_form" for="ViajaConIdentificacionSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="ViajaConIdentificacion"
                             id="ViajaConIdentificacionNo" value="No" (change)="onChange($event)">
-                        <label for="ViajaConIdentificacionNo">No</label>
+                        <label class="label_form" for="ViajaConIdentificacionNo">No</label>
                     </div>
                 </div>
 
@@ -232,13 +236,13 @@
                     <div>
                         <input class="input_form" type="radio" name="HablaEspañol" id="HablaEspañolSi" value="Sí"
                             (change)="onChange($event)">
-                        <label for="HablaEspañolNo">Sí</label>
+                        <label class="label_form" for="HablaEspañolNo">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="HablaEspañol" id="HablaEspañolNo" value="No"
                             (change)="onChange($event)">
-                        <label for="HablaEspañolNo">No</label>
+                        <label class="label_form" for="HablaEspañolNo">No</label>
                     </div>
                 </div>
             </div>
@@ -277,13 +281,13 @@
                     <div>
                         <input class="input_form" type="radio" name="PuebloOriginario" id="PuebloOriginarioSi"
                             value="Sí" (change)="onChange($event)">
-                        <label for="PuebloOriginarioSi">Sí</label>
+                        <label class="label_form" for="PuebloOriginarioSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="PuebloOriginario" id="PuebloOriginarioNo"
                             value="No" (change)="onChange($event)">
-                        <label for="PuebloOriginarioNo">No</label>
+                        <label class="label_form" for="PuebloOriginarioNo">No</label>
                     </div>
                 </div>
 
@@ -302,13 +306,13 @@
                     <div>
                         <input class="input_form" type="radio" name="Afrodescendiente" id="AfrodescendienteSi"
                             value="Sí" (change)="onChange($event)">
-                        <label for="AfrodescendienteSi">Sí</label>
+                        <label class="label_form" for="AfrodescendienteSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="Afrodescendiente" id="AfrodescendienteNo"
                             value="No" (change)="onChange($event)">
-                        <label for="AfrodescendienteNo">No</label>
+                        <label class="label_form" for="AfrodescendienteNo">No</label>
                     </div>
                 </div>
             </div>
@@ -323,13 +327,13 @@
                     <div>
                         <input class="input_form" type="radio" name="IdiomaPadresAbuelos" id="IdiomaPadresAbuelosSi"
                             value="Sí" (change)="onChange($event)">
-                        <label for="IdiomaPadresAbuelosSi">Sí</label>
+                        <label class="label_form" for="IdiomaPadresAbuelosSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="IdiomaPadresAbuelos" id="IdiomaPadresAbuelosNo"
                             value="No" (change)="onChange($event)">
-                        <label for="IdiomaPadresAbuelosNo">No</label>
+                        <label class="label_form" for="IdiomaPadresAbuelosNo">No</label>
                     </div>
                 </div>
 
@@ -362,7 +366,7 @@
                     <label class="label_form" for="OrientacionSexual">Orientación sexual</label>
                 </div>
 
-                <div class="col-20">
+                <div class="col-35">
                     <div>
                         <input class="input_form" type="radio" name="OrientacionSexual"
                             id="OrientacionSexualHeterosexual" value="Heterosexual">
@@ -388,7 +392,7 @@
                     </div>
                 </div>
 
-                <div class="col-55" *ngIf="valoresRadioButton.OrientacionSexual == 'Otro'">
+                <div class="col-40" *ngIf="valoresRadioButton.OrientacionSexual == 'Otro'">
                     <input class="input_form" id="OrientacionSexualCual" type="text"
                         formControlName="OrientacionSexualCual" placeholder="¿Cuál?">
                 </div>
@@ -572,7 +576,8 @@
                     <input class="input_form" id="MunicipioObjetivo" type="text" formControlName="MunicipioObjetivo">
                 </div>
                 <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo === 'MEXICANA'">
-                    <select class="select_form" name="MunicipioObjetivo" id="MunicipioObjetivo" formControlName="MunicipioObjetivo">
+                    <select class="select_form" name="MunicipioObjetivo" id="MunicipioObjetivo"
+                        formControlName="MunicipioObjetivo">
                         <option disabled selected hidden value="">Selecciona una opción</option>
                         <option *ngFor="let municipio of municipios" value="{{municipio.municipio}}">{{
                             municipio.municipio
@@ -602,13 +607,13 @@
                     <div>
                         <input class="input_form" type="radio" name="DeportadaAnteriormente"
                             id="DeportadaAnteriormenteSi" value="Sí" (change)="onChange($event)">
-                        <label for="AfrodescendienteSi">Sí</label>
+                        <label class="label_form" for="AfrodescendienteSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="DeportadaAnteriormente"
                             id="DeportadaAnteriormenteNo" value="No" (change)="onChange($event)">
-                        <label for="DeportadaAnteriormenteNo">No</label>
+                        <label class="label_form" for="DeportadaAnteriormenteNo">No</label>
                     </div>
                 </div>
             </div>
@@ -645,13 +650,13 @@
                     <div>
                         <input class="input_form" type="radio" name="Encarcelado" id="EncarceladoSi" value="Sí"
                             (change)="onChange($event)">
-                        <label for="EncarceladoSi">Sí</label>
+                        <label class="label_form" for="EncarceladoSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="Encarcelado" id="EncarceladoNo" value="No"
                             (change)="onChange($event)">
-                        <label for="EncarceladoNo">No</label>
+                        <label class="label_form" for="EncarceladoNo">No</label>
                     </div>
                 </div>
             </div>
@@ -696,13 +701,13 @@
                     <div>
                         <input class="input_form" type="radio" name="PapelesFalsos" id="PapelesFalsosSi" value="Sí"
                             (change)="onChange($event)">
-                        <label for="PapelesFalsosSi">Sí</label>
+                        <label class="label_form" for="PapelesFalsosSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="PapelesFalsos" id="PapelesFalsosNo" value="No"
                             (change)="onChange($event)">
-                        <label for="PapelesFalsosNo">No</label>
+                        <label class="label_form" for="PapelesFalsosNo">No</label>
                     </div>
                 </div>
 
@@ -783,13 +788,13 @@
                     <div>
                         <input class="input_form" type="radio" name="VelloFacial" id="VelloFacialSi" value="Sí"
                             (change)="onChange($event)">
-                        <label for="VelloFacialSi">Sí</label>
+                        <label class="label_form" for="VelloFacialSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="VelloFacial" id="VelloFacialNo" value="No"
                             (change)="onChange($event)">
-                        <label for="VelloFacialNo">No</label>
+                        <label class="label_form" for="VelloFacialNo">No</label>
                     </div>
                 </div>
 
@@ -808,13 +813,13 @@
                     <div>
                         <input class="input_form" type="radio" name="Lentes" id="LentesSi" value="Sí"
                             (change)="onChange($event)">
-                        <label for="LentesSi">Sí</label>
+                        <label class="label_form" for="LentesSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="Lentes" id="LentesNo" value="No"
                             (change)="onChange($event)">
-                        <label for="LentesNo">No</label>
+                        <label class="label_form" for="LentesNo">No</label>
                     </div>
                 </div>
             </div>
@@ -839,13 +844,13 @@
                         <div>
                             <input class="input_form" type="radio" name="Embarazada" id="EmbarazadaSi" value="Sí"
                                 (change)="onChange($event)">
-                            <label for="EmbarazadaSi">Sí</label>
+                            <label class="label_form" for="EmbarazadaSi">Sí</label>
                         </div>
 
                         <div>
                             <input class="input_form" type="radio" name="Embarazada" id="EmbarazadaNo" value="No"
                                 (change)="onChange($event)">
-                            <label for="EmbarazadaNo">No</label>
+                            <label class="label_form" for="EmbarazadaNo">No</label>
                         </div>
                     </div>
                 </div>
@@ -935,13 +940,13 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label class="label_form" for="Imagen">Imagén de la persona</label>
+                    <label class="label_form" for="Imagen">Imagen de la persona</label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="Imagen" type="file" accept='image/*'
-                        (change)="onFileChange($event)">
+                    <input class="input_form" id="Imagen" type="file" accept='image/*' (change)="onFileChange($event)">
                 </div>
-                <img [src]="imagenSRC" *ngIf="imagenSRC" style="width: 50%; align-items: center;">
+                <br>
+                <img [src]="imagenSRC" *ngIf="imagenSRC" style="width: 400px; margin-top: 20px;">
             </div>
         </div>
 
@@ -957,13 +962,13 @@
                     <div>
                         <input class="input_form" type="radio" name="HayDenuncia" id="HayDenunciaSi" value="Sí"
                             (change)="onChange($event)">
-                        <label for="HayDenunciaSi">Sí</label>
+                        <label class="label_form" for="HayDenunciaSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="HayDenuncia" id="HayDenunciaNo" value="No"
                             (change)="onChange($event)">
-                        <label for="HayDenunciaNo">No</label>
+                        <label class="label_form" for="HayDenunciaNo">No</label>
                     </div>
                 </div>
 
@@ -982,13 +987,13 @@
                     <div>
                         <input class="input_form" type="radio" name="HayReporte" id="HayReporteSi" value="Sí"
                             (change)="onChange($event)">
-                        <label for="HayReporteSi">Sí</label>
+                        <label class="label_form" for="HayReporteSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="HayReporte" id="HayReporteNo" value="No"
                             (change)="onChange($event)">
-                        <label for="HayReporteNo">No</label>
+                        <label class="label_form" for="HayReporteNo">No</label>
                     </div>
                 </div>
 
@@ -1007,13 +1012,13 @@
                     <div>
                         <input class="input_form" type="radio" name="AvancesDenuncia" id="AvancesDenunciaSi" value="Sí"
                             (change)="onChange($event)">
-                        <label for="AvancesDenunciaSi">Sí</label>
+                        <label class="label_form" for="AvancesDenunciaSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="AvancesDenuncia" id="AvancesDenunciaNo" value="No"
                             (change)="onChange($event)">
-                        <label for="AvancesDenunciaNo">No</label>
+                        <label class="label_form" for="AvancesDenunciaNo">No</label>
                     </div>
                 </div>
 
@@ -1120,7 +1125,7 @@
             <div class="row">
                 <div class="col-25">
                     <label class="label_form" for="InformacionUsadaPara">¿Acepta que la información sea usada para
-                        denuncia o búsqueda? *</label>
+                        denuncia o búsqueda? <span class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
                     <select class="select_form" name="InformacionUsadaPara" id="InformacionUsadaPara"
@@ -1136,20 +1141,20 @@
             <div class="row">
                 <div class="col-25">
                     <label class="label_form" for="AvancesDenuncia">¿Acepta que la información se haga pública?
-                        *</label>
+                        <span class="campo_obligatorio">*</span></label>
                 </div>
 
                 <div class="col-10">
                     <div>
                         <input class="input_form" type="radio" name="InformacionPublica" id="InformacionPublicaSi"
                             value="Sí" (change)="onChange($event)">
-                        <label for="InformacionPublicaSi">Sí</label>
+                        <label class="label_form" for="InformacionPublicaSi">Sí</label>
                     </div>
 
                     <div>
                         <input class="input_form" type="radio" name="InformacionPublica" id="InformacionPublicaNo"
                             value="No" (change)="onChange($event)">
-                        <label for="InformacionPublicaNo">No</label>
+                        <label class="label_form" for="InformacionPublicaNo">No</label>
                     </div>
                 </div>
             </div>

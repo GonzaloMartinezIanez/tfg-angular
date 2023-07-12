@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { EntrevistadorService } from '../entrevistador.service';
+import { EntrevistadorService } from '../servicios/entrevistador.service';
 import * as L from "leaflet";
 import { HttpClient } from '@angular/common/http';
 import { GlobalComponent } from '../global-component';
@@ -11,7 +11,12 @@ import { GlobalComponent } from '../global-component';
   templateUrl: './grupo.component.html',
   styleUrls: ['./grupo.component.css']
 })
+
+/**
+ * Componente para la creacion de grupos de personas
+ */
 export class GrupoComponent implements OnInit {
+  // FormGroup con el formulario
   formularioGrupo = new FormGroup({
     NombreGrupo: new FormControl('', Validators.required),
     FechaCreacion: new FormControl(''),
@@ -19,10 +24,9 @@ export class GrupoComponent implements OnInit {
     LugarCreacion: new FormControl(''),
   })
 
-  constructor(private http: HttpClient, private servicioEntrevistador: EntrevistadorService) { }
+  // Variables del mapa
   mapGrupo;
   layer = new L.marker;
-
   markerIcon = {
     icon: L.icon({
       iconSize: [25, 41],
@@ -34,10 +38,19 @@ export class GrupoComponent implements OnInit {
     })
   };
 
+  constructor(private http: HttpClient, private servicioEntrevistador: EntrevistadorService) { }
+
+  /**
+   * Se obtiene el entrevistador al comenzar el componente
+   */
   ngOnInit(): void {
     this.getEntrevistador();
   }
 
+  /**
+   * Obtener el entrevistador actual y rellenar el campo del lugar de 
+   * creacion del grupo
+   */
   getEntrevistador(): void {
     this.servicioEntrevistador.getEntrevistador()
       .subscribe(entrevistador => {
@@ -49,6 +62,9 @@ export class GrupoComponent implements OnInit {
       });
   }
 
+  /**
+   * Funcion para crear el mapa
+   */
   crearMapa() {
     this.mapGrupo = L.map("mapGrupo").setView([37.16788748437835, -3.5993957519531254], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -65,6 +81,9 @@ export class GrupoComponent implements OnInit {
       }
     }
 
+    /**
+     * Funcion que se ejecuta cada vez que se hace click sobre el mapa
+     */
     this.mapGrupo.on("click", e => {
       //Marcar las coordenadas en el formulario
       this.formularioGrupo.patchValue({
@@ -77,6 +96,9 @@ export class GrupoComponent implements OnInit {
     });
   }
 
+  /**
+   * Funcion que envia el formulario a la API
+   */
   crearGrupo() {
     this.http.post(GlobalComponent.APIurl + "/grupo", this.formularioGrupo.value)
       .subscribe(res => {

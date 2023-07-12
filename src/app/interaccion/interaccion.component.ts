@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { EntrevistadorService } from '../entrevistador.service';
-import { GrupoService } from '../grupo.service';
+import { EntrevistadorService } from '../servicios/entrevistador.service';
+import { GrupoService } from '../servicios/grupo.service';
 import * as L from "leaflet";
 import { HttpClient } from '@angular/common/http';
 import { GlobalComponent } from '../global-component';
-import { NacionesService } from '../naciones.service';
+import { NacionesService } from '../servicios/naciones.service';
 
 @Component({
   selector: 'app-interaccion',
@@ -13,24 +13,7 @@ import { NacionesService } from '../naciones.service';
   styleUrls: ['./interaccion.component.css']
 })
 export class InteraccionComponent implements OnInit {
-  mapInteraccion;
-  fisrtTimeMap = true;
-  layer = new L.marker;
-  imagenSRC: string = "";
-
-  markerIcon = {
-    icon: L.icon({
-      iconSize: [25, 41],
-      iconAnchor: [10, 41],
-      popupAnchor: [2, -40],
-      // specify the path here
-      iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
-      shadowUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-shadow.png"
-    })
-  };
-
-  posicionFormulario: any;
-
+  // FormGroup ocn el formulario de personas en interaccion
   formularioInteraccion = new FormGroup({
     Nombre: new FormControl('', Validators.required),
     ApellidoPaterno: new FormControl('', Validators.required),
@@ -62,7 +45,8 @@ export class InteraccionComponent implements OnInit {
     Institucion: new FormControl(''),
     Interacciones: new FormControl(''),
   })
-
+  
+  // Variable que guarda el estado de los radio buttons
   valoresRadioButton = {
     "SituacionCalle": "",
     "MigrantesMexicanas": "",
@@ -73,7 +57,27 @@ export class InteraccionComponent implements OnInit {
     "TrabajadorHogar": ""
   }
 
+  // Variables del mapa
+  mapInteraccion;
+  fisrtTimeMap = true;
+  layer = new L.marker;
+  markerIcon = {
+    icon: L.icon({
+      iconSize: [25, 41],
+      iconAnchor: [10, 41],
+      popupAnchor: [2, -40],
+      // specify the path here
+      iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
+      shadowUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-shadow.png"
+    })
+  };
+
+  posicionFormulario: any;      // Variable que marca en que paso esta el formulario 
+  imagenSRC: string = "";
+
+  // Variable donde se guarda el id y el nombre del os grupos
   grupos: any;
+  // Variable donde se guardan los integrantes de un grupo
   personasEnGrupo: any;
 
   naciones: any;
@@ -83,6 +87,10 @@ export class InteraccionComponent implements OnInit {
   constructor(private servicioEntrevistador: EntrevistadorService,
     private servicioGrupo: GrupoService, private http: HttpClient, private nacionesSercive: NacionesService) { }
 
+    /**
+     * Al comienzo se obtienen los grupos, datos del entrevistador y las nacionalidades
+     * Tambien comienza en el primer paso del formulario (0)
+     */
   ngOnInit(): void {
     this.posicionFormulario = 0;
     this.getGrupos();
@@ -90,6 +98,9 @@ export class InteraccionComponent implements OnInit {
     this.getNaciones();
   }
 
+  /**
+   * Funcion para crear el mapa
+   */
   crearMapa() {
     this.mapInteraccion = L.map("mapInteraccion", { scrollWheelZoom: false }).setView([37.16788748437835, -3.5993957519531254], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -118,7 +129,10 @@ export class InteraccionComponent implements OnInit {
     });
   }
 
-  // Mostrar la imagen en el html
+  /**
+   * Funcion que se llama cuando se selecciona una imagen
+   * @param event Contiene la informacion de la imagen
+   */
   onFileChange(event) {
     const reader = new FileReader();
 
@@ -136,6 +150,9 @@ export class InteraccionComponent implements OnInit {
     }
   }
 
+  /**
+   * Funcion para obtener el id y nombre de los grupos
+   */
   getGrupos() {
     this.servicioGrupo.getGruposCorto()
       .subscribe(grupos => {
@@ -146,12 +163,20 @@ export class InteraccionComponent implements OnInit {
       });
   }
 
+  /**
+   * Funcion que se llama cada vez que se selecciona un grupo y
+   * se manda una petcion para obtener los integrantes de este
+   * @param event 
+   */
   onGruposChange(event) {
     this.servicioGrupo.getPersonasEnGrupo(this.formularioInteraccion.value.IdGrupo).subscribe(personas => {
       this.personasEnGrupo = personas
     })
   }
 
+  /**
+   * Funcion para obtener y guardar los datos del entrevistador
+   */
   getEntrevistador(): void {
     this.servicioEntrevistador.getEntrevistador()
       .subscribe(entrevistador => {
@@ -163,12 +188,19 @@ export class InteraccionComponent implements OnInit {
       });
   }
 
+  /**
+   * Funcion para obtener las nacionlidades
+   */
   getNaciones() {
     this.nacionesSercive.getNaciones().subscribe(n => {
       this.naciones = n;
     })
   }
 
+  /**
+   * Funcion que se llama cada vez que se selecciona una nacionalidad
+   * en el select del html
+   */
   onNacionesChange(event) {
     if (this.formularioInteraccion.value.Nacionalidad === "MEXICANA") {
       this.nacionesSercive.getEntidades().subscribe(e => {
@@ -177,12 +209,19 @@ export class InteraccionComponent implements OnInit {
     }
   }
 
+  /**
+   * Funcion que se llama cada vez que cambia la entidad para mostrar los 
+   * municipios de esta entidad
+   */
   onEntidadesChange(event) {
     this.nacionesSercive.getMunicipios(this.formularioInteraccion.value.Estado).subscribe(m => {
       this.municipios = m;
     })
   }
 
+  /**
+   * Funcion que manda los datos del formulario a la API
+   */
   enviar(): void {
     this.rellenarCamposRadio();
 
@@ -207,6 +246,10 @@ export class InteraccionComponent implements OnInit {
        })
   }
 
+  /**
+   *  Funcion para cambiar a otro paso del formulario
+   * @param siguientePaso Numero del paso objetivo
+   */
   async cambiarPasoFormulario(siguientePaso) {
     this.posicionFormulario = siguientePaso;
     // Esta espera es necesaria ya que a la hora de crear el mapa, no le da tiempo al html a mostrar 
@@ -221,6 +264,10 @@ export class InteraccionComponent implements OnInit {
     }
   }
 
+  /**
+   * Funcion para avanzar o retroceder en el formulario
+   * @param avanzar Si es verdadera avanza, de lo contrario retrocede
+   */
   async botonSiguienteRetrocer(avanzar) {
     if (avanzar) {
       this.posicionFormulario++;
@@ -240,10 +287,19 @@ export class InteraccionComponent implements OnInit {
     }
   }
 
+  /**
+   * Funcion para detener la ejecucion un tiempo
+   * @param ms Tiempo en milisegundos
+   * @returns 
+   */
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  /**
+   * Funcion que se llama cada vez que se pulsa un radio button del formulario
+   * @param event 
+   */
   onChange(event) {
     if (event.target.value == "Sí") {
       this.valoresRadioButton[event.target.name] = "Sí"
@@ -254,6 +310,10 @@ export class InteraccionComponent implements OnInit {
     }
   }
 
+  /**
+   * Funcion que rellena el valor de los radio buttons en 
+   * los campos del formulario
+   */
   rellenarCamposRadio() {
     this.formularioInteraccion.patchValue({
       SituacionCalle: this.valoresRadioButton.SituacionCalle,

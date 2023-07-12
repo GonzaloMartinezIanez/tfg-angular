@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { InteraccionService } from '../interaccion.service';
+import { InteraccionService } from '../servicios/interaccion.service';
 
 import DataGridXL from "@datagridxl/datagridxl2";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -11,28 +11,39 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./ver-interaccion.component.css']
 })
 export class VerInteraccionComponent implements OnInit {
-  @ViewChild("grid") grid: ElementRef;
-  gridInstance: any;
-  interacciones: any;
-
+  // FormGroup con el formulario para filtrar
   formularioVerInteraccion = new FormGroup({
     valor: new FormControl('', Validators.required),
     campo: new FormControl('')
   })
 
+  @ViewChild("grid") grid: ElementRef;
+  gridInstance: any;    // Variable donde se crea la tabla
+  interacciones: any;   // Variable donde se guardan los registros
 
   constructor(private servicioInteraccion: InteraccionService) {
   }
 
+  /**
+  * Al principio de la ejecucion se limpia la tabla, y se espera 
+  * a que se obtengan los registros
+  */
   ngOnInit(): void {
     this.clear();
     this.getInteracciones();
   }
 
+  /**
+   * Funcion para descargar la tabla en formato csv
+   */
   download() {
     this.gridInstance.downloadDataAsCSV();
   }
 
+  /**
+    * Funcion que envia a la API una peticion con los campos y
+    * contenidos por los que filtrar
+    */
   busqueda() {
     this.servicioInteraccion.getInteraccionCampo(this.formularioVerInteraccion.value.campo, this.formularioVerInteraccion.value.valor)
       .subscribe(i => {
@@ -40,6 +51,10 @@ export class VerInteraccionComponent implements OnInit {
       });
   }
 
+  /**
+    * Funcion para obtener los registros de personas en interaccion y
+    * mostrarlas en la tabla
+    */
   getInteracciones() {
     this.servicioInteraccion.getPrimerasInteracciones()
       .subscribe(i => {
@@ -47,6 +62,10 @@ export class VerInteraccionComponent implements OnInit {
       })
   }
 
+  /**
+   * Funcion para crear la tabla
+   * @param interacciones Datos con los registros
+   */
   crearTabla(interacciones) {
     this.gridInstance = new DataGridXL("grid", {
       data: interacciones.map(i => Object.values(i)),
@@ -165,11 +184,14 @@ export class VerInteraccionComponent implements OnInit {
         {
           title: "Observaciones",
           source: 25
-        }        
+        }
       ]
     });
   }
 
+  /**
+   * Funcion para limpiar la tabla
+   */
   clear(): void {
     this.crearTabla([{ "IdInteraccion": "-", "Nombre": "-", "ApellidoPaterno": "-", "ApellidoMaterno": "-", "NombreSocial": "-", "FechaNacimiento": "-", "Sexo": "-", "Nacionalidad": "-", "Estado": "-", "Municipio": "-", "LugarFrecuenta": "-", "LugarActual": "-", "SituacionCalle": "-", "MigrantesMexicanas": "-", "TrabajadorCampo": "-", "DesplazadasForzadasInternas": "-", "MigrantesExtranjeras": "-", "Deportadas": "-", "TrabajadorHogar": "-", "DescripcionFisica": "-", "Necesidades": "-", "MensajeFamiliares": "-", "Imagen": "-", "SaludFisica": "-", "SaludMental": "-", "Observaciones": "-", "Folio": "-" }]);
   }

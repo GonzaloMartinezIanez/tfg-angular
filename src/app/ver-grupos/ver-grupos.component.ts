@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GrupoService } from '../grupo.service';
+import { GrupoService } from '../servicios/grupo.service';
 import { FormsModule } from '@angular/forms';
 import * as L from "leaflet";
 
@@ -8,12 +8,15 @@ import * as L from "leaflet";
   templateUrl: './ver-grupos.component.html',
   styleUrls: ['./ver-grupos.component.css']
 })
+/**
+ * Componente para consultar los grupos de personas
+ */
 export class VerGruposComponent implements OnInit {
-  grupoSeleccionado: any;
-  gruposCorto: any;
-  datosGrupo: any;
-  personas: any;
+  grupoSeleccionado: any;     // Guarda el grupo que se ha seleccionado en el select
+  gruposCorto: any;           // Id y nombre de los grupos
+  personas: any;              // Nombre de los integrantes del grupo
 
+  // Variable donde se guardan los datos del grupo seleccionado
   grupo: any = {
     nombreGrupo: "",
     fechaCreación: "",
@@ -21,10 +24,10 @@ export class VerGruposComponent implements OnInit {
     lugarCreacion: ""
   }
 
+  // Variables del mapa
   mapVerGrupo;
   layer = new L.marker;
   ocultarMapa = true;
-
   markerIcon = {
     icon: L.icon({
       iconSize: [25, 41],
@@ -38,18 +41,29 @@ export class VerGruposComponent implements OnInit {
 
   constructor(private grupoService: GrupoService) { }
 
+  /**
+   * Funcion que se ejecuta en la creacion del componente
+   * y obtiene el id y nombre de los grupos y crea el mapa
+   */
   ngOnInit(): void {
     this.getGrupos();
 
     this.crearMapa();
   }
 
+  /**
+   * Funcion para obtener el id y nombre de los grupos
+   */
   getGrupos() {
     this.grupoService.getGruposCorto().subscribe(g => {
       this.gruposCorto = g;
     })
   }
 
+  /**
+   * Funcion que se ejecuta cada vez que se seleciona un grupo,
+   * solicita los datos e integrantes del grupo a la API
+   */
   async onGruposChange(event) {
      this.grupoService.getGrupoId(this.grupoSeleccionado).subscribe(g => {
       this.grupo.nombreGrupo = g[0].NombreGrupo;
@@ -67,6 +81,9 @@ export class VerGruposComponent implements OnInit {
     this.actualizarMapa();
   }
 
+  /**
+   * Funcion para crear el mapa
+   */
   crearMapa() {
     this.mapVerGrupo = L.map("mapVerGrupo").setView([37.16788748437835, -3.5993957519531254], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -75,6 +92,9 @@ export class VerGruposComponent implements OnInit {
     }).addTo(this.mapVerGrupo);
   }
 
+  /**
+   * Funcion para actualizar el mapa
+   */
   actualizarMapa() {
     if (this.grupo.lugarCreacion != "") {
       const coordenadas = this.grupo.lugarCreacion.split(', ');
