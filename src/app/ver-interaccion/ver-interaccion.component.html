@@ -3,45 +3,720 @@
 <div class="contenido">
     <h2>Datos de personas en estado de interacción</h2>
 
-    <form [formGroup]="formularioVerInteraccion" (ngSubmit)="(busqueda())">
-        <select class="input_ver" name="campo" id="campo" formControlName="campo" >
-            <option value="" disabled selected hidden>Selecciona un campo para buscar</option>
-            <option value="IdInteraccion">Folio</option> 
-            <option value="Nombre">Nombre</option>
-            <option value="ApellidoPaterno">Apellido paterno</option>
-            <option value="ApellidoMaterno">Apellido materno</option>
-            <option value="NombreSocial">Nombre social</option>
-            <option value="Sexo">Sexo</option>
-            <option value="Nacionalidad">Nacionalidad</option>
-            <option value="Estado">Estado</option>
-            <option value="Municipio">Municipio</option>
-            <option value="LugarFrecuenta">Lugar que frecuenta</option>
-            <option value="LugarActual">Lugar actual</option>
-            <option value="SituacionCalle">En situación de calle</option>
-            <option value="MigrantesMexicanas">Migrante mexicana</option>
-            <option value="TrabajadorCampo">Trabajador de campo</option>
-            <option value="DesplazadasForzadasInternas">Desplazadas forzadas internas</option>
-            <option value="MigrantesExtranjeras">Migrantes extranjeras</option>
-            <option value="Deportadas">Deportadas</option>
-            <option value="TrabajadorHogar">Trabajador del hogar</option>
-            <option value="SaludFisica">Salud física</option>
-            <option value="SaludMental">Salud mental</option>                     
-        </select>
+    <div class="busqueda">
+        <div>
+            <select (change)="onSelectChange($event)" class="input_ver" name="campo" id="campo" [(ngModel)]="campo">
+                <option value="" disabled selected hidden>Selecciona un campo para buscar</option>
+                <option value="IdInteraccion">Folio</option>
+                <option value="FechaEntrevista">Fecha de la entrevista</option>
+                <option value="Nombre">Nombre</option>
+                <option value="ApellidoPaterno">Apellido paterno</option>
+                <option value="ApellidoMaterno">Apellido materno</option>
+                <option value="NombreSocial">Nombre social</option>
+                <option value="FechaNacimiento">Fecha de nacimiento</option>
+                <option value="Edad">Edad</option>
+                <option value="Sexo">Sexo</option>
+                <option value="Nacionalidad">Nacionalidad</option>
+                <option value="Estado">Entidad federativa</option>
+                <option value="Municipio">Municipio</option>
+                <option value="ViajaConIdentificacion">Viaja con identificación</option>
+                <option value="OtrosIdiomas">Habla otros idiomas</option>
+                <option value="Profesion">Profesión</option>
+                <option value="Telefono">Número de teléfono</option>
+                <option value="SituacionCalle">En situación de calle</option>
+                <option value="MigrantesMexicanas">Migrante mexicana</option>
+                <option value="TrabajadorCampo">Trabajador de campo</option>
+                <option value="DesplazadasForzadasInternas">Desplazadas forzadas internas</option>
+                <option value="MigrantesExtranjeras">Migrantes extranjeras</option>
+                <option value="Deportadas">Deportadas</option>
+                <option value="TrabajadorHogar">Trabajador del hogar</option>
+                <option value="SaludFisica">Salud física</option>
+                <option value="SaludMental">Salud mental</option>
+            </select>
+        </div>
 
-        <input class="input_ver" style="margin-left: 20px;" type="text" id="valor" formControlName="valor" placeholder="Escribe aquí para buscar">
-        
-        <input class="button_form" style="margin-left: 20px;" type="submit" [disabled]="!formularioVerInteraccion.valid" value="Añadir filtro">
-    </form>
+        <div *ngIf="this.campoSeleccionado == true">
+            <div *ngIf="this.campoTextoSeleccionado == true">
+                <input size="50" oninput="this.value = this.value.toUpperCase()" class="input_ver" type="text"
+                    id="valor" placeholder="Escribe aquí para buscar" [(ngModel)]="valorTexto">
+            </div>
+
+            <div *ngIf="this.campoTextoMinusculaSeleccionado == true">
+                <input size="50" class="input_ver" type="text" id="valor" [(ngModel)]="valorTexto"
+                    placeholder="Escribe aquí para buscar">
+            </div>
+
+            <div *ngIf="this.campoNumeroSeleccionado == true">
+                <input class="input_ver" type="number" id="valor" [(ngModel)]="valorTexto"
+                    placeholder="Escribe aquí para buscar">
+            </div>
+
+            <div *ngIf="this.campoBooleanoSeleccionado == true">
+                <select (change)="onSelectChange($event)" class="input_ver" name="campo" id="campo"
+                    [(ngModel)]="valorTexto">
+                    <option value="" disabled selected hidden>Selecciona un campo para buscar</option>
+                    <option value="SÍ">Sí</option>
+                    <option value="NO">No</option>
+                    <option value="">No contestó</option>
+                </select>
+            </div>
+
+            <div *ngIf="this.campoFechaSeleccionado == true">
+                <label class="label_form">Desde </label><input class="input_ver" type="date" id="valor"
+                    [(ngModel)]="valorFechaInicio">
+                <label class="label_form">Hasta </label><input class="input_ver" type="date" id="valor"
+                    [(ngModel)]="valorFechaFin">
+            </div>
+
+            <div *ngIf="this.campoEstadoSaludSeleccionado == true">
+                <select (change)="onSelectChange($event)" class="input_ver" name="campo" id="campo"
+                    [(ngModel)]="valorTexto">
+                    <option value="" disabled selected hidden>Selecciona un campo para buscar</option>
+                    <option value="BUENA">Buena</option>
+                    <option value="MALA">Mala</option>
+                    <option value="REGULAR">Regular</option>
+                </select>
+            </div>
+
+            <div *ngIf="this.campoSexoSeleccionado == true">
+                <select (change)="onSelectChange($event)" class="input_ver" name="campo" id="campo"
+                    [(ngModel)]="valorTexto">
+                    <option value="" disabled selected hidden>Selecciona un campo para buscar</option>
+                    <option value="HOMBRE">Hombre</option>
+                    <option value="MUJER">Mujer</option>
+                    <option value="INTERSEX">Intersex</option>
+                </select>
+            </div>
+        </div>
+
+        <div *ngIf="this.campoSeleccionado == true">
+            <button (click)="busqueda()" class="button_form">Buscar</button>
+        </div>
+    </div>
 
     <br>
-    <button class="button_form" (click)="clear()">Limpiar búsquedas</button>
-    
+
+    <button class="button_form" (click)="getTodasInteracciones()">Obtener todos los registros</button>
+    <button style="margin-left: 30px;" class="button_form" (click)="clear()">Limpiar búsquedas</button>
+
     <br>
     <br>
 
-    <div  id="grid"></div>
+    <div id="grid"></div>
 
     <br>
-    
+
     <button class="button_form" (click)="download()">Descargar tabla como CSV</button>
+    <button style="float: right;" class="button_form" (click)="downloadpdf()">Descargar persona selecionada como
+        pdf</button>
+
+    <br><br><br>
+
+    <!-- Datos generales y procedencia de la persona -->
+    <div class="pdf_x3" #pdf>
+        <div class="pdf" #content1>
+            <h1 style="text-align: center; padding: 20px">Registro de persona en interacción</h1>
+            <div class="fila">
+                <div class="columna">
+                    <h2>Datos generales</h2>
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Nombre">Nombre</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Nombre" type="text" value="{{interaccion.Nombre}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="ApellidoPaterno">Apellido paterno</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="ApellidoPaterno" type="text"
+                                value="{{interaccion.ApellidoPaterno}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="ApellidoMaterno">Apellido materno</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="ApellidoMaterno" type="text"
+                                value="{{interaccion.ApellidoMaterno}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="NombreSocial">Nombre social</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="NombreSocial" type="text"
+                                value="{{interaccion.NombreSocial}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="FechaNacimiento">Fecha de nacimiento</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="FechaNacimiento" type="text"
+                                value="{{interaccion.FechaNacimiento}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Edad">Edad</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Edad" type="text" value="{{interaccion.Edad}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Sexo">Sexo asignado al nacer</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Sexo" type="text" value="{{interaccion.Sexo}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="ViajaConIdentificacion">Viaja con identificación</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="ViajaConIdentificacion" type="text"
+                                value="{{interaccion.ViajaConIdentificacion}}">
+                        </div>
+                    </div>
+
+                    <div *ngIf="interaccion.ViajaConIdentificacion == 'Sí' && interaccion.ViajaConIdentificacionCual != ''"
+                        class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="ViajaConIdentificacionCual">Número de identificación</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="ViajaConIdentificacionCual" type="text"
+                                value="{{interaccion.ViajaConIdentificacionCual}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="OtrosIdiomas">Habla otros idiomas</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="OtrosIdiomas" type="text"
+                                value="{{interaccion.OtrosIdiomas}}">
+                        </div>
+                    </div>
+
+                    <div *ngIf="interaccion.OtrosIdiomas == 'Sí' && interaccion.OtrosIdiomasCual != ''" class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="OtrosIdiomasCual">Qué idiomas</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="OtrosIdiomasCual" type="text"
+                                value="{{interaccion.OtrosIdiomasCual}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="PuebloOriginario">Pertenece a un pueblo originario</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="PuebloOriginario" type="text"
+                                value="{{interaccion.PuebloOriginario}}">
+                        </div>
+                    </div>
+
+                    <div *ngIf="interaccion.PuebloOriginario == 'Sí' && interaccion.PuebloOriginarioCual != ''"
+                        class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="PuebloOriginarioCual">Qué pueblo</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="PuebloOriginarioCual" type="text"
+                                value="{{interaccion.PuebloOriginarioCual}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Profesion">Profesión u oficio</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Profesion" type="text"
+                                value="{{interaccion.Profesion}}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="columna">
+                    <div [ngClass]="{ocultar: imagenURL == undefined || imagenURL == ''}">
+                        <h2>Imagen de la persona</h2>
+                        <img class="imagen" [src]="imagenURL">
+                    </div>
+
+                    <br>
+
+                    <h2>Observaciones del entrevistador</h2>
+    
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Entrevistador">Entrevistador</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Entrevistador" type="text"
+                                value="{{interaccion.Entrevistador}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="FechaEntrevista">Fecha de la entrevista</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="FechaEntrevista" type="text"
+                                value="{{interaccion.FechaEntrevista}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="SaludFisica">Salud física</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="SaludFisica" type="text"
+                                value="{{interaccion.SaludFisica}}">
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="SaludMental">Salud mental</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="SaludMental" type="text"
+                                value="{{interaccion.SaludMental}}">
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Observaciones">Observaciones</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="Observaciones" rows="10" cols="50"
+                                value="{{interaccion.Observaciones}}"></textarea>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Descripción física y situación de la persona -->
+        <div class="pdf" #content2>
+            <div class="fila">
+                <div class="columna">
+                    <h2>Descripción física</h2>
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Estatura">Estatura</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Estatura" type="text"
+                                value="{{interaccion.Estatura}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Peso">Peso</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Peso" type="text" value="{{interaccion.Peso}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Lentes">Usa lentes</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Lentes" type="text" value="{{interaccion.Lentes}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="VelloFacial">Barba o bigote</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="VelloFacial" type="text"
+                                value="{{interaccion.VelloFacial}}">
+                        </div>
+                    </div>
+
+                    <div *ngIf="interaccion.VelloFacial == 'Sí' && interaccion.VelloFacialCual != ''" class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="VelloFacialCual">Tipo de vello facial</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="VelloFacialCual" type="text"
+                                value="{{interaccion.VelloFacialCual}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="SenialesParticulares">Señas particulares</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="SenialesParticulares" rows="10" cols="50"
+                                value="{{interaccion.SenialesParticulares}}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Lesiones">Lesiones o fracturas</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="Lesiones" rows="10" cols="50"
+                                value="{{interaccion.Lesiones}}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="EstadoSalud">Estado de salud</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="EstadoSalud" rows="10" cols="50"
+                                value="{{interaccion.EstadoSalud}}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="DescripcionPrendas">Descripción de las prendas</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="DescripcionPrendas" rows="10" cols="50"
+                                value="{{interaccion.DescripcionPrendas}}"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="columna">
+                    <h2>Procedencia de la persona</h2>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Nacionalidad">Nacionalidad</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Nacionalidad" type="text"
+                                value="{{interaccion.Nacionalidad}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Estado">Entidad federativa de nacimiento</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Estado" type="text" value="{{interaccion.Estado}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Municipio">Municipio de nacimiento</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Municipio" type="text"
+                                value="{{interaccion.Municipio}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="EdadMigracion">Edad a la que migró</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="EdadMigracion" type="text"
+                                value="{{interaccion.EdadMigracion}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="AnioComienzoMigracion">Año del comienzo de la
+                                migración</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="AnioComienzoMigracion" type="text"
+                                value="{{interaccion.AnioComienzoMigracion}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="MotivoMigracion">Motivo de la migración</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="MotivoMigracion" rows="10" cols="50"
+                                value="{{interaccion.MotivoMigracion}}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="LugarFrecuenta">Lugar que frecuenta</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="LugarFrecuenta" type="text"
+                                value="{{interaccion.LugarFrecuenta}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="LugarActual">Lugar de inicio de la interacción</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="LugarActual" type="text"
+                                value="{{interaccion.LugarActual}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Interacciones">Interacciones de la persona</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="Interacciones" rows="10" cols="50"
+                                value="{{interaccion.Interacciones}}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="estaEnGrupo">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="NombreGrupo">Grupo al que pertenece</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="NombreGrupo" type="text"
+                                value="{{interaccion.NombreGrupo}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos del familiar de contacto y observaciones del entrevistador -->
+        <div class="pdf" #content3>
+            <div class="fila">
+                <div class="columna">
+                    <h2>Situación de la persona</h2>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="SituacionCalle">En situación de calle</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="SituacionCalle" type="text"
+                                value="{{interaccion.SituacionCalle}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="MigrantesMexicanas">Migrante mexicana</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="MigrantesMexicanas" type="text"
+                                value="{{interaccion.MigrantesMexicanas}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="TrabajadorCampo">Trabajadora de campo</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="TrabajadorCampo" type="text"
+                                value="{{interaccion.TrabajadorCampo}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="DesplazadasForzadasInternas">Desplazada forzada
+                                interna</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="DesplazadasForzadasInternas" type="text"
+                                value="{{interaccion.DesplazadasForzadasInternas}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="MigrantesExtranjeras">Migrantes extranjeras</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="MigrantesExtranjeras" type="text"
+                                value="{{interaccion.MigrantesExtranjeras}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Deportadas">Deportada</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Deportadas" type="text"
+                                value="{{interaccion.Deportadas}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="TrabajadorHogar">Trabajadora del hogar</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="TrabajadorHogar" type="text"
+                                value="{{interaccion.TrabajadorHogar}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Necesidades">Necesidad de apoyo/atención por parte de
+                                autoridades</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="Necesidades" rows="10" cols="50"
+                                value="{{interaccion.Necesidades}}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="Telefono">Número de teléfono</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Telefono" type="text"
+                                value="{{interaccion.Telefono}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="MensajeFamiliares">Mensaje a familiares</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="MensajeFamiliares" rows="10" cols="50"
+                                value="{{interaccion.MensajeFamiliares}}"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="columna">
+                    <h2>Datos del familiar de contacto</h2>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="NombreQuienBusca">Nombre</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Telefono" type="text"
+                                value="{{interaccion.NombreQuienBusca}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="ApellidoPaternoQuienBusca">Apellido paterno</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Telefono" type="text"
+                                value="{{interaccion.ApellidoPaternoQuienBusca}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="ApellidoMaternoQuienBusca">Apellido materno</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Telefono" type="text"
+                                value="{{interaccion.ApellidoMaternoQuienBusca}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="ParentescoQuienBusca">Parentesco</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Telefono" type="text"
+                                value="{{interaccion.ParentescoQuienBusca}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="DireccionQuienBusca">Dirección</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Telefono" type="text"
+                                value="{{interaccion.DireccionQuienBusca}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="TelefonoQuienBusca">Teléfono</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Telefono" type="text"
+                                value="{{interaccion.TelefonoQuienBusca}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="CorreoElectronicoQuienBusca">Correo electrónico</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <input readonly class="input_form" id="Telefono" type="text"
+                                value="{{interaccion.CorreoElectronicoQuienBusca}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-30_pdf">
+                            <label class="label_pdf" for="OtroContactoQuienBusca">Otro tipo de conctacto</label>
+                        </div>
+                        <div class="col-70_pdf">
+                            <textarea readonly class="textarea_form" id="OtroContactoQuienBusca" rows="10" cols="50"
+                                value="{{interaccion.OtroContactoQuienBusca}}"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<br><br>
+<app-footer></app-footer>

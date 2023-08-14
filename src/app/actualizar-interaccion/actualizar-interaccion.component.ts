@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { GrupoService } from '../servicios/grupo.service';
 import { HttpClient } from '@angular/common/http';
 import { InteraccionService } from '../servicios/interaccion.service';
 import * as L from "leaflet";
+import { GlobalComponent } from '../global-component';
 
 @Component({
   selector: 'app-actualizar-interaccion',
@@ -15,8 +18,8 @@ import * as L from "leaflet";
  */
 export class ActualizarInteraccionComponent implements OnInit {
   folio = "";                   // Contenido que se enviará en el formulario
+  imagenURL: any;
   hayInteraccion = false;       // Hasta que no hay una interaccion, no se muestra el div
-  estaEnGrupo = false;          // Mostrar los integrantes del grupo si hay
   interaccionesOriginal = ""    // Variable necesaria para saber si se ha tocado la interaccion
 
   interaccion: any = {          // Variable donde se guarda la interaccion
@@ -24,57 +27,37 @@ export class ActualizarInteraccionComponent implements OnInit {
     Nombre: "",
     ApellidoPaterno: "",
     ApellidoMaterno: "",
-    NombreSocial: "",
     FechaNacimiento: "",
-    Sexo: "",
-    Nacionalidad: "",
-    Estado: "",
-    Municipio: "",
-    LugarFrecuenta: "",
-    LugarActual: "",
-    IdGrupo: "",
-    SituacionCalle: "",
-    MigrantesMexicanas: "",
-    TrabajadorCampo: "",
-    DesplazadasForzadasInternas: "",
-    MigrantesExtranjeras: "",
-    Deportadas: "",
-    TrabajadorHogar: "",
-    DescripcionFisica: "",
-    Necesidades: "",
-    MensajeFamiliares: "",
     Imagen: "",
-    SaludFisica: "",
-    SaludMental: "",
-    Observaciones: "",
-    Entrevistador: "",
     Institucion: "",
-    Interacciones: "",
-    NombreGrupo: ""
   }
 
-  // Variables relacionadas con el mapa
-  mapActualizarInteraccion;
-  layer = new L.marker;
-  ocultarMapa = true;
-  primeraVezMapa = true;
+  NombreABuscar = "";
+  ApellidoPaternoABuscar = "";
+  ApellidoMaternoABuscar = "";
 
-  markerIcon = {
-    icon: L.icon({
-      iconSize: [25, 41],
-      iconAnchor: [10, 41],
-      popupAnchor: [2, -40],
-      // specify the path here
-      iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
-      shadowUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-shadow.png"
-    })
-  }; 
+  personas : any = [];
 
-  constructor(private http: HttpClient, private servicioGrupo: GrupoService, private servicioInteraccion: InteraccionService) { }
+  private subject = new Subject<string>();
+
+  // Variables para mostrar la alerta con error o exito
+  hayError = false;
+  mensaje = "Mensaje con el error";
+  exito = false;
+
+  constructor(private http: HttpClient, private servicioInteraccion: InteraccionService) { 
+    this.subject.pipe(
+      debounceTime(500),
+      distinctUntilChanged())
+      .subscribe(value => {
+        this.servicioInteraccion.getInteraccionesPorNombre(value).subscribe(res => {
+          this.personas = res;
+      });
+    });
+  }
 
   ngOnInit(): void {
-    // Al comenzar se crea un mapa vacio que no se muestra
-    this.crearMapa();
+
   }
 
   /**
@@ -82,108 +65,52 @@ export class ActualizarInteraccionComponent implements OnInit {
    * en la variable privada this.interaccion
    * En el caso de no existir o no tener acceso, se muestra un error
    */
-  getInteraccion() {
-    if (Number(this.folio)) {
-      this.servicioInteraccion.getInteraccion(this.folio).subscribe(res => {
+  getInteraccionPorFolio(id : string, medianteFolio : boolean) {
+    var folio = "";
+    if(medianteFolio){
+      folio = this.folio;
+    } else{
+      folio = id
+    }
+
+    if (folio) {
+      this.servicioInteraccion.getInteraccionCorto(folio).subscribe(res => {
         if (res == "") {
           this.hayInteraccion = false
-          alert("El registro no existe o no tienes acceso")
+          this.hayError = true;
+          this.mensaje = "El registro no existe o no tienes acceso";
+          this.exito = false;
         } else {
           this.hayInteraccion = true
 
-          this.interaccion.Folio = this.folio;
+          this.interaccion.Folio = folio;
           this.interaccion.Nombre = res[0].Nombre;
           this.interaccion.ApellidoPaterno = res[0].ApellidoPaterno;
           this.interaccion.ApellidoMaterno = res[0].ApellidoMaterno;
-          this.interaccion.NombreSocial = res[0].NombreSocial;
-          this.interaccion.FechaNacimiento = res[0].FechaNacimiento;
-          this.interaccion.Sexo = res[0].Sexo;
-          this.interaccion.Nacionalidad = res[0].Nacionalidad;
-          this.interaccion.Estado = res[0].Estado;
-          this.interaccion.Municipio = res[0].Municipio;
-          this.interaccion.LugarFrecuenta = res[0].LugarFrecuenta;
-          this.interaccion.LugarActual = res[0].LugarActual;
-          this.interaccion.IdGrupo = res[0].IdGrupo;
-          this.interaccion.SituacionCalle = res[0].SituacionCalle;
-          this.interaccion.MigrantesMexicanas = res[0].MigrantesMexicanas;
-          this.interaccion.TrabajadorCampo = res[0].TrabajadorCampo;
-          this.interaccion.DesplazadasForzadasInternas = res[0].DesplazadasForzadasInternas;
-          this.interaccion.MigrantesExtranjeras = res[0].MigrantesExtranjeras;
-          this.interaccion.Deportadas = res[0].Deportadas;
-          this.interaccion.TrabajadorHogar = res[0].TrabajadorHogar;
-          this.interaccion.DescripcionFisica = res[0].DescripcionFisica;
-          this.interaccion.Necesidades = res[0].Necesidades;
-          this.interaccion.MensajeFamiliares = res[0].MensajeFamiliares;
+          this.interaccion.FechaNacimiento = res[0].FechaNacimiento.split("T")[0].split("-").reverse().join("-");
           this.interaccion.Imagen = res[0].Imagen;
-          this.interaccion.SaludFisica = res[0].SaludFisica;
-          this.interaccion.SaludMental = res[0].SaludMental;
-          this.interaccion.Observaciones = res[0].Observaciones;
-          this.interaccion.Entrevistador = res[0].Entrevistador;
-          this.interaccion.Institucion = res[0].Institucion;
           this.interaccion.Interacciones = res[0].Interacciones;
 
           this.interaccionesOriginal = res[0].Interacciones;
 
-          // Mostrar el mapa si es necesario
-          if (this.interaccion.LugarActual != "") {
-            const coordenadas = this.interaccion.LugarActual.split(', ');
-            if (Number(coordenadas[0]) && Number(coordenadas[1])) {
-              if(this.primeraVezMapa){          
-                this.actualizarMapa();
-                this.ocultarMapa = false;
-              } else{
-                this.ocultarMapa = true;
-              }
-            }
-          } else {
-            this.ocultarMapa = true;
+          if (this.interaccion.Imagen != "") {
+            this.http.get(GlobalComponent.APIurl + "/imagen/" + this.interaccion.Imagen, { responseType: 'blob' }).subscribe(res => {
+              this.createImageFromBlob(res);
+            })
           }
-
-          // Si esta en un grupo hay que mostrarlo en la interfaz
-          this.servicioGrupo.getGrupoInteraccion(this.folio).subscribe(res => {
-            if (res == "[]") {
-              this.estaEnGrupo = false;
-            } else {
-              this.estaEnGrupo = true;
-              this.interaccion.NombreGrupo = res[0].NombreGrupo
-            }
-          })
         }
       })
-      
     } else {
-      alert("El folio debe ser un número")
+      this.hayError = true;
+      this.mensaje = "El folio debe ser un número";
+      this.exito = false;
     }
   }
 
-  /**
-   * Funcion que crea un mapa vacio
-   */
-  crearMapa() {
-    this.mapActualizarInteraccion = L.map("mapActualizarInteraccion").setView([37.16788748437835, -3.5993957519531254], 13);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.mapActualizarInteraccion);
-  }
-
-  /**
-   * Funcion que añade un marcador al mapa con la nueva posicion
-   */
-  actualizarMapa() {
-    if (this.interaccion.LugarActual != "") {
-      const coordenadas = this.interaccion.LugarActual.split(', ');
-
-      if (Number(coordenadas[0]) && Number(coordenadas[1])) {
-        this.ocultarMapa = false;
-
-        this.mapActualizarInteraccion.removeLayer(this.layer)
-        this.mapActualizarInteraccion.setView([coordenadas[0], coordenadas[1]], 13);
-        this.layer = L.marker([coordenadas[0], coordenadas[1]], this.markerIcon).addTo(this.mapActualizarInteraccion);
-      } else {
-        this.ocultarMapa = true;
-      }
-    }
+  getInteraccionPorNombre() {
+    /* 
+    }) */
+    this.subject.next(this.NombreABuscar + "/" + this.ApellidoPaternoABuscar + "/" + this.ApellidoMaternoABuscar)
   }
 
   /**
@@ -193,18 +120,38 @@ export class ActualizarInteraccionComponent implements OnInit {
   actualizar() {
     if (this.interaccionesOriginal == this.interaccion.Interacciones) {
       // No se ha modificado la interaccion
-      alert("No se han modificado las interacciones")
+      this.hayError = true;
+      this.mensaje = "No se han modificado las interacciones";
+      this.exito = false;
     } else {
       this.servicioInteraccion.putInteraccion(this.folio, this.interaccion.Interacciones).subscribe(res => {
-        console.log(res)
-         if (res['message'] == "Interaccion actualizada") {
-           alert("Interacción actualizada con éxito")
-         }
+        if (res['message'] == "Interaccion actualizada") {
+          this.hayError = true;
+          this.mensaje = "Interaccion actualizada";
+          this.exito = true;
+        }
       })
     }
   }
 
-  /* delay(ms: number) {
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.imagenURL = reader.result;
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
+  delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  } */
+  }
+
+  onMessageClose() {
+    this.hayError = false;
+    this.mensaje = '';
+    this.exito = false;
+  }
 }

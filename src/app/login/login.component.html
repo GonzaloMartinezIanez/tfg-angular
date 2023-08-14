@@ -1,18 +1,26 @@
-<div class="login">
-    <h2>Iniciar sesión</h2>
+<div class="contenido">
+    <div class="login">
+        <h2>Iniciar sesión</h2>
 
-    <form [formGroup]="formularioLogIn" (ngSubmit)="(enviar())">
-        <label class="label_form" for="User">Nombre de usuario</label>
-        <input class="input_form" id="User" type="text" formControlName="User">
+        <form [formGroup]="formularioLogIn" (ngSubmit)="(enviar())">
+            <label class="label_form" for="User">Nombre de usuario</label>
+            <input class="input_form" id="User" type="text" formControlName="User">
 
-        <label class="label_form" for="Password">Contraseña</label>
-        <input class="input_form" id="Password" type="password" formControlName="Password">
+            <label class="label_form" for="Password">Contraseña</label>
+            <input class="input_form" id="Password" type="password" formControlName="Password">
 
-        <br>
-        <br>
+            <br>
+            <br>
 
-        <div class="centrar">
-            <button  class="boton">Entrar</button>
-        </div>
-    </form>
+            <div class="centrar">
+                <button class="button_form">Acceder</button>
+            </div>
+        </form>
+    </div>
 </div>
+
+
+<app-message-alert [ngClass]="{ocultar: !hayError}" [mensaje]="mensaje" [exito]="exito" [home]="false"
+    [reiniciar]="false" (close)="onMessageClose()"></app-message-alert>
+
+<app-footer></app-footer>

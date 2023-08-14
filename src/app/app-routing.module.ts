@@ -10,11 +10,14 @@ import { VerDesaparecidosComponent } from './ver-desaparecidos/ver-desaparecidos
 import { VerInteraccionComponent } from './ver-interaccion/ver-interaccion.component';
 import { VerGruposComponent } from './ver-grupos/ver-grupos.component';
 import { ActualizarInteraccionComponent } from './actualizar-interaccion/actualizar-interaccion.component';
+import { AdministrarUsuariosComponent } from './administrar-usuarios/administrar-usuarios.component';
+import { InformacionComponent } from './informacion/informacion.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'info', component: InformacionComponent },
   { path: 'entrevistador', component: EntrevistadorComponent },
   { path: 'desaparecidos', component: DesaparecidosComponent },
   { path: 'interaccion', component: InteraccionComponent },
@@ -23,6 +26,7 @@ const routes: Routes = [
   { path: 'ver-interaccion', component: VerInteraccionComponent },
   { path: 'ver-grupos', component: VerGruposComponent },
   { path: 'actualizar-interaccion', component: ActualizarInteraccionComponent },
+  { path: 'administrar-usuarios', component: AdministrarUsuariosComponent },
   { path: '**', component: LoginComponent }
 ];
 

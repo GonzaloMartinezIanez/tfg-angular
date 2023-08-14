@@ -5,36 +5,41 @@
         <h1>Formulario de personas en interacción</h1>
 
         <div class="boton_area_form">
-            <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 0}"
+            <button [ngClass]="posicionFormulario == 0 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
                 (click)="cambiarPasoFormulario(0)">Datos generales de la persona que interactúa</button>
-            <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 1}"
+            <button [ngClass]="posicionFormulario == 1 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
                 (click)="cambiarPasoFormulario(1)">Procedencia de la persona</button>
-            <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 2}"
-                (click)="cambiarPasoFormulario(2)">Situación de la persona</button>
-            <button class="boton_avanzar_form" [ngClass]="{boton_avanzar_form_seleccionado: posicionFormulario == 3}"
-                (click)="cambiarPasoFormulario(3)">Observaciones</button>
+            <button [ngClass]="posicionFormulario == 2 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
+                (click)="cambiarPasoFormulario(2)">Descripción física</button>
+            <button [ngClass]="posicionFormulario == 3 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
+                (click)="cambiarPasoFormulario(3)">Situación de la persona</button>
+            <button [ngClass]="posicionFormulario == 4 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
+                (click)="cambiarPasoFormulario(4)">Observaciones</button>
         </div>
     </div>
 
     <div class="formulario">
         <form [formGroup]="formularioInteraccion" (ngSubmit)="enviar()" enctype="multipart/form-data">
             <div [ngClass]="{ocultar: posicionFormulario != 0}">
-                <h2>Datos generales</h2>
+                <h2>Datos generales de la persona que interactúa</h2>
                 <div class="row">
                     <div class="col-25">
                         <label class="label_form" for="Nombre">Nombre <span class="campo_obligatorio">*</span></label>
                     </div>
                     <div class="col-75">
-                        <input class="input_form" id="Nombre" type="text" formControlName="Nombre">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="Nombre"
+                            type="text" formControlName="Nombre">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-25">
-                        <label class="label_form" for="ApellidoPaterno">Apellido paterno <span class="campo_obligatorio">*</span></label>
+                        <label class="label_form" for="ApellidoPaterno">Apellido paterno <span
+                                class="campo_obligatorio">*</span></label>
                     </div>
                     <div class="col-75">
-                        <input class="input_form" id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoPaterno"
+                            type="text" formControlName="ApellidoPaterno">
                     </div>
                 </div>
 
@@ -43,7 +48,8 @@
                         <label class="label_form" for="ApellidoMaterno">Apellido materno</label>
                     </div>
                     <div class="col-75">
-                        <input class="input_form" id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoMaterno"
+                            type="text" formControlName="ApellidoMaterno">
                     </div>
                 </div>
 
@@ -52,16 +58,27 @@
                         <label class="label_form" for="NombreSocial">Nombre social</label>
                     </div>
                     <div class="col-75">
-                        <input class="input_form" id="NombreSocial" type="text" formControlName="NombreSocial">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="NombreSocial"
+                            type="text" formControlName="NombreSocial">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-25">
-                        <label class="label_form" for="FechaNacimiento">Fecha de nacimiento</label>
+                        <label class="label_form" for="FechaNacimiento">Fecha de nacimiento <span
+                                class="campo_obligatorio">*</span></label>
                     </div>
                     <div class="col-75">
                         <input class="input_form" id="FechaNacimiento" type="date" formControlName="FechaNacimiento">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Edad">Edad <span class="campo_obligatorio">*</span></label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="Edad" type="number" formControlName="Edad">
                     </div>
                 </div>
 
@@ -72,10 +89,98 @@
                     <div class="col-75">
                         <select class="select_form" name="Sexo" id="Sexo" formControlName="Sexo">
                             <option disabled selected hidden value="">Selecciona una opción</option>
-                            <option value='Hombre'>Hombre</option>
-                            <option value='Mujer'>Mujer</option>
-                            <option value='Intersex'>Intersex</option>
+                            <option value='HOMBRE'>HOMBRE</option>
+                            <option value='MUJER'>MUJER</option>
+                            <option value='INTERSEX'>INTERSEX</option>
                         </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="ViajaConIdentificacion">Viaja con identificación</label>
+                    </div>
+
+                    <div class="col-10">
+                        <div>
+                            <input class="input_form" type="radio" name="ViajaConIdentificacion"
+                                id="ViajaConIdentificacionSi" value="Sí" (change)="onChange($event)">
+                            <label class="label_form" for="ViajaConIdentificacionSi">Sí</label>
+                        </div>
+
+                        <div>
+                            <input class="input_form" type="radio" name="ViajaConIdentificacion"
+                                id="ViajaConIdentificacionNo" value="No" (change)="onChange($event)">
+                            <label class="label_form" for="ViajaConIdentificacionNo">No</label>
+                        </div>
+                    </div>
+
+                    <div class="col-65" *ngIf="valoresRadioButton.ViajaConIdentificacion == 'SÍ'">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form"
+                            id="ViajaConIdentificacionCual" type="text" formControlName="ViajaConIdentificacionCual"
+                            placeholder="Número">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="OtrosIdiomas">¿Habla algún idioma diferente al español?</label>
+                    </div>
+
+                    <div class="col-10">
+                        <div>
+                            <input class="input_form" type="radio" name="OtrosIdiomas" id="OtrosIdiomasSi" value="Sí"
+                                (change)="onChange($event)">
+                            <label class="label_form" for="OtrosIdiomasSi">Sí</label>
+                        </div>
+
+                        <div>
+                            <input class="input_form" type="radio" name="OtrosIdiomas" id="OtrosIdiomasNo" value="No"
+                                (change)="onChange($event)">
+                            <label class="label_form" for="OtrosIdiomasNo">No</label>
+                        </div>
+                    </div>
+
+                    <div class="col-65" *ngIf="valoresRadioButton.OtrosIdiomas == 'SÍ'">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="OtrosIdiomasCual"
+                            type="text" formControlName="OtrosIdiomasCual" placeholder="¿Cuál?">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="PuebloOriginario">¿Pertenece a un pueblo
+                            originario/indígena?</label>
+                    </div>
+
+                    <div class="col-10">
+                        <div>
+                            <input class="input_form" type="radio" name="PuebloOriginario" id="PuebloOriginarioSi"
+                                value="Sí" (change)="onChange($event)">
+                            <label class="label_form" for="PuebloOriginarioSi">Sí</label>
+                        </div>
+
+                        <div>
+                            <input class="input_form" type="radio" name="PuebloOriginario" id="PuebloOriginarioNo"
+                                value="No" (change)="onChange($event)">
+                            <label class="label_form" for="PuebloOriginarioNo">No</label>
+                        </div>
+                    </div>
+
+                    <div class="col-65" *ngIf="valoresRadioButton.PuebloOriginario == 'SÍ'">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form"
+                            id="PuebloOriginarioCual" type="text" formControlName="PuebloOriginarioCual"
+                            placeholder="¿Cuál?">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Profesion">Profesión u oficio</label>
+                    </div>
+                    <div class="col-75">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="Profesion"
+                            type="text" formControlName="Profesion">
                     </div>
                 </div>
             </div>
@@ -84,7 +189,8 @@
                 <h2>Procedencia de la persona</h2>
                 <div class="row">
                     <div class="col-25">
-                        <label class="label_form" for="Nacionalidad">Nacionalidad</label>
+                        <label class="label_form" for="Nacionalidad">Nacionalidad <span
+                                class="campo_obligatorio">*</span></label>
                     </div>
                     <div class="col-75">
                         <select class="select_form" name="Nacionalidad" id="Nacionalidad" formControlName="Nacionalidad"
@@ -136,10 +242,41 @@
 
                 <div class="row">
                     <div class="col-25">
+                        <label class="label_form" for="EdadMigracion">¿A qué edad migró?</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="EdadMigracion" type="number" formControlName="EdadMigracion">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="AnioComienzoMigracion">¿En qué año salió de su lugar de
+                            origen?</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="AnioComienzoMigracion" type="number"
+                            formControlName="AnioComienzoMigracion">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="MotivoMigracion">¿Por qué decidió migrar?</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form"
+                            id="MotivoMigracion" rows="3" cols="50" formControlName="MotivoMigracion"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
                         <label class="label_form" for="LugarFrecuenta">Lugar que frecuenta</label>
                     </div>
                     <div class="col-75">
-                        <input class="input_form" id="LugarFrecuenta" type="text" formControlName="LugarFrecuenta"
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="LugarFrecuenta"
+                            type="text" formControlName="LugarFrecuenta"
                             placeholder="Lugar o lugares en los que la persona suele quedarse, transitar o visitar; en caso de vivir ahí, los lugares que frecuenta visitar">
                     </div>
                 </div>
@@ -150,11 +287,24 @@
                         <label class="label_form" for="LugarActual">Lugar actual</label>
                     </div>
                     <div class="col-75">
-                        <input class="input_form" id="LugarActual" type="text" formControlName="LugarActual">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="LugarActual"
+                            type="text" formControlName="LugarActual"
+                            placeholder="Para usar el mapa hay que pinchar en la lupa de la esquina superior derecha">
                     </div>
                 </div>
 
                 <div id="mapInteraccion"></div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Interacciones">Interacciones</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form"
+                            id="Interacciones" rows="10" cols="50" formControlName="Interacciones"
+                            placeholder="Ruta migratoria que toma la persona"></textarea>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-25">
@@ -182,10 +332,131 @@
             </div>
 
             <div [ngClass]="{ocultar: posicionFormulario != 2}">
-                <h2>Situación de la persona</h2>
-                <h2>Perfil: elegir una o varias opciones según corresponda</h2>
-                <h3>Catálogo de personas</h3>
+                <h2>Descripción física de la persona migrante desaparecida</h2>
 
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Estatura">Estatura</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="Estatura" type="number" formControlName="Estatura"
+                            placeholder="cm">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Peso">Peso</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="Peso" type="number" formControlName="Peso" placeholder="kg">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Lentes">¿Usa lentes?</label>
+                    </div>
+
+                    <div class="col-10">
+                        <div>
+                            <input class="input_form" type="radio" name="Lentes" id="LentesSi" value="Sí"
+                                (change)="onChange($event)">
+                            <label class="label_form" for="LentesSi">Sí</label>
+                        </div>
+
+                        <div>
+                            <input class="input_form" type="radio" name="Lentes" id="LentesNo" value="No"
+                                (change)="onChange($event)">
+                            <label class="label_form" for="LentesNo">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="VelloFacial">Barba o bigote</label>
+                    </div>
+
+                    <div class="col-10">
+                        <div>
+                            <input class="input_form" type="radio" name="VelloFacial" id="VelloFacialSi" value="Sí"
+                                (change)="onChange($event)">
+                            <label class="label_form" for="VelloFacialSi">Sí</label>
+                        </div>
+
+                        <div>
+                            <input class="input_form" type="radio" name="VelloFacial" id="VelloFacialNo" value="No"
+                                (change)="onChange($event)">
+                            <label class="label_form" for="VelloFacialNo">No</label>
+                        </div>
+                    </div>
+
+                    <div class="col-65" *ngIf="valoresRadioButton.VelloFacial == 'SÍ'">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="VelloFacialCual"
+                            type="text" formControlName="VelloFacialCual" placeholder="Color y tamaño">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="SenialesParticulares">Señas particulares</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form"
+                            id="SenialesParticulares" rows="5" cols="50" formControlName="SenialesParticulares"
+                            placeholder="Lunares, tatuajes, quemaduras, manchas, cicatrices, perforaciones, señalar tamaño y ubicación. También incluir modificaciones corporales como prótesis, siliconas inyectables, implantes, cirugías corporales"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Lesiones">Lesiones o fracturas que haya tenido</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form" id="Lesiones"
+                            rows="5" cols="50" formControlName="Lesiones"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="EstadoSalud">Estado de salud</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form" id="EstadoSalud"
+                            rows="5" cols="50" formControlName="EstadoSalud"
+                            placeholder="Enfermedades crónicas, dolores en el cuerpo, enfermedades mentales, algún tipo de discapacidad, si toma o necesita tomar medicamentos"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="DescripcionPrendas">Descripción de prendas</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form" id="DescripcionPrendas" rows="5" cols="50"
+                            formControlName="DescripcionPrendas"
+                            placeholder="Ropa, zapatos, joyas, sombreros, celulares, bolsas u otras cosas que llevabala persona desaparecida"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="Imagen">Imagén de la persona</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="Imagen" type="file" accept='image/*;capture=camera'
+                            (change)="onFileChange($event)">
+                    </div>
+
+                    <br>
+
+                    <img [src]="imagenSRC" *ngIf="imagenSRC" style="height: 400px; margin-top: 20px;">
+                </div>
+            </div>
+            <div [ngClass]="{ocultar: posicionFormulario != 3}">
+                <h2>Situación y datos individualizantes de la persona</h2>
                 <div class="row">
                     <div class="col-25">
                         <label class="label_form" for="SituacionCalle">En situación de calle</label>
@@ -329,22 +600,21 @@
 
                 <div class="row">
                     <div class="col-25">
-                        <label class="label_form" for="DescripcionFisica">Descripción física</label>
+                        <label class="label_form" for="Necesidades">Necesidad de apoyo/atención por parte de
+                            autoridades:</label>
                     </div>
                     <div class="col-75">
-                        <textarea class="textarea_form" id="DescripcionFisica" rows="10" cols="50"
-                            formControlName="DescripcionFisica"></textarea>
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form" id="Necesidades" rows="10" cols="50"
+                            formControlName="Necesidades"></textarea>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-25">
-                        <label class="label_form" for="Necesidades">Necesidad de apoyo/atención por parte de
-                            autoridades:</label>
+                        <label class="label_form" for="Telefono">Teléfono</label>
                     </div>
                     <div class="col-75">
-                        <textarea class="textarea_form" id="Necesidades" rows="10" cols="50"
-                            formControlName="Necesidades"></textarea>
+                        <input class="input_form" id="Telefono" type="text" formControlName="Telefono">
                     </div>
                 </div>
 
@@ -353,28 +623,96 @@
                         <label class="label_form" for="MensajeFamiliares">Mensaje a familiares</label>
                     </div>
                     <div class="col-75">
-                        <textarea class="textarea_form" id="MensajeFamiliares" rows="10" cols="50"
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form" id="MensajeFamiliares" rows="10" cols="50"
                             formControlName="MensajeFamiliares"></textarea>
+                    </div>
+                </div>
+
+                <h3>Datos del familiar de contacto</h3>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="NombreQuienBusca">Nombre</label>
+                    </div>
+                    <div class="col-75">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="NombreQuienBusca" type="text" formControlName="NombreQuienBusca">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-25">
-                        <label class="label_form" for="Imagen">Imagén de la persona</label>
+                        <label class="label_form" for="ApellidoPaternoQuienBusca">Apellido paterno</label>
                     </div>
                     <div class="col-75">
-                        <input class="input_form" id="Imagen" type="file" accept='image/*'
-                            (change)="onFileChange($event)">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoPaternoQuienBusca" type="text"
+                            formControlName="ApellidoPaternoQuienBusca">
                     </div>
+                </div>
 
-                    <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="ApellidoMaternoQuienBusca">Apellido materno</label>
+                    </div>
+                    <div class="col-75">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoMaternoQuienBusca" type="text"
+                            formControlName="ApellidoMaternoQuienBusca">
+                    </div>
+                </div>
 
-                    <img [src]="imagenSRC" *ngIf="imagenSRC" style="height: 400px; margin-top: 20px;">
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="ParentescoQuienBusca">Parentesco o relación con la persona
+                            desaparecida</label>
+                    </div>
+                    <div class="col-75">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ParentescoQuienBusca" type="text"
+                            formControlName="ParentescoQuienBusca">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="DireccionQuienBusca">Dirección</label>
+                    </div>
+                    <div class="col-75">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="DireccionQuienBusca" type="text"
+                            formControlName="DireccionQuienBusca">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="TelefonoQuienBusca">Teléfono del familiar</label>
+                    </div>
+                    <div class="col-75">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="TelefonoQuienBusca" type="text"
+                            formControlName="TelefonoQuienBusca">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="CorreoElectronicoQuienBusca">Correo electrónico</label>
+                    </div>
+                    <div class="col-75">
+                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="CorreoElectronicoQuienBusca" type="text"
+                            formControlName="CorreoElectronicoQuienBusca">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="OtroContactoQuienBusca">Otro tipo de contacto</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form" id="OtroContactoQuienBusca" rows="10" cols="50"
+                            formControlName="OtroContactoQuienBusca"></textarea>
+                    </div>
                 </div>
             </div>
 
-            <div [ngClass]="{ocultar: posicionFormulario != 3}">
-                <h2>Observaciones</h2>
+            <div [ngClass]="{ocultar: posicionFormulario != 4}">
+                <h2>Observaciones del entrevistador</h2>
 
                 <div class="row">
                     <div class="col-25">
@@ -383,9 +721,9 @@
                     <div class="col-75">
                         <select class="select_form" name="SaludFisica" id="SaludFisica" formControlName="SaludFisica">
                             <option disabled selected hidden value="">Selecciona una opción</option>
-                            <option value="Buena">Buena</option>
-                            <option value="Regular">Regular</option>
-                            <option value="Mala">Mala</option>
+                            <option value="BUENA">BUENA</option>
+                            <option value="REGULAR">REGULAR</option>
+                            <option value="MALA">MALA</option>
                         </select>
                     </div>
                 </div>
@@ -397,9 +735,9 @@
                     <div class="col-75">
                         <select class="select_form" name="SaludMental" id="SaludMental" formControlName="SaludMental">
                             <option disabled selected hidden value="">Selecciona una opción</option>
-                            <option value="Buena">Buena</option>
-                            <option value="Regular">Regular</option>
-                            <option value="Mala">Mala</option>
+                            <option value="BUENA">BUENA</option>
+                            <option value="REGULAR">REGULAR</option>
+                            <option value="MALA">MALA</option>
                         </select>
                     </div>
                 </div>
@@ -409,7 +747,7 @@
                         <label class="label_form" for="Observaciones">Observaciones</label>
                     </div>
                     <div class="col-75">
-                        <textarea class="textarea_form" id="Observaciones" rows="10" cols="50"
+                        <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form" id="Observaciones" rows="10" cols="50"
                             formControlName="Observaciones"></textarea>
                     </div>
                 </div>
@@ -419,7 +757,7 @@
                         <label class="label_form" for="Entrevistador">Entrevistador</label>
                     </div>
                     <div class="col-75">
-                        <input readonly class="input_form" id="Entrevistador" type="text" formControlName="Entrevistador">
+                        <label class="label_form" for="Entrevistador">{{entrevistador.Nombre.toUpperCase()}}</label>
                     </div>
                 </div>
 
@@ -428,17 +766,27 @@
                         <label class="label_form" for="Institucion">Institución</label>
                     </div>
                     <div class="col-75">
-                            <input readonly class="input_form" id="Institucion" type="text" formControlName="Institucion">
+                        <label class="label_form" for="Institucion">{{entrevistador.Institucion.toUpperCase()}}</label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-25">
-                        <label class="label_form" for="Interacciones">Interacciones</label>
+                        <label class="label_form" for="Cargo">Cargo</label>
                     </div>
                     <div class="col-75">
-                        <textarea class="textarea_form" id="Interacciones" rows="10" cols="50"
-                            formControlName="Interacciones" value="Comienza en {{formularioInteraccion.value.LugarActual}}">hola</textarea>
+                        <label class="label_form" for="Cargo">{{entrevistador.Cargo.toUpperCase()}}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="label_form" for="FechaEntrevista">Fecha de la entrevista <span
+                                class="campo_obligatorio">*</span></label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input_form" id="FechaEntrevista" type="datetime-local"
+                            formControlName="FechaEntrevista" value="2017-06-01T08:30">
                     </div>
                 </div>
             </div>
@@ -450,12 +798,17 @@
                     [ngClass]="{ocultar: posicionFormulario == 0}"
                     (click)="botonSiguienteRetrocer(false)">Retroceder</button>
                 <button type="button" class="boton_avanzar_form_siguiente"
-                    [ngClass]="{ocultar: posicionFormulario == 3}"
+                    [ngClass]="{ocultar: posicionFormulario == 4}"
                     (click)="botonSiguienteRetrocer(true)">Avanzar</button>
 
-                <input [ngClass]="{ocultar: posicionFormulario != 3}" class="boton_avanzar_form_siguiente" type="submit"
-                [disabled]="!formularioInteraccion.valid">
+                <input [ngClass]="{ocultar: posicionFormulario != 4}" class="boton_avanzar_form_siguiente"
+                    type="submit">
             </div>
         </form>
     </div>
 </div>
+
+<app-footer></app-footer>
+
+<app-message-alert [ngClass]="{ocultar: !hayError}" [mensaje]="mensaje" [exito]="exito" [home]="home"
+    [reiniciar]="reiniciar" (close)="onMessageClose()"></app-message-alert>

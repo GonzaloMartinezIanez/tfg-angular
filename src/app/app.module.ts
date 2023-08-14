@@ -19,6 +19,10 @@ import { FormsModule } from '@angular/forms';
 import { TokenInterceptorService } from './servicios/token-interceptor.service';
 import { VerGruposComponent } from './ver-grupos/ver-grupos.component';
 import { ActualizarInteraccionComponent } from './actualizar-interaccion/actualizar-interaccion.component';
+import { AdministrarUsuariosComponent } from './administrar-usuarios/administrar-usuarios.component';
+import { MessageAlertComponent } from './message-alert/message-alert.component';
+import { InformacionComponent } from './informacion/informacion.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,10 @@ import { ActualizarInteraccionComponent } from './actualizar-interaccion/actuali
     MenuComponent,
     VerGruposComponent,
     ActualizarInteraccionComponent,
+    AdministrarUsuariosComponent,
+    MessageAlertComponent,
+    InformacionComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

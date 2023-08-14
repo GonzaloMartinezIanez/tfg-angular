@@ -11,8 +11,24 @@ import { GlobalComponent } from '../global-component';
 export class InteraccionService {
   constructor(private http: HttpClient) { }
 
-  getInteraccion(id : string){
-    return this.http.get(GlobalComponent.APIurl + "/interaccion/" + id);
+  getInteraccionCorto(id : string){
+    return this.http.get(GlobalComponent.APIurl + "/interaccionCorto/" + id);
+  }
+
+  getInteraccionesPorNombre(cadena : string){
+    var Nombre = cadena.split("/")[0];
+    var ApellidoPaterno = cadena.split("/")[1];
+    var ApellidoMaterno = cadena.split("/")[2];
+    if(Nombre == ""){
+      Nombre = "*"
+    }
+    if(ApellidoPaterno == ""){
+      ApellidoPaterno = "*"
+    }
+    if(ApellidoMaterno == ""){
+      ApellidoMaterno = "*"
+    }
+    return this.http.get(GlobalComponent.APIurl + "/interaccionesPorNombre/" + Nombre + "/" + ApellidoPaterno + "/" + ApellidoMaterno);
   }
 
   /**
@@ -28,11 +44,11 @@ export class InteraccionService {
     return this.http.put(GlobalComponent.APIurl + "/interaccion/", body);
   }
 
-  getPrimerasInteracciones(){
+  getInteracciones(){
     return this.http.get(GlobalComponent.APIurl + "/interaccion");
   }
 
-  getInteraccionCampo(campo, valor){
-    return this.http.get(GlobalComponent.APIurl + "/interaccionPorCampo/" + campo + "/" + valor);
+  getInteraccionCampo(datos){
+    return this.http.post(GlobalComponent.APIurl + "/interaccionPorCampo/", datos);
   }
 }

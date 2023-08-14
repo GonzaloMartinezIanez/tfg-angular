@@ -20,8 +20,9 @@
         <li style="text-align: right;" class="dropdown">
             <a href="javascript:void(0)" class="dropbtn">Bienvenido, {{user}} </a>
             <div class="dropdown-content">
-                <a style="text-align: right;" routerLink="/entrevistador">Modificar datos del
-                    entrevistador</a>
+                <a style="text-align: right;" routerLink="/entrevistador">Modificar lugar del
+                    entrevistador</a>                
+                <a *ngIf="administrador" style="text-align: right;" routerLink="/administrar-usuarios">Administrar usuarios</a>
                 <a style="text-align: right;" (click)="logOut()">Cerrar sesión</a>
             </div>
         </li>

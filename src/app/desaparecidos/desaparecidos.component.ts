@@ -148,6 +148,13 @@ export class DesaparecidosComponent implements OnInit {
     "InformacionPublica": "",
   }
 
+  // Variables para mostrar la alerta con error o exito
+  hayError = false;
+  mensaje = "Mensaje con el error";
+  exito = false;
+  reiniciar = true;
+  home = true;
+
   naciones: any;
   entidades: any;
   municipios: any;
@@ -214,28 +221,53 @@ export class DesaparecidosComponent implements OnInit {
    * Funcion que manda los datos del formulario a la API
    */
   enviar(): void {
-    let valores = this.rellenarCamposRadio();
+    if (this.formularioDesaparecidos.invalid) {
+      this.hayError = true;
+      this.mensaje = 'Hay campos obligatorios vacíos';
+      this.exito = false;
+      this.reiniciar = false;
+      this.home = false;
+    } else {
+      let valores = this.rellenarCamposRadio();
 
-    if (Number(this.formularioDesaparecidos.value.EstadoObjetivo)) {
-      this.formularioDesaparecidos.patchValue({
-        EstadoObjetivo: this.entidades.find(ent => ent.idEntidad == this.formularioDesaparecidos.value.EstadoObjetivo).entidad
-      })
+      if (Number(this.formularioDesaparecidos.value.EstadoObjetivo)) {
+        this.formularioDesaparecidos.patchValue({
+          EstadoObjetivo: this.entidades.find(ent => ent.idEntidad == this.formularioDesaparecidos.value.EstadoObjetivo).entidad
+        })
+      }
+
+      // Para mandar una imagen es necesario enviar un FormData
+      const formData = new FormData();
+      for (const key of Object.keys(this.formularioDesaparecidos.value)) {
+        const value = this.formularioDesaparecidos.value[key];
+        formData.append(key, value);
+      }
+
+
+      this.http.post(GlobalComponent.APIurl + "/desaparecidos", formData)
+        .subscribe(res => {
+          if (res['message'] == "Persona desaparecida añadida") {
+            this.hayError = true;
+            this.mensaje = "Persona desaparecida añadida";
+            this.exito = true;
+            this.reiniciar = true;
+            this.home = true;
+          } else if(res['message'] == "La persona ya esta registrada"){
+            this.hayError = true;
+            this.mensaje = "Esta persona está registrada con el folio: " + res['folio'];
+            this.exito = false;
+            this.reiniciar = true;
+            this.home = true;
+          }else {
+            this.hayError = true;
+            this.mensaje = 'Se ha producido un error';
+            this.exito = false;
+            this.reiniciar = false;
+            this.home = false;
+          }
+        })
     }
 
-    // Para mandar una imagen es necesario enviar un FormData
-    const formData = new FormData();
-    for (const key of Object.keys(this.formularioDesaparecidos.value)) {
-      const value = this.formularioDesaparecidos.value[key];
-      formData.append(key, value);
-    }
-
-    this.http.post(GlobalComponent.APIurl + "/desaparecidos", formData)
-      .subscribe(res => {
-        console.log(res)
-        if (res['message'] == "Persona desaparecida añadida") {
-          alert("Persona desaparecida añadida")
-        }
-      })
   }
 
   /**
@@ -312,11 +344,11 @@ export class DesaparecidosComponent implements OnInit {
    */
   onChange(event) {
     if (event.target.value == "Sí") {
-      this.valoresRadioButton[event.target.name] = "Sí"
+      this.valoresRadioButton[event.target.name] = "SÍ"
     } else if (event.target.value == "No") {
-      this.valoresRadioButton[event.target.name] = "No"
+      this.valoresRadioButton[event.target.name] = "NO"
     } else if ((event.target.value == "Otro")) {
-      this.valoresRadioButton[event.target.name] = "Otro"
+      this.valoresRadioButton[event.target.name] = "OTRO"
     } else {
       this.valoresRadioButton[event.target.name] = event.target.value;
     }
@@ -326,5 +358,13 @@ export class DesaparecidosComponent implements OnInit {
         InformacionPublica: event.target.value
       });
     }
+  }
+
+  onMessageClose() {
+    this.hayError = false;
+    this.mensaje = '';
+    this.exito = false;
+    this.reiniciar = true;
+    this.home = true;
   }
 }

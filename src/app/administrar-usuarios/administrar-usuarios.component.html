@@ -1,0 +1,216 @@
+<app-menu></app-menu>
+
+<div class="contenido">
+
+    <div class="boton_area_form">
+        <button [ngClass]="posicion == 0 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
+            (click)="cambiarPaso(0)">Listar usuarios</button>
+        <button [ngClass]="posicion == 1 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
+            (click)="cambiarPaso(1)">Crear nuevo usuario</button>
+    </div>
+
+    <div [ngClass]="{ocultar: posicion != 0}">
+        <h2>Lista de los usuarios del sistema</h2>
+
+        <div id="grid"></div>
+        <br>
+        <button class="button_form" (click)="download()">Descargar tabla como CSV</button>
+        <br> <br>
+
+
+        <h2>Formulario para modificar los datos del entrevistador seleccionado en la tabla</h2>
+        <form [formGroup]="formularioModificarEntrevistador" (ngSubmit)="modificarUsuario()">
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Nombre">Nombre <span class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="NombreModificar" type="text" formControlName="Nombre">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ApellidoPaterno">Apellido paterno <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoPaternoModificar" type="text"
+                        formControlName="ApellidoPaterno">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ApellidoMaterno">Apellido materno <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoMaternoModificar" type="text"
+                        formControlName="ApellidoMaterno">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Istitucion">Institución <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <select class="select_form" name="Institucion" id="InstitucionModificar"
+                        formControlName="Institucion">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option value="CNB">CNB</option>
+                        <option value="CLB">CLB</option>
+                        <option value="FISCALÍA">FISCALÍA</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Cargo">Cargo <span class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="CargoModificar" type="text" formControlName="Cargo">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="User">Nombre de usuario <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="UserModificar" type="text" formControlName="User">
+                </div>
+            </div>
+            <br>
+
+            <input class="input_form" type="submit" value="Modificar datos">
+        </form>
+
+        <h3>Cambiar la contraseña</h3>
+        <form [formGroup]="formularioCambiarContrasenia" (ngSubmit)="cambiarContrasenia()">
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Password">Contraseña <span class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="PasswordCambioContraseña" type="password" formControlName="Password">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Password2">Confirme la Contraseña <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Password2CambioContraseña" type="password" formControlName="Password2">
+                </div>
+            </div>
+
+            <br>
+            <input class="input_form" type="submit" value="Cambiar contraseña">
+            <br><br><br>
+        </form>
+
+    </div>
+
+    <div [ngClass]="{ocultar: posicion != 1}">
+        <h2>Formulario para crear nuevos entrevistadores</h2>
+        <form [formGroup]="formularioNuevoEntrevistador" (ngSubmit)="crearUsuario()">
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Nombre">Nombre <span class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="Nombre" type="text" formControlName="Nombre">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ApellidoPaterno">Apellido paterno <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="ApellidoMaterno">Apellido materno <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Istitucion">Institución <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <select class="select_form" name="Institucion" id="Institucion" formControlName="Institucion">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option value="CNB">CNB</option>
+                        <option value="CLB">CLB</option>
+                        <option value="FISCALÍA">FISCALÍA</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Cargo">Cargo <span class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="Cargo" type="text" formControlName="Cargo">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="User">Nombre de usuario <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="User" type="text" formControlName="User">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Password">Contraseña <span class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Password" type="password" formControlName="Password">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label class="label_form" for="Password2">Confirme la Contraseña <span
+                            class="campo_obligatorio">*</span></label>
+                </div>
+                <div class="col-75">
+                    <input class="input_form" id="Password2" type="password" formControlName="Password2">
+                </div>
+            </div>
+
+            <br>
+
+            <input class="input_form" type="submit" value="Crear usuario">
+        </form>
+    </div>
+</div>
+
+<app-message-alert [ngClass]="{ocultar: !hayError}" [mensaje]="mensaje" [exito]="exito" [home]="false"
+    [reiniciar]="reiniciar" (close)="onMessageClose()"></app-message-alert>
+
+<app-footer></app-footer>

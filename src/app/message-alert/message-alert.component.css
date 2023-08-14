@@ -1,0 +1,89 @@
+/* .alerta {
+    padding: 10px;
+    border: 1px solid;
+    margin-bottom: 10px;
+} */
+
+.fondo {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+.alerta {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background-color: white;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.alerta.success {
+    background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+}
+
+.alerta.error {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    justify-content: right;
+}
+
+.buttonExito{
+    background-color: rgb(35, 91, 78);
+    color: white;
+    border-color: white;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+
+    padding: 15px 32px;
+
+    text-align: center;
+    text-decoration: none;
+}
+
+.buttonExito:hover {
+    background-color: rgb(16, 49, 43);
+    cursor:pointer;
+}
+
+.buttonError{
+    background-color: rgb(105, 28, 50);
+    color: white;
+    border-color: white;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+
+    padding: 15px 32px;
+
+    text-align: center;
+    text-decoration: none;
+}
+
+.buttonError:hover {
+    background-color: rgb(159, 34, 65);
+    cursor:pointer;
+}
+
+@media screen and (max-width: 800px) {
+    .alerta {
+        width: 80%;
+    }
+}

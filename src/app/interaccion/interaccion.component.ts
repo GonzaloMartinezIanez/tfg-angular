@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EntrevistadorService } from '../servicios/entrevistador.service';
 import { GrupoService } from '../servicios/grupo.service';
 import * as L from "leaflet";
+import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import { HttpClient } from '@angular/common/http';
 import { GlobalComponent } from '../global-component';
 import { NacionesService } from '../servicios/naciones.service';
@@ -15,18 +16,48 @@ import { NacionesService } from '../servicios/naciones.service';
 export class InteraccionComponent implements OnInit {
   // FormGroup ocn el formulario de personas en interaccion
   formularioInteraccion = new FormGroup({
+    // Datos generales
     Nombre: new FormControl('', Validators.required),
     ApellidoPaterno: new FormControl('', Validators.required),
     ApellidoMaterno: new FormControl(''),
     NombreSocial: new FormControl(''),
-    FechaNacimiento: new FormControl(''),
+    FechaNacimiento: new FormControl('', Validators.required),
+    Edad: new FormControl('', Validators.required),
     Sexo: new FormControl(''),
-    Nacionalidad: new FormControl(''),
+    ViajaConIdentificacion: new FormControl(''),
+    ViajaConIdentificacionCual: new FormControl(''),
+    OtrosIdiomas: new FormControl(''),
+    OtrosIdiomasCual: new FormControl(''),
+    PuebloOriginario: new FormControl(''),
+    PuebloOriginarioCual: new FormControl(''),
+    Profesion: new FormControl(''),
+
+    // Procedencia de la persona
+    Nacionalidad: new FormControl('', Validators.required),
     Estado: new FormControl(''),
     Municipio: new FormControl(''),
     LugarFrecuenta: new FormControl(''),
+    EdadMigracion: new FormControl(''),
+    AnioComienzoMigracion: new FormControl(''),
+    MotivoMigracion: new FormControl(''),
     LugarActual: new FormControl(''),
+    LugarActualCoordenadas: new FormControl(''),
+    Interacciones: new FormControl(''),
     IdGrupo: new FormControl(''),
+
+    // Descripcion fisica
+    Estatura: new FormControl(''),
+    Peso: new FormControl(''),
+    Lentes: new FormControl(''),
+    VelloFacial: new FormControl(''),
+    VelloFacialCual: new FormControl(''),
+    SenialesParticulares: new FormControl(''),
+    Lesiones: new FormControl(''),
+    EstadoSalud: new FormControl(''),
+    DescripcionPrendas: new FormControl(''),
+    Imagen: new FormControl(null),
+
+    // Situacion y datos individualizantes de la persona
     SituacionCalle: new FormControl(''),
     MigrantesMexicanas: new FormControl(''),
     TrabajadorCampo: new FormControl(''),
@@ -34,20 +65,39 @@ export class InteraccionComponent implements OnInit {
     MigrantesExtranjeras: new FormControl(''),
     Deportadas: new FormControl(''),
     TrabajadorHogar: new FormControl(''),
-    DescripcionFisica: new FormControl(''),
     Necesidades: new FormControl(''),
+    Telefono: new FormControl(''),
     MensajeFamiliares: new FormControl(''),
-    Imagen: new FormControl(null),
+    NombreQuienBusca: new FormControl(''),
+    ApellidoPaternoQuienBusca: new FormControl(''),
+    ApellidoMaternoQuienBusca: new FormControl(''),
+    ParentescoQuienBusca: new FormControl(''),
+    DireccionQuienBusca: new FormControl(''),
+    TelefonoQuienBusca: new FormControl(''),
+    CorreoElectronicoQuienBusca: new FormControl(''),
+    OtroContactoQuienBusca: new FormControl(''),
+
+    // Observaciones
     SaludFisica: new FormControl(''),
     SaludMental: new FormControl(''),
     Observaciones: new FormControl(''),
-    Entrevistador: new FormControl(''),
-    Institucion: new FormControl(''),
-    Interacciones: new FormControl(''),
+    // Datos del entrevistador
+    FechaEntrevista: new FormControl('', Validators.required),
   })
-  
+
+  entrevistador = {
+    Nombre: "",
+    Institucion: "",
+    Cargo: ""
+  }
+
   // Variable que guarda el estado de los radio buttons
   valoresRadioButton = {
+    "ViajaConIdentificacion": "",
+    "OtrosIdiomas": "",
+    "PuebloOriginario": "",
+    "Lentes": "",
+    "VelloFacial": "",
     "SituacionCalle": "",
     "MigrantesMexicanas": "",
     "TrabajadorCampo": "",
@@ -56,6 +106,13 @@ export class InteraccionComponent implements OnInit {
     "Deportadas": "",
     "TrabajadorHogar": ""
   }
+
+  // Variables para mostrar la alerta con error o exito
+  hayError = false;
+  mensaje = "Mensaje con el error";
+  exito = false;
+  reiniciar = true;
+  home = true;
 
   // Variables del mapa
   mapInteraccion;
@@ -87,10 +144,10 @@ export class InteraccionComponent implements OnInit {
   constructor(private servicioEntrevistador: EntrevistadorService,
     private servicioGrupo: GrupoService, private http: HttpClient, private nacionesSercive: NacionesService) { }
 
-    /**
-     * Al comienzo se obtienen los grupos, datos del entrevistador y las nacionalidades
-     * Tambien comienza en el primer paso del formulario (0)
-     */
+  /**
+   * Al comienzo se obtienen los grupos, datos del entrevistador y las nacionalidades
+   * Tambien comienza en el primer paso del formulario (0)
+   */
   ngOnInit(): void {
     this.posicionFormulario = 0;
     this.getGrupos();
@@ -102,14 +159,23 @@ export class InteraccionComponent implements OnInit {
    * Funcion para crear el mapa
    */
   crearMapa() {
-    this.mapInteraccion = L.map("mapInteraccion", { scrollWheelZoom: false }).setView([37.16788748437835, -3.5993957519531254], 13);
+    this.mapInteraccion = L.map("mapInteraccion").setView([37.16788748437835, -3.5993957519531254], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.mapInteraccion);
 
-    if (this.formularioInteraccion.value.LugarActual != undefined) {
-      const coordenadas = this.formularioInteraccion.value.LugarActual.split(', ');
+    L.Control.geocoder()
+      .on('markgeocode', e => {
+        this.formularioInteraccion.patchValue({
+          LugarActual: e.geocode.name.toUpperCase(),
+          LugarActualCoordenadas: e.geocode.center.lat + ", " + e.geocode.center.lng,
+          Interacciones: "COMIENZA EN  " + e.geocode.name.toUpperCase() + "."
+        })
+      }).addTo(this.mapInteraccion);
+
+    if (this.formularioInteraccion.value.LugarActualCoordenadas != undefined) {
+      const coordenadas = this.formularioInteraccion.value.LugarActualCoordenadas.split(', ');
 
       if (Number(coordenadas[0]) && Number(coordenadas[1])) {
         this.mapInteraccion.setView([coordenadas[0], coordenadas[1]], 13);
@@ -117,7 +183,7 @@ export class InteraccionComponent implements OnInit {
       }
     }
 
-    this.mapInteraccion.on("click", e => {
+    /* this.mapInteraccion.on("click", e => {
       //Marcar las coordenadas en el formulario
       this.formularioInteraccion.patchValue({
         LugarActual: e.latlng.lat + ", " + e.latlng.lng
@@ -126,7 +192,7 @@ export class InteraccionComponent implements OnInit {
       this.layer.remove();
       // Guardar la marca y dibujarla en el mapa
       this.layer = L.marker([e.latlng.lat, e.latlng.lng], this.markerIcon).addTo(this.mapInteraccion);
-    });
+    }); */
   }
 
   /**
@@ -180,10 +246,15 @@ export class InteraccionComponent implements OnInit {
   getEntrevistador(): void {
     this.servicioEntrevistador.getEntrevistador()
       .subscribe(entrevistador => {
-        this.formularioInteraccion.patchValue({
-          Entrevistador: entrevistador[0].Nombre + " " + entrevistador[0].ApellidoPaterno + " " + entrevistador[0].ApellidoMaterno,
+        this.entrevistador = {
+          Nombre: entrevistador[0].Nombre + " " + entrevistador[0].ApellidoPaterno + " " + entrevistador[0].ApellidoMaterno,
           Institucion: entrevistador[0].Institucion,
+          Cargo: entrevistador[0].Cargo
+        }
+        this.formularioInteraccion.patchValue({
           LugarActual: entrevistador[0].LugarActual,
+          LugarActualCoordenadas: entrevistador[0].LugarActualCoordenadas,
+          Interacciones: "COMIENZA EN " + entrevistador[0].LugarActual
         });
       });
   }
@@ -206,6 +277,11 @@ export class InteraccionComponent implements OnInit {
       this.nacionesSercive.getEntidades().subscribe(e => {
         this.entidades = e;
       })
+    } else {
+      this.formularioInteraccion.patchValue({
+        Estado: "",
+        Municipio: ""
+      })
     }
   }
 
@@ -223,27 +299,55 @@ export class InteraccionComponent implements OnInit {
    * Funcion que manda los datos del formulario a la API
    */
   enviar(): void {
-    this.rellenarCamposRadio();
+    if (this.formularioInteraccion.invalid) {
+      this.hayError = true;
+      this.mensaje = 'Hay campos obligatorios vacíos';
+      this.exito = false;
+      this.reiniciar = false;
+      this.home = false;
+    } else {
+      this.rellenarCamposRadio();
+      if (this.formularioInteraccion.value.LugarActual == "") {
+        this.formularioInteraccion.patchValue({
+          LugarActualCoordenadas: ""
+        })
+      }
 
-    if (Number(this.formularioInteraccion.value.Estado)) {
-      this.formularioInteraccion.patchValue({
-        Estado: this.entidades.find(ent => ent.idEntidad == this.formularioInteraccion.value.Estado).entidad
-      })
+      if (Number(this.formularioInteraccion.value.Estado)) {
+        this.formularioInteraccion.patchValue({
+          Estado: this.entidades.find(ent => ent.idEntidad == this.formularioInteraccion.value.Estado).entidad
+        })
+      }
+
+      const formData = new FormData();
+      for (const key of Object.keys(this.formularioInteraccion.value)) {
+        const value = this.formularioInteraccion.value[key];
+        formData.append(key, value);
+      }
+
+      this.http.post(GlobalComponent.APIurl + "/interaccion", formData)
+        .subscribe(res => {
+          if (res['message'] == "Interacción añadida") {
+            this.hayError = true;
+            this.mensaje = "Interacción añadida con número de folio " + res['folio'];
+            this.exito = true;
+            this.reiniciar = true;
+            this.home = true;
+          } else if (res['message'] == "La interaccion existe") {
+            this.hayError = true;
+            this.mensaje = "Esta persona está registrada con el folio: " + res['folio'];
+            this.exito = false;
+            this.reiniciar = true;
+            this.home = true;
+          } else {
+            this.hayError = true;
+            this.mensaje = 'Se ha producido un error';
+            this.exito = false;
+            this.reiniciar = false;
+            this.home = false;
+          }
+        })
     }
-
-    const formData = new FormData();
-    for (const key of Object.keys(this.formularioInteraccion.value)) {
-      const value = this.formularioInteraccion.value[key];
-      formData.append(key, value);
-    }
-
-     this.http.post(GlobalComponent.APIurl + "/interaccion", formData)
-       .subscribe(res => {
-         console.log(res)
-         if (res['message'] == "Interacción añadida") {
-           alert("Interacción añadida con número de folio " + res['folio'])
-         }
-       })
   }
 
   /**
@@ -302,11 +406,9 @@ export class InteraccionComponent implements OnInit {
    */
   onChange(event) {
     if (event.target.value == "Sí") {
-      this.valoresRadioButton[event.target.name] = "Sí"
+      this.valoresRadioButton[event.target.name] = "SÍ"
     } else if (event.target.value == "No") {
-      this.valoresRadioButton[event.target.name] = "No"
-    } else if ((event.target.value == "Otro")) {
-      this.valoresRadioButton[event.target.name] = "Otro"
+      this.valoresRadioButton[event.target.name] = "NO"
     }
   }
 
@@ -316,6 +418,11 @@ export class InteraccionComponent implements OnInit {
    */
   rellenarCamposRadio() {
     this.formularioInteraccion.patchValue({
+      ViajaConIdentificacion: this.valoresRadioButton.ViajaConIdentificacion,
+      OtrosIdiomas: this.valoresRadioButton.OtrosIdiomas,
+      PuebloOriginario: this.valoresRadioButton.PuebloOriginario,
+      Lentes: this.valoresRadioButton.Lentes,
+      VelloFacial: this.valoresRadioButton.VelloFacial,
       SituacionCalle: this.valoresRadioButton.SituacionCalle,
       MigrantesMexicanas: this.valoresRadioButton.MigrantesMexicanas,
       TrabajadorCampo: this.valoresRadioButton.TrabajadorCampo,
@@ -324,5 +431,13 @@ export class InteraccionComponent implements OnInit {
       Deportadas: this.valoresRadioButton.Deportadas,
       TrabajadorHogar: this.valoresRadioButton.TrabajadorHogar
     });
+  }
+
+  onMessageClose() {
+    this.hayError = false;
+    this.mensaje = '';
+    this.exito = false;
+    this.reiniciar = true;
+    this.home = true;
   }
 }

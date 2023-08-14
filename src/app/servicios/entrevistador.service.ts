@@ -18,7 +18,33 @@ export class EntrevistadorService {
     return this.http.get(GlobalComponent.APIurl + "/entrevistador");
   }
 
-  putEntrevistador(e: any) {
-    return this.http.put(GlobalComponent.APIurl + "/entrevistador", e);
+  getEntrevistadores() {
+    return this.http.get(GlobalComponent.APIurl + "/entrevistadores");
   }
+
+  getEntrevistadorNombre(id : string) {
+    return this.http.get(GlobalComponent.APIurl + "/entrevistadorNombre/" + id);
+  }
+
+  putEntrevistador(datos: any) {
+    return this.http.put(GlobalComponent.APIurl + "/entrevistador", datos);
+  }
+
+  putEntrevistadorAdmin(datos: any){
+    return this.http.put(GlobalComponent.APIurl + "/modificarEntrevistador", datos);
+  }
+
+  changePassword(datos: any) {
+    return this.http.put(GlobalComponent.APIurl + "/cambiarContrasenia", datos);
+  }
+
+  changePasswordAdmin(datos: any){
+    return this.http.put(GlobalComponent.APIurl + "/cambiarContraseniaAdmin", datos);
+  }
+
+  registrarEntrevistador(datos: any){
+    return this.http.put(GlobalComponent.APIurl + "/registrar", datos);
+  }
+
+
 }

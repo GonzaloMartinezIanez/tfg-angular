@@ -13,7 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["stream"],
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ],
             "outputPath": "dist/angular-tfg",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -35,8 +37,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",

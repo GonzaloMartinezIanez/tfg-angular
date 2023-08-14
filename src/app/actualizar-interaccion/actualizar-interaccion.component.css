@@ -6,21 +6,34 @@
     flex: 50%;
 }
 
-.boton {
-    background-color: rgb(35, 91, 78);
-    color: white;
-    border-style: solid;
-    border-radius: 5px;
-    border-width: 2px;
-
-    padding: 15px 32px;
-
-    text-align: center;
-    text-decoration: none;
-}
-
 .centrar {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.lista {
+    background-color: white;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    height: 200px;
+    overflow: auto;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding-left: 10px;
+    padding-top: 10px;
+    text-decoration: none;
+}
+
+.boton_busqueda{
+    cursor: pointer;
+    padding: 5px;
 }

@@ -1,63 +1,79 @@
 <app-menu></app-menu>
 
 <div class="contenido">
-    <h2>Modificar datos del entrevistador/a</h2>
+    <h2>Modificar ubicación del entrevistador</h2>
     <form [formGroup]="formularioEntrevistador" (ngSubmit)="modificar()">
         <div class="row">
-            <div class="col-25">
+            <div class="col-25-label">
                 <label class="label_form" for="Nombre">Nombre</label>
             </div>
-            <div class="col-75">
-                <input class="input_form" id="Nombre" type="text" formControlName="Nombre">
+            <div class="col-75-label">
+                <label class="label_form" for="Nombre">{{entrevistador.Nombre}}</label>
+               <!--  <input class="input_form" id="Nombre" type="text" formControlName="Nombre"> -->
             </div>
         </div>
 
         <div class="row">
-            <div class="col-25">
+            <div class="col-25-label">
                 <label class="label_form" for="ApellidoPaterno">Apellido paterno</label>
             </div>
-            <div class="col-75">
-                <input class="input_form" id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
+            <div class="col-75-label">
+                <label class="label_form" for="ApellidoPaterno">{{entrevistador.ApellidoPaterno}}</label>
+                <!-- <input class="input_form" id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno"> -->
             </div>
         </div>
 
         <div class="row">
-            <div class="col-25">
+            <div class="col-25-label">
                 <label class="label_form" for="ApellidoMaterno">Apellido materno</label>
             </div>
-            <div class="col-75">
-                <input class="input_form" id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
+            <div class="col-75-label">
+                <label class="label_form" for="ApellidoMaterno">{{entrevistador.ApellidoMaterno}}</label>
+                <!-- <input readonly class="input_form" id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno"> -->
             </div>
         </div>
 
         <div class="row">
-            <div class="col-25">
-                <label class="label_form" for="Istitucion">Institución</label>
+            <div class="col-25-label">
+                <label class="label_form" for="Institucion">Institución</label>
             </div>
-            <div class="col-75">
-                <select class="select_form" name="Institucion" id="Institucion" formControlName="Institucion">
+            <div class="col-75-label">
+                <label class="label_form" for="Institucion">{{entrevistador.Institucion}}</label>
+                <!-- <select class="select_form" name="Institucion" id="Institucion" formControlName="Institucion">
                     <option value="CNB">CNB</option>
                     <option value="CLB">CLB</option>
                     <option value="Fiscalía">Fiscalía</option>
-                </select>
+                </select> -->
             </div>
         </div>
 
         <div class="row">
-            <div class="col-25">
+            <div class="col-25-label">
                 <label class="label_form" for="Cargo">Cargo</label>
             </div>
-            <div class="col-75">
-                <input class="input_form" id="Cargo" type="text" formControlName="Cargo">
+            <div class="col-75-label">
+                <label class="label_form" for="Cargo">{{entrevistador.Cargo}}</label>
+                <!-- <input class="input_form" id="Cargo" type="text" formControlName="Cargo"> -->
             </div>
         </div>
 
         <div class="row">
-            <div class="col-25">
+            <div class="col-25-label">
+                <label class="label_form" for="User">Nombre de usuario</label>
+            </div>
+            <div class="col-75-label">
+                <label class="label_form" for="User">{{entrevistador.User}}</label>
+                <!-- <input class="input_form" id="Cargo" type="text" formControlName="Cargo"> -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25-label">
                 <label class="label_form" for="LugarActual"> Lugar donde se encuentra actualmente</label>
             </div>
-            <div class="col-75">
-                <input class="input_form" id="LugarActual" type="text" formControlName="LugarActual">
+            <div class="col-75-label">
+                <label class="label_form" for="User">{{formularioEntrevistador.value.LugarActual}}</label>
+                <!-- <input class="input_form" id="LugarActual" type="text" formControlName="LugarActual" placeholder="Para usar el mapa hay que pinchar en la lupa de la esquina superior derecha"> -->
             </div>
         </div>
 
@@ -65,6 +81,49 @@
 
         <br>
 
-        <input class="input_form" type="submit" [disabled]="!formularioEntrevistador.valid">
+        <input class="input_form" type="submit" value="Modificar ubicación">
     </form>
+
+    <br>
+    <br>
+    
+    <h3>Formulario para cambiar la contraseña</h3>
+    <form [formGroup]="formularioPassword" (ngSubmit)="changePassword()">
+        <div class="row">
+            <div class="col-25">
+                <label class="label_form" for="OldPassword">Contraseña actual</label>
+            </div>
+            <div class="col-75">
+                <input class="input_form" id="OldPassword" type="password" formControlName="OldPassword">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label class="label_form" for="NewPassword">Nueva contraseña</label>
+            </div>
+            <div class="col-75">
+                <input class="input_form" id="NewPassword" type="password" formControlName="NewPassword">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label class="label_form" for="NewPassword2">Repetir la nueva contraseña</label>
+            </div>
+            <div class="col-75">
+                <input class="input_form" id="NewPassword2" type="password" formControlName="NewPassword2">
+            </div>
+        </div>
+
+        <br>
+
+        <input class="input_form" type="submit" value="Cambiar contraseña">
+        <br><br><br>
+    </form>    
 </div>
+
+
+<app-footer></app-footer>
+<app-message-alert [ngClass]="{ocultar: !hayError}" [mensaje]="mensaje" [exito]="exito" [home]="true" [reiniciar]="false" (close)="onMessageClose()"></app-message-alert>
+

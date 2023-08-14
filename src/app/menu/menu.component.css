@@ -13,8 +13,8 @@ ul {
 
   font-size: x-large;
   list-style-type: none;
-  padding: 0%;
-  margin: 0%;
+  padding: 0;
+  margin: 0;
   background-color: rgb(16, 49, 43);
   color: white;
 }
@@ -26,6 +26,7 @@ li a,
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  cursor:pointer;
 }
 
 li a:hover,
@@ -43,7 +44,6 @@ li.dropdown {
   background-color: rgb(16, 49, 43);
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  /* z-index: 1; */
 }
 
 .dropdown-content a {

@@ -1,0 +1,11 @@
+<div class="fondo" (click)="onClose()">
+    <div class="alerta" [ngClass]="{'success': exito, 'error': !exito}">
+        <p>{{ mensaje }}</p>
+        <br>
+        <div class="button-container">            
+            <button [ngClass]="{'buttonExito': exito, 'buttonError': !exito}" *ngIf="home" (click)="onRedirect()">Volver al menú</button>
+            <button [ngClass]="{'buttonExito': exito, 'buttonError': !exito}" *ngIf="reiniciar" (click)="onReset()">Añadir nuevo registro</button>
+            <button [ngClass]="{'buttonExito': exito, 'buttonError': !exito}" (click)="onClose()">Cerrar</button>
+        </div>
+    </div>
+</div>

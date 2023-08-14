@@ -5,10 +5,11 @@
     <form [formGroup]="formularioGrupo" (ngSubmit)="(crearGrupo())">
         <div class="row">
             <div class="col-25">
-                <label class="label_form" for="NombreGrupo">Nombre del grupo <span class="campo_obligatorio">*</span></label>
+                <label class="label_form" for="NombreGrupo">Nombre del grupo <span
+                        class="campo_obligatorio">*</span></label>
             </div>
             <div class="col-75">
-                <input class="input_form" id="NombreGrupo" type="text" formControlName="NombreGrupo">
+                <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="NombreGrupo" type="text" formControlName="NombreGrupo">
             </div>
         </div>
 
@@ -26,7 +27,8 @@
                 <label class="label_form" for="NombreEncargado">Nombre del encargado del grupo</label>
             </div>
             <div class="col-75">
-                <input class="input_form" id="NombreEncargado" type="text" formControlName="NombreEncargado" placeholder="Debe ser una persona del grupo que está migrando">
+                <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="NombreEncargado" type="text" formControlName="NombreEncargado"
+                    placeholder="Debe ser una persona del grupo que está migrando">
             </div>
         </div>
 
@@ -35,7 +37,8 @@
                 <label class="label_form" for="LugarCreacion"> Lugar de creación</label>
             </div>
             <div class="col-75">
-                <input class="input_form" id="LugarCreacion" type="text" formControlName="LugarCreacion">
+                <input class="input_form" id="LugarCreacion" type="text" formControlName="LugarCreacion"
+                    placeholder="Para usar el mapa hay que usar la lupa en la esquina superior derecha">
             </div>
         </div>
 
@@ -46,7 +49,12 @@
         <br>
 
         <div class="row">
-            <input class="input_form"type="submit" [disabled]="!formularioGrupo.valid">
+            <input class="input_form" type="submit">
         </div>
     </form>
 </div>
+
+<app-message-alert [ngClass]="{ocultar: !hayError}" [mensaje]="mensaje" [exito]="exito" [home]="home"
+    [reiniciar]="reiniciar" (close)="onMessageClose()"></app-message-alert>
+
+<app-footer></app-footer>

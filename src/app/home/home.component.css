@@ -2,7 +2,6 @@
     width: 90%;
     height: 70vh;
     margin: auto;
-    margin-top: 100px;
 
     display: flex;
     flex-basis: 100%;
@@ -17,6 +16,7 @@
 
     flex: 1 1 33%;
     margin: 20px;
+    cursor:pointer;
 }
 
 .button_menu:hover {

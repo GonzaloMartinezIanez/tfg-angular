@@ -21,7 +21,8 @@ export class VerGruposComponent implements OnInit {
     nombreGrupo: "",
     fechaCreación: "",
     nombreEncargado: "",
-    lugarCreacion: ""
+    lugarCreacion: "",
+    lugarCreacionCoordenadas: ""
   }
 
   // Variables del mapa
@@ -70,6 +71,7 @@ export class VerGruposComponent implements OnInit {
       this.grupo.fechaCreacion = g[0].FechaCreacion;
       this.grupo.nombreEncargado = g[0].NombreEncargado;
       this.grupo.lugarCreacion = g[0].LugarCreacion;
+      this.grupo.lugarCreacionCoordenadas = g[0].LugarCreacionCoordenadas;
     });
 
     this.grupoService.getPersonasEnGrupo(this.grupoSeleccionado).subscribe(personas => {
@@ -96,8 +98,8 @@ export class VerGruposComponent implements OnInit {
    * Funcion para actualizar el mapa
    */
   actualizarMapa() {
-    if (this.grupo.lugarCreacion != "") {
-      const coordenadas = this.grupo.lugarCreacion.split(', ');
+    if (this.grupo.lugarCreacionCoordenadas != null) {
+      const coordenadas = this.grupo.lugarCreacionCoordenadas.split(', ');
 
       if (Number(coordenadas[0]) && Number(coordenadas[1])) {
         this.ocultarMapa = false;        
@@ -105,10 +107,9 @@ export class VerGruposComponent implements OnInit {
         this.mapVerGrupo.removeLayer(this.layer)
         this.mapVerGrupo.setView([coordenadas[0], coordenadas[1]], 13);
         this.layer = L.marker([coordenadas[0], coordenadas[1]], this.markerIcon).addTo(this.mapVerGrupo);
-
-      } else {
-        this.ocultarMapa = true;
-      }
+      } 
+    } else {
+      this.ocultarMapa = true;
     }
   }
 

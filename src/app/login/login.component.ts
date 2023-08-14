@@ -21,6 +21,11 @@ export class LoginComponent implements OnInit {
     Password: new FormControl('', Validators.required)
   })
 
+  // Variables para mostrar la alerta con error o exito
+  hayError = false;
+  mensaje = "Mensaje con el error";
+  exito = false;
+
   constructor(private http: HttpClient, public router: Router, private authService: AuthService) { }
 
   /**
@@ -40,17 +45,34 @@ export class LoginComponent implements OnInit {
    */
   enviar(): void {
     if (!this.formularioLogIn.valid) {
-      alert("Tienes que rellenar los campos")
+      this.hayError = true;
+      this.mensaje = 'Tienes que rellenar los campos';
+      this.exito = false;
     } else {
       this.http.post(GlobalComponent.APIurl + "/auth", this.formularioLogIn.value)
         .subscribe(res => {
           if (res['token'] != undefined) {
             localStorage.setItem('token', res['token'])
-            this.router.navigate(['home'])
-          } else {
-            alert("Usuario o contraseña incorrecta")
+            this.router.navigate(['info'])
           }
+        }, error => {
+          if (error.status == 0) {
+            this.hayError = true;
+            this.mensaje = 'Se ha producido un error';
+            this.exito = false;
+          } else {
+            this.hayError = true;
+            this.mensaje = 'Usuario o contraseña incorrecta';
+            this.exito = false;
+          }
+
         })
     }
+  }
+
+  onMessageClose() {
+    this.hayError = false;
+    this.mensaje = '';
+    this.exito = false;
   }
 }
