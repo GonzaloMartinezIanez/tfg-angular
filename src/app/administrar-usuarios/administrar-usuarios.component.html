@@ -25,7 +25,8 @@
                     <label class="label_form" for="Nombre">Nombre <span class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
-                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="NombreModificar" type="text" formControlName="Nombre">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="NombreModificar"
+                        type="text" formControlName="Nombre">
                 </div>
             </div>
 
@@ -35,8 +36,8 @@
                             class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
-                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoPaternoModificar" type="text"
-                        formControlName="ApellidoPaterno">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form"
+                        id="ApellidoPaternoModificar" type="text" formControlName="ApellidoPaterno">
                 </div>
             </div>
 
@@ -46,8 +47,8 @@
                             class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
-                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoMaternoModificar" type="text"
-                        formControlName="ApellidoMaterno">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form"
+                        id="ApellidoMaternoModificar" type="text" formControlName="ApellidoMaterno">
                 </div>
             </div>
 
@@ -72,7 +73,12 @@
                     <label class="label_form" for="Cargo">Cargo <span class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
-                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="CargoModificar" type="text" formControlName="Cargo">
+                    <select class="select_form" name="Cargo" id="Cargo" formControlName="Cargo">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option value="ENTREVISTADOR">Entrevistador</option>
+                        <option value="ENCARGADO">Encargado</option>
+                        <option value="ADMINISTRADOR">Administrador</option>
+                    </select>
                 </div>
             </div>
 
@@ -107,7 +113,8 @@
                             class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
-                    <input class="input_form" id="Password2CambioContraseña" type="password" formControlName="Password2">
+                    <input class="input_form" id="Password2CambioContraseña" type="password"
+                        formControlName="Password2">
                 </div>
             </div>
 
@@ -126,7 +133,8 @@
                     <label class="label_form" for="Nombre">Nombre <span class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
-                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="Nombre" type="text" formControlName="Nombre">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="Nombre" type="text"
+                        formControlName="Nombre">
                 </div>
             </div>
 
@@ -136,7 +144,8 @@
                             class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
-                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoPaterno" type="text" formControlName="ApellidoPaterno">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoPaterno"
+                        type="text" formControlName="ApellidoPaterno">
                 </div>
             </div>
 
@@ -146,7 +155,8 @@
                             class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
-                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoMaterno" type="text" formControlName="ApellidoMaterno">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="ApellidoMaterno"
+                        type="text" formControlName="ApellidoMaterno">
                 </div>
             </div>
 
@@ -170,7 +180,36 @@
                     <label class="label_form" for="Cargo">Cargo <span class="campo_obligatorio">*</span></label>
                 </div>
                 <div class="col-75">
-                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="Cargo" type="text" formControlName="Cargo">
+                    <select class="select_form" name="Cargo" id="Cargo" formControlName="Cargo">
+                        <option disabled selected hidden value="">Selecciona una opción</option>
+                        <option value="ENTREVISTADOR">Entrevistador</option>
+                        <option value="ENCARGADO">Encargado</option>
+                        <option value="ADMINISTRADOR">Administrador</option>
+                    </select>
+                </div>
+            </div>
+
+            <div *ngIf="this.formularioNuevoEntrevistador.value.Cargo == 'ENTREVISTADOR'" class="row">
+                <div class="col-25"></div>
+                <div class="col-75">
+                    <label class="label_form" style="font-weight: normal;">Este usuario puede consultar los registros
+                        que ha subido un usuario de su centro</label>
+                </div>
+            </div>
+
+            <div *ngIf="this.formularioNuevoEntrevistador.value.Cargo == 'ENCARGADO'" class="row">
+                <div class="col-25"></div>
+                <div class="col-75">
+                    <label class="label_form" style="font-weight: normal;">Este usuario puede añadir registros y ver los
+                        registros añadidos por su centro</label>
+                </div>
+            </div>
+
+            <div *ngIf="this.formularioNuevoEntrevistador.value.Cargo == 'ADMINISTRADOR'" class="row">
+                <div class="col-25"></div>
+                <div class="col-75">
+                    <label class="label_form" style="font-weight: normal;">Este usuario puede añadir registros, ver
+                        todos los registros y gestionar a los usuarios</label>
                 </div>
             </div>
 

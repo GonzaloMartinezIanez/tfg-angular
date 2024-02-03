@@ -5,6 +5,8 @@ import * as L from "leaflet";
 import { EntrevistadorService } from '../servicios/entrevistador.service';
 import { GlobalComponent } from '../global-component';
 import { NacionesService } from '../servicios/naciones.service';
+import { AuthService } from '../servicios/auth.service';
+import { Router } from '@angular/router';
 //import "leaflet/dist/leaflet.css";
 
 @Component({
@@ -160,16 +162,26 @@ export class DesaparecidosComponent implements OnInit {
   municipios: any;
 
   constructor(private servicioEntrevistador: EntrevistadorService,
-    private http: HttpClient, private nacionesSercive: NacionesService) { }
+    private http: HttpClient, private nacionesSercive: NacionesService,
+    private authService: AuthService, public router: Router) { }
 
   /**
    * Al comenzar se obtiene los datos del entrevistador las naciones
    * y se marca la posicion del formulario a la primera (0)
    */
   ngOnInit(): void {
+    this.obtenerCargo();
     this.getEntrevistador();
     this.posicionFormulario = 0;
     this.getNaciones();
+  }
+
+  obtenerCargo() {
+    this.authService.obtenerCargo().subscribe(res => {
+      if (res[0]['Cargo'] == "ENTREVISTADOR") {
+        this.router.navigate(['home'])
+      }
+    });
   }
 
   /**
@@ -200,7 +212,7 @@ export class DesaparecidosComponent implements OnInit {
    * en el select del html
    */
   onNacionesChange(event) {
-    if (this.formularioDesaparecidos.value.PaisObjetivo === "MEXICANA") {
+    if (this.formularioDesaparecidos.value.PaisObjetivo === "México") {
       this.nacionesSercive.getEntidades().subscribe(e => {
         this.entidades = e;
       })
@@ -228,7 +240,7 @@ export class DesaparecidosComponent implements OnInit {
       this.reiniciar = false;
       this.home = false;
     } else {
-      let valores = this.rellenarCamposRadio();
+      this.rellenarCamposRadio();
 
       if (Number(this.formularioDesaparecidos.value.EstadoObjetivo)) {
         this.formularioDesaparecidos.patchValue({
@@ -243,7 +255,6 @@ export class DesaparecidosComponent implements OnInit {
         formData.append(key, value);
       }
 
-
       this.http.post(GlobalComponent.APIurl + "/desaparecidos", formData)
         .subscribe(res => {
           if (res['message'] == "Persona desaparecida añadida") {
@@ -252,13 +263,13 @@ export class DesaparecidosComponent implements OnInit {
             this.exito = true;
             this.reiniciar = true;
             this.home = true;
-          } else if(res['message'] == "La persona ya esta registrada"){
+          } else if (res['message'] == "La persona ya esta registrada") {
             this.hayError = true;
             this.mensaje = "Esta persona está registrada con el folio: " + res['folio'];
             this.exito = false;
             this.reiniciar = true;
             this.home = true;
-          }else {
+          } else {
             this.hayError = true;
             this.mensaje = 'Se ha producido un error';
             this.exito = false;

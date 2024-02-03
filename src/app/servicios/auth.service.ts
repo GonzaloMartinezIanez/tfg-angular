@@ -41,7 +41,8 @@ export class AuthService {
     return (Math.floor((new Date).getTime() / 1000)) >= expiry;
   }
 
-  esAdmin(){
-    return this.http.get(GlobalComponent.APIurl + "/administrador"); 
+  obtenerCargo(){
+    return this.http.get(GlobalComponent.APIurl + "/cargo");
   }
+
 }

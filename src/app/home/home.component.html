@@ -1,14 +1,16 @@
 <app-menu></app-menu>
 <div class="contenido">
     <div class="nav_menu">
-        <button class="button_menu" (click)="navegar('desaparecidos')">Añadir persona desaparecida</button>
+        <button *ngIf="!entrevistador" class="button_menu" (click)="navegar('desaparecidos')">Añadir persona
+            desaparecida</button>
         <button class="button_menu" (click)="navegar('ver-desaparecidos')">Ver personas desaparecidas</button>
-        <button class="button_menu" (click)="navegar('interaccion')">Añadir persona en interacción</button>
-        <button class="button_menu" (click)="navegar('ver-interaccion')">Ver personas en interacción</button>
-        <button class="button_menu" (click)="navegar('grupo')">Crear grupo de personas</button>
+        <button *ngIf="!entrevistador" class="button_menu" (click)="navegar('interaccion')">Añadir persona en situación de riesgo</button>
+        <button class="button_menu" (click)="navegar('ver-interaccion')">Ver personas en situación de riesgo</button>
+        <button *ngIf="!entrevistador" class="button_menu" (click)="navegar('grupo')">Crear grupo de personas</button>
         <button class="button_menu" (click)="navegar('ver-grupos')">Ver grupos de personas</button>
-        <button class="button_menu" (click)="navegar('actualizar-interaccion')">Actualizar interacción de una persona</button>
+        <button *ngIf="!entrevistador" class="button_menu" (click)="navegar('actualizar-interaccion')">Actualizar ruta de una persona</button>
     </div>
 </div>
 
 <app-footer></app-footer>
+

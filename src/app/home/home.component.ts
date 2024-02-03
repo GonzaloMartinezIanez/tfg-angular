@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../servicios/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +11,12 @@ import { Router } from '@angular/router';
  * Componente que contiene el menu principal de la aplicacion
  */
 export class HomeComponent implements OnInit {
-  constructor(public router: Router) { }
+  constructor(public router: Router, private authService: AuthService) { }
+  entrevistador = false;
+
 
   ngOnInit(): void {
+    this.obtenerCargo();
   }
 
   /**
@@ -21,5 +25,13 @@ export class HomeComponent implements OnInit {
    */
   navegar(direccion : string) : void {
     this.router.navigate([direccion]);
+  }
+  
+  obtenerCargo() {
+    this.authService.obtenerCargo().subscribe(res => {
+      if (res[0]['Cargo'] == "ENTREVISTADOR") {
+        this.entrevistador = true
+      }
+    });
   }
 }

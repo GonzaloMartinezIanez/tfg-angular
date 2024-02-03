@@ -15,6 +15,7 @@ import { GlobalComponent } from '../global-component';
 export class MenuComponent implements OnInit {
   user = "Usuario"    // Variable que guarda el nombre del entrevistador
   administrador = false;
+  entrevistador = false;
 
   constructor(private authService: AuthService, public router: Router, private servicioEntrevistador: EntrevistadorService) { }
 
@@ -34,7 +35,7 @@ export class MenuComponent implements OnInit {
       })
     }
 
-    this.esAdmin();
+    this.obtenerCargo();
   }
 
   /**
@@ -44,11 +45,19 @@ export class MenuComponent implements OnInit {
     this.authService.logOut()
   }
 
-  esAdmin() {
-    this.authService.esAdmin().subscribe(res => {
-      if(res['message'] == "Es admin"){
-        this.administrador = true
+  obtenerCargo() {
+    this.authService.obtenerCargo().subscribe(res => {
+      switch (res[0]['Cargo']) {
+        case "ENTREVISTADOR":
+          this.entrevistador = true;
+          break;
+        case "ADMINISTRADOR":
+          this.administrador = true;
+          break;
+        default:
+          break;
       }
-    })
+
+    });
   }
 }

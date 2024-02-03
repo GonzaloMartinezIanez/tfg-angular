@@ -542,6 +542,8 @@ export class VerInteraccionComponent implements OnInit {
         this.interaccion['Entrevistador'] = res[0].Nombre + " " + res[0].ApellidoPaterno + " " + res[0].ApellidoMaterno;
       })
 
+      
+
       this.servicioGrupo.getGrupoInteraccion(this.interaccion['IdInteraccion']).subscribe(res => {
         if(res != ""){
           this.interaccion['NombreGrupo'] = res[0].NombreGrupo;

@@ -14,7 +14,7 @@ import { EntrevistadorComponent } from './entrevistador/entrevistador.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TokenInterceptorService } from './servicios/token-interceptor.service';
 import { VerGruposComponent } from './ver-grupos/ver-grupos.component';
@@ -23,6 +23,7 @@ import { AdministrarUsuariosComponent } from './administrar-usuarios/administrar
 import { MessageAlertComponent } from './message-alert/message-alert.component';
 import { InformacionComponent } from './informacion/informacion.component';
 import { FooterComponent } from './footer/footer.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,9 @@ import { FooterComponent } from './footer/footer.component';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
+    },
+    {
+      provide: LocationStrategy, useClass: HashLocationStrategy
     }
   ],
   bootstrap: [AppComponent]

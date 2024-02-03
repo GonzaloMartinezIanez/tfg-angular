@@ -7,6 +7,8 @@ import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import { HttpClient } from '@angular/common/http';
 import { GlobalComponent } from '../global-component';
 import { NacionesService } from '../servicios/naciones.service';
+import { AuthService } from '../servicios/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-interaccion',
@@ -142,17 +144,27 @@ export class InteraccionComponent implements OnInit {
   municipios: any;
 
   constructor(private servicioEntrevistador: EntrevistadorService,
-    private servicioGrupo: GrupoService, private http: HttpClient, private nacionesSercive: NacionesService) { }
+    private servicioGrupo: GrupoService, private http: HttpClient, private nacionesSercive: NacionesService,
+    private authService: AuthService, public router: Router) { }
 
   /**
    * Al comienzo se obtienen los grupos, datos del entrevistador y las nacionalidades
    * Tambien comienza en el primer paso del formulario (0)
    */
   ngOnInit(): void {
+    this.obtenerCargo();
     this.posicionFormulario = 0;
     this.getGrupos();
     this.getEntrevistador();
     this.getNaciones();
+  }
+
+  obtenerCargo() {
+    this.authService.obtenerCargo().subscribe(res => {
+      if (res[0]['Cargo'] == "ENTREVISTADOR") {
+        this.router.navigate(['home'])
+      }
+    });
   }
 
   /**
@@ -273,7 +285,7 @@ export class InteraccionComponent implements OnInit {
    * en el select del html
    */
   onNacionesChange(event) {
-    if (this.formularioInteraccion.value.Nacionalidad === "MEXICANA") {
+    if (this.formularioInteraccion.value.Nacionalidad === "México") {
       this.nacionesSercive.getEntidades().subscribe(e => {
         this.entidades = e;
       })

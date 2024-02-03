@@ -550,10 +550,10 @@
                 <div class="col-25">
                     <label class="label_form" for="EstadoObjetivo">Estado a donde se dirigía</label>
                 </div>
-                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo != 'MEXICANA'">
-                    <input class="input_form" id="EstadoObjetivo" type="text" formControlName="EstadoObjetivo">
+                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo != 'México'">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="EstadoObjetivo" type="text" formControlName="EstadoObjetivo">
                 </div>
-                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo === 'MEXICANA'">
+                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo === 'México'">
                     <select class="select_form" name="EstadoObjetivo" id="EstadoObjetivo"
                         formControlName="EstadoObjetivo" (change)="onEntidadesChange($event)">
                         <option disabled selected hidden value="">Selecciona una opción</option>
@@ -568,10 +568,10 @@
                     <label class="label_form" for="MunicipioObjetivo">Localidad/municipio/condado a donde se
                         dirigía</label>
                 </div>
-                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo != 'MEXICANA'">
-                    <input class="input_form" id="MunicipioObjetivo" type="text" formControlName="MunicipioObjetivo">
+                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo != 'México'">
+                    <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="MunicipioObjetivo" type="text" formControlName="MunicipioObjetivo">
                 </div>
-                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo === 'MEXICANA'">
+                <div class="col-75" *ngIf="this.formularioDesaparecidos.value.PaisObjetivo === 'México'">
                     <select class="select_form" name="MunicipioObjetivo" id="MunicipioObjetivo"
                         formControlName="MunicipioObjetivo">
                         <option disabled selected hidden value="">Selecciona una opción</option>
@@ -937,7 +937,7 @@
                     <label class="label_form" for="RedesSociales">Redes sociales</label>
                 </div>
                 <div class="col-75">
-                    <textarea class="textarea_form" id="RedesSociales" rows="2" cols="50"
+                    <textarea oninput="this.value = this.value.toUpperCase()" class="textarea_form" id="RedesSociales" rows="2" cols="50"
                         formControlName="RedesSociales" placeholder="Facebook, Instagram, Twitter, etc"></textarea>
                 </div>
             </div>

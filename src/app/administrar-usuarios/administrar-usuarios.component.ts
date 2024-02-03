@@ -54,16 +54,16 @@ export class AdministrarUsuariosComponent implements OnInit {
   constructor(private authService: AuthService, public router: Router, private servicioEntrevistador: EntrevistadorService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.esAdmin();
+    this.obtenerCargo();
     this.getEntrevistadores();
   }
 
-  esAdmin() {
-    this.authService.esAdmin().subscribe(res => {
-      if (res['message'] == "No es admin") {
+  obtenerCargo() {
+    this.authService.obtenerCargo().subscribe(res => {
+      if (res[0]['Cargo'] != "ADMINISTRADOR") {
         this.router.navigate(['login'])
       }
-    })
+    });
   }
 
   getEntrevistadores() {

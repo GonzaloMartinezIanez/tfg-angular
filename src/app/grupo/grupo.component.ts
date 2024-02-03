@@ -4,6 +4,8 @@ import { EntrevistadorService } from '../servicios/entrevistador.service';
 import * as L from "leaflet";
 import { HttpClient } from '@angular/common/http';
 import { GlobalComponent } from '../global-component';
+import { AuthService } from '../servicios/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -45,13 +47,23 @@ export class GrupoComponent implements OnInit {
   reiniciar = true;
   home = true;
 
-  constructor(private http: HttpClient, private servicioEntrevistador: EntrevistadorService) { }
+  constructor(private http: HttpClient, private servicioEntrevistador: EntrevistadorService,
+    private authService: AuthService, public router: Router) { }
 
   /**
    * Se obtiene el entrevistador al comenzar el componente
    */
   ngOnInit(): void {
+    this.obtenerCargo();
     this.getEntrevistador();
+  }
+
+  obtenerCargo() {
+    this.authService.obtenerCargo().subscribe(res => {
+      if (res[0]['Cargo'] == "ENTREVISTADOR") {
+        this.router.navigate(['home'])
+      }
+    });
   }
 
   /**

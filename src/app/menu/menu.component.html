@@ -3,18 +3,18 @@
         <li style="text-align: left;" class="dropdown">
             <a href="javascript:void(0)" class="dropbtn">Menu</a>
             <div class="dropdown-content">
-                <a routerLink="/desaparecidos">Añadir persona desaparecida</a>
+                <a *ngIf="!entrevistador" routerLink="/desaparecidos">Añadir persona desaparecida</a>
                 <a routerLink="/ver-desaparecidos">Visualizar personas desaparecidas</a>
-                <a routerLink="/interaccion">Añadir persona en interacción</a>
-                <a routerLink="/ver-interaccion">Visualizar personas en interacción</a>
-                <a routerLink="/grupo">Crear grupo de personas</a>
+                <a *ngIf="!entrevistador" routerLink="/interaccion">Añadir persona en riesgo</a>
+                <a routerLink="/ver-interaccion">Visualizar personas en riesgo</a>
+                <a *ngIf="!entrevistador" routerLink="/grupo">Crear grupo de personas</a>
                 <a routerLink="/ver-grupos">Visualizar grupos de personas</a>
-                <a routerLink="/actualizar-interaccion">Actualizar interacción de una persona</a>
+                <a *ngIf="!entrevistador" routerLink="/actualizar-interaccion">Actualizar registro de persona en riesgo</a>
             </div>
         </li>
 
         <li style="text-align: center;">
-            <a routerLink="/home">Registro de Interacciones</a>
+            <a routerLink="/home">Registro de personas en riesgo</a>
         </li>
 
         <li style="text-align: right;" class="dropdown">

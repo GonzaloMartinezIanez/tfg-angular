@@ -1,5 +1,5 @@
 .login{
-    padding-top: 35vh;
+    padding-top: 10vh;
     width: 60%;
     margin: auto;
 
@@ -25,4 +25,9 @@
 
     text-align: center;
     text-decoration: none;
+}
+
+.logo{
+    width: 200px;
+    height: 200px;
 }

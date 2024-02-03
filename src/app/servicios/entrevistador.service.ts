@@ -43,7 +43,7 @@ export class EntrevistadorService {
   }
 
   registrarEntrevistador(datos: any){
-    return this.http.put(GlobalComponent.APIurl + "/registrar", datos);
+    return this.http.post(GlobalComponent.APIurl + "/registrar", datos);
   }
 
 

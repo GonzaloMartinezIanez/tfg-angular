@@ -1,5 +1,5 @@
 .login{
-    padding-top: 35vh;
+    padding-top: 10vh;
 
     display: flex;
     align-items: center;
@@ -10,4 +10,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.logo{
+    width: 400px;
+    height: 400px;
 }

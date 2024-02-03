@@ -2,11 +2,11 @@
 
 <div class="contenido">
     <div class="cabecera">
-        <h1>Formulario de personas en interacción</h1>
+        <h1>Formulario de personas en situación de riesgo</h1>
 
         <div class="boton_area_form">
             <button [ngClass]="posicionFormulario == 0 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
-                (click)="cambiarPasoFormulario(0)">Datos generales de la persona que interactúa</button>
+                (click)="cambiarPasoFormulario(0)">Datos generales de la persona</button>
             <button [ngClass]="posicionFormulario == 1 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
                 (click)="cambiarPasoFormulario(1)">Procedencia de la persona</button>
             <button [ngClass]="posicionFormulario == 2 ? 'boton_avanzar_form_seleccionado' : 'boton_avanzar_form'"
@@ -21,7 +21,7 @@
     <div class="formulario">
         <form [formGroup]="formularioInteraccion" (ngSubmit)="enviar()" enctype="multipart/form-data">
             <div [ngClass]="{ocultar: posicionFormulario != 0}">
-                <h2>Datos generales de la persona que interactúa</h2>
+                <h2>Datos generales de la persona</h2>
                 <div class="row">
                     <div class="col-25">
                         <label class="label_form" for="Nombre">Nombre <span class="campo_obligatorio">*</span></label>
@@ -207,11 +207,11 @@
                         <label class="label_form" for="Estado">Entidad federativa de nacimiento</label>
                     </div>
 
-                    <div class="col-75" *ngIf="this.formularioInteraccion.value.Nacionalidad != 'MEXICANA'">
+                    <div class="col-75" *ngIf="this.formularioInteraccion.value.Nacionalidad != 'México'">
                         <input class="input_form" id="Estado" type="text" formControlName="Estado">
                     </div>
 
-                    <div class="col-75" *ngIf="this.formularioInteraccion.value.Nacionalidad === 'MEXICANA'">
+                    <div class="col-75" *ngIf="this.formularioInteraccion.value.Nacionalidad === 'México'">
                         <select class="select_form" name="Estado" id="Estado" formControlName="Estado"
                             (change)="onEntidadesChange($event)">
                             <option disabled selected hidden value="">Selecciona una opción</option>
@@ -226,11 +226,11 @@
                         <label class="label_form" for="Municipio">Municipio de nacimiento</label>
                     </div>
 
-                    <div class="col-75" *ngIf="this.formularioInteraccion.value.Nacionalidad != 'MEXICANA'">
+                    <div class="col-75" *ngIf="this.formularioInteraccion.value.Nacionalidad != 'México'">
                         <input class="input_form" id="Municipio" type="text" formControlName="Municipio">
                     </div>
 
-                    <div class="col-75" *ngIf="this.formularioInteraccion.value.Nacionalidad === 'MEXICANA'">
+                    <div class="col-75" *ngIf="this.formularioInteraccion.value.Nacionalidad === 'México'">
                         <select class="select_form" name="Municipio" id="Municipio" formControlName="Municipio">
                             <option disabled selected hidden value="">Selecciona una opción</option>
                             <option *ngFor="let municipio of municipios" value="{{municipio.municipio}}">{{
@@ -695,7 +695,7 @@
                         <label class="label_form" for="CorreoElectronicoQuienBusca">Correo electrónico</label>
                     </div>
                     <div class="col-75">
-                        <input oninput="this.value = this.value.toUpperCase()" class="input_form" id="CorreoElectronicoQuienBusca" type="text"
+                        <input class="input_form" id="CorreoElectronicoQuienBusca" type="text"
                             formControlName="CorreoElectronicoQuienBusca">
                     </div>
                 </div>
